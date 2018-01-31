@@ -10,20 +10,12 @@ class Base extends  Controller
 
         //验证安装文件
         if (!is_file(ROOT_PATH . 'data/install.lock') || !is_file(APP_PATH . 'database.php')) {
-            $this->redirect('install/index/index');
+            $this->redirect('install/');
         }
 
         if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
             $this->error('您尚未登录系统',url('login/dologin'));
         }
-        if(empty(Session::get('sys_conf'))){
-            $sysconf = new SysConf();
-            $sys_conf_result = $sysconf->select();
-            //系统配置转换成键值对存储
-            $sys_conf = array_column($sys_conf_result,'value','name');
-            Session::set('sys_conf',$sys_conf);
-        }
-
 
     }
 

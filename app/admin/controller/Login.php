@@ -38,7 +38,7 @@ class Login extends Controller
         if(Session::get('uid') && Session::get('userinfo') && Session::get('username')){
             $this->redirect(url('index/index'));
         }
-        return $this->fetch('login/dologin');
+        return $this->fetch('dologin');
     }
 
 
