@@ -1,0 +1,76 @@
+.editerToolsBox{
+	border-top: 1px solid #808080;
+	width: 100%;
+	table-layout:fixed;
+}
+.editerToolsBG{
+	width:100%;
+	height:20px;
+	/*background:url("bg.gif");*/
+	padding-left:2px;
+}
+.editerArrowUp{
+	width:18px;
+	border-left:1px solid #ffffff;
+	background:url("arrow_up.gif") #bdb7b7 no-repeat center;
+}
+.editerArrowDown{
+	width:18px;
+	border-left:1px solid #ffffff;
+	background:url("arrow_down.gif") #bdb7b7 no-repeat center;
+}
+.editerToolsIMG{
+	background:url("tools.gif");
+	height:20px;
+}
+
+.editerTextTopBG{
+	background:url("bodyTop.gif");
+	height:1px;
+}
+.editerTextBottomBG{
+	background:url("bodyBottom.gif");
+	width: 100%;
+	height:27px;
+}
+.editerTextBG{
+	width:100%;
+	background-color:#CCCCCC;
+}
+.editerTextArea{
+	border:1px;
+	padding:0;
+	width:100%;
+	height:320px;
+	overflow:auto;
+}
+.fullmessage {
+	border: 0px;
+	position: absolute;
+	top:0px;
+	left:0px;
+	z-index: 65535;
+	width: 100%!important;
+	height: 100%!important;
+}
+.fullbody {
+	padding: 0px;
+	left: 0px;
+	margin: 0px;
+	overflow: hidden;
+	width: 0px;
+	position: static;
+	top: 0px;
+	height: 0px;
+}
+.editerTextBox {
+	width: 100%;
+}
+#fulledit td {
+	padding: 0px;
+	border-left: 1px solid #BBBBBB;
+	border-right: 1px solid #BBBBBB;
+}
+.userData {
+	behavior:url(#default#userdata);
+}
