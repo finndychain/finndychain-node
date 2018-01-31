@@ -1,0 +1,93 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">数据管理</a></li>
+                    <li class="active">导入采集规则</li>
+                </ul>
+                <!--<div class="nav-search" id="nav-search">-->
+                    <!--<form class="form-search">-->
+								<!--<span class="input-icon">-->
+									<!--<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />-->
+									<!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
+								<!--</span>-->
+                    <!--</form>-->
+                <!--</div>&lt;!&ndash; /.nav-search &ndash;&gt;-->
+            </div>
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                导入采集规则
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    导入保存的规则文件，快速创建一个同配置的数据源
+                                </small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <form method="post" name="importform" id="theform" action="{:url('robot/importcopy')}" enctype="multipart/form-data">
+                    <input type="hidden" name="formhash" value="">
+
+                    <div class="colorarea01">
+
+                        <table cellspacing="0" cellpadding="0" width="100%" class="table table-bordered">
+
+                            <tbody><tr id="tr_">
+                                <th class="width-25">规则文件内容<p></p><p>请将数据源对应的规则文件内容粘贴到文本框，注意内容完整性</p></th>
+                                <td><textarea name="importtext" rows="12" cols="70"></textarea>
+                                </td>
+                            </tr>
+
+                            <tr id="tr_ignoreversion">
+                                <th class="width-25">兼容性校验<p></p><p>是否校验规则版本，建议开启</p></th>
+                                <td><label><input class="ace" name="ignoreversion" type="radio" value="0" checked=""><span class="lbl">&nbsp;校验 &nbsp;&nbsp;</span> </label><label><input class="ace" name="ignoreversion" type="radio" value="1"><span class="lbl">&nbsp;不校验&nbsp;&nbsp;</span> </label></td>
+                            </tr>
+
+                            </tbody></table>
+
+                    </div>
+
+                    <div class="col-xs-12 align-center"><input type="submit" name="importsubmit" value="立即导入" class="btn btn-info input-small">
+
+                        &nbsp;&nbsp;<input type="reset" name="importreset" value="重 置" class="btn btn-light input-small">
+
+                    </div></form>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+
+
+
+</div><!-- /.main-container -->
+
+<script>
+    var importtext = document.getElementById("importtext");
+    if(importtext) {
+        if (importtext.value.length < 1 || importtext.value.length > 30) {
+
+            importtext.focus();
+            Msg("导入文本长度不符合要求");
+            if(btn) btn.disabled = false;
+            return false;
+        }
+    }
+</script>

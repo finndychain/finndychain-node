@@ -1,0 +1,172 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<style>
+    #vip-list{padding: 0px;overflow: hidden;position: relative; height: 130px; MARGIN: 0 -10PX;}
+    a{text-decoration:none;}
+    a:link{text-decoration:none;}
+    a:visited{text-decoration:none;}
+    a:hover{text-decoration:none;}
+    a:active{text-decoration:none;}
+
+
+</style>
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="#">会员管理</a>
+                    </li>
+                </ul><!-- /.breadcrumb -->
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn  btn-info btn-round" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">新增会员</button>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <form action="{:url('User/AddUser')}" method="POST" id="addsubmit" onSubmit="return validate(this)">
+                                                        <div class="form-group">
+                                                            <label  class="control-label">用户名:</label>
+                                                            <input type="text" class="form-control" id="addusername" name="username">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="control-label">密码:</label>
+                                                            <input type="text" class="form-control" id="adduserpwd" name="password">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="control-label">权限:</label>
+                                                            <select name="" id="" class="form-control">
+                                                                <option value="0">普通会员</option>
+                                                                <option value="1">管理员</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                            <button type="submit" class="btn btn-info">提交</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- /.page-header -->
+                            <div class="space-12"></div>
+                            <table cellspacing="0" cellpadding="0" width="100%" class="table table-striped table-bordered table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>用户名</th>
+                                        <th>密码</th>
+                                        <th>权限</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    <!--数据行-->
+                                    <tr>
+                                        <td>1</td>
+                                        <td>jay</td>
+                                        <td>123456</td>
+                                        <td>管理员</td>
+                                        <td>20180101</td>
+                                        <td>
+                                            <button type="button" class="btn btn-mini  btn-info btn-round" data-toggle="modal" data-target="#exampleModal1" data-whatever="@mdo">编辑</button>
+                                            <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <form action="{:url('User/AddUser')}" method="post" id="editsubmit" onSubmit="return edit_validate(this)">
+                                                                <div class="form-group">
+                                                                    <label  class="control-label">用户名:</label>
+                                                                    <input type="text" class="form-control" id="editusername" name="username">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label  class="control-label">密码:</label>
+                                                                    <input type="text" class="form-control" id="editpwd" name="password">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label  class="control-label">权限:</label>
+                                                                    <select name="" id="" class="form-control">
+                                                                        <option value="0">普通会员</option>
+                                                                        <option value="1">管理员</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-mini  btn-default btn-round" data-dismiss="modal">关闭</button>
+                                                                    <button type="submit" class="btn btn-mini  btn-info ">提交</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                <button class="btn btn-mini btn-warning tooltip-warning btn-round  " type="button" onclick="window.location.href='midycp.php?action=robotreq&amp;op=take&amp;robotid=303223'"><i class="ace-icon fa fa-ban "></i> 禁用</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<script>
+
+    function validate (theform){
+        var addusername = $('#addusername').val();
+        var adduserpwd = $('#adduserpwd').val();
+        if(addusername == '' ){
+            alert('用户名不能为空');
+            return false;
+        }
+        if(adduserpwd == '' ){
+            alert('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+    function edit_validate (theform){
+        var editusername = $('#editusername').val();
+        var editpwd = $('#editpwd').val();
+
+        if(editusername == '' ){
+            alert('用户名不能为空');
+            return false;
+        }
+        if(editpwd == '' ){
+            alert('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+</script>

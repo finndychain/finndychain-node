@@ -1,0 +1,228 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">系统设置</a></li>
+                    <li class="active">系统设置</li>
+                </ul>
+                <!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                系统设置
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    平台基本功能设置
+                                </small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form method="post" name="thevalueform"  class="form-horizontal" id="theform" action="{:url('sysconf/sysset')}" enctype="multipart/form-data">
+                                        <div class="tabbable">
+                                            <ul class="nav nav-tabs padding-12 tab-color-blue background-blue" id="myTab4">
+                                                <li class="active">
+                                                    <a data-toggle="tab" href="#base" aria-expanded="true">基本</a>
+                                                </li>
+
+                                                <li class="">
+                                                    <a data-toggle="tab" href="#accredit" aria-expanded="false">授权</a>
+                                                </li>
+                                                <li class="">
+                                                    <a data-toggle="tab" href="#seo" aria-expanded="false">SEO设置</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div id="base" class="tab-pane active">
+                                                    <div class="space-12"></div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > 站点开关 </label>
+                                                        <div class="col-sm-10">
+                                                            <select name="toggle_web_site" id="toggle_web_site" class="col-xs-10 col-sm-5">
+                                                                <option value="1" {if condition="$vo.toggle_web_site eq '1'"} selected{/if} >开启</option>
+                                                                <option value="0" {if condition="$vo.toggle_web_site eq '0'"} selected{/if}>关闭</option>
+                                                            </select>
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                    <span class="middle">站点关闭后将提示网站已关闭，不能正常访问</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > 首页地址 </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text"  name="index_url"  class="col-xs-10 col-sm-5" value="{$systeminfo.index_url}">
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                <span class="middle">可以通过配置此项自定义系统首页的地址，比如：http://www.xxx.com</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > 网站标题 </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text"  name="web_site_title" class="col-xs-10 col-sm-5" value="{$systeminfo.web_site_title}">
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                <span class="middle">网站标题前台显示标题</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > 网站备案号 </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text"  name="web_site_icp" class="col-xs-10 col-sm-5" value="{$systeminfo.web_site_icp}">
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                <span class="middle">设置在网站底部显示的备案号</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > 版权信息 </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text"  name="web_site_copyright" class="col-xs-10 col-sm-5" value="{$systeminfo.web_site_copyright}">
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                <span class="middle">设置在网站底部显示的版权信息</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > 站点统计 </label>
+                                                        <div class="col-sm-10">
+                                                            <textarea name="web_site_statistics" id="web_site_statistics" cols="30" rows="5" class="col-xs-10 col-sm-5">{$systeminfo.web_site_statistics}</textarea>
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                <span class="middle">支持百度、Google、cnzz等所有Javascript的统计代码</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="space-12"></div>
+                                                    <div class="row ">
+                                                        <div class="col-xs-12 align-center">
+                                                            <input type="submit" name="thevaluesubmit" value="提交保存" class="btn btn-info input-small" >
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div id="accredit" class="tab-pane">
+                                                    <div class="alert alert-info">
+                                                        请在官网(http://www.finndy.com/)注册账户，然后填写下方注册信息
+                                                    </div>
+                                                    <div class="space-12"></div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > 账号 </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text"  name="app_key" value="{$systeminfo.app_key}"  class="col-xs-10 col-sm-5">
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > 密钥 </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text"  name="app_secret"  value="{$systeminfo.app_secret}" class="col-xs-10 col-sm-5">
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                <span class="middle"> 密钥请通过登陆http://www.finndy.com/至个人中心获取</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="col-xs-12 align-center">
+                                                            <input type="submit" name="thevaluesubmit" value="提交保存" class="btn btn-info input-small">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="seo" class="tab-pane">
+                                                    <div class="space-12"></div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > SEO关键字 </label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text"  name="web_site_keyword"  class="col-xs-10 col-sm-5" value="{$systeminfo.web_site_keyword}">
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                <span class="middle"> 网站搜索引擎关键字</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 label_control no-padding-right" > SEO描述 </label>
+                                                        <div class="col-sm-10">
+                                                            <textarea name="web_site_description" id="" cols="30" rows="5" class="col-xs-10 col-sm-5">{$systeminfo.web_site_description}</textarea>
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                <span class="middle">网站搜索引擎描述</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row ">
+                                                        <div class="col-xs-12 align-center">
+                                                            <input type="submit" name="thevaluesubmit" value="提交保存" class="btn btn-info input-small">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- /.page-header -->
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<script>
+
+    function validate (theform){
+        var addusername = $('#addusername').val();
+        var adduserpwd = $('#adduserpwd').val();
+        if(addusername == '' ){
+            alert('用户名不能为空');
+            return false;
+        }
+        if(adduserpwd == '' ){
+            alert('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+    function edit_validate (theform){
+        var editusername = $('#editusername').val();
+        var editpwd = $('#editpwd').val();
+
+        if(editusername == '' ){
+            alert('用户名不能为空');
+            return false;
+        }
+        if(editpwd == '' ){
+            alert('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+
+
+</script>

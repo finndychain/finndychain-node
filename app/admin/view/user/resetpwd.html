@@ -1,0 +1,70 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">我的面板</a></li>
+                    <li class="active">修改密码</li>
+                </ul><!-- /.nav-search -->
+            </div>
+
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                修改密码
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    修改您的账号密码
+                                </small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form class="" action="{:url('user/resetpwd')}" method="post">
+                            <table class="table no-border" width="100%" cellspacing="0" cellpadding="0">
+                                <tbody>
+                                    <tr>
+                                        <th class="left-th">旧密码</th>
+                                        <td>
+                                            <input class="txt" id="set_oldpass" type="password" size="30" value="" name="set_oldpass">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-th">新密码</th>
+                                        <td><input class="txt" id="set_newpass" type="password" size="30" value="" name="set_newpass"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="left-th">确认新密码</th>
+                                        <td><input class="txt" id="set_okpass" type="password" size="30" value="" name="set_okpass"> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-xs-12 align-center">
+                                <input class="btn btn-info input-small" type="submit" name="pwdsubmit" value="确 定"> &nbsp;&nbsp;
+                                <input class="btn btn-light input-small" type="reset" name="resetbtn" value="重 置">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

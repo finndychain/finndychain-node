@@ -1,0 +1,117 @@
+<!-- leftside -->
+<div id="sidebar" class="sidebar                  responsive">
+    <ul class="nav nav-list">
+        <li class="active">
+            <a href="index.html">
+                <i class="menu-icon fa fa-tachometer"></i>
+                <span class="menu-text"> 首页 </span>
+            </a>
+
+            <b class="arrow"></b>
+        </li>
+
+        <li class="open">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-desktop"></i>
+                <span class="menu-text">
+								数据管理
+							</span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+
+            <b class="arrow"></b>
+
+            <ul class="submenu">
+                <li class="">
+                    <a href="{:url('Robot/Add')}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        创建数据源
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
+                <li class="">
+                    <a href="{:url('Robot/Robotlist')}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        数据源列表
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+            </ul>
+        </li>
+        <li class="open">
+            <a href="#" class="dropdown-toggle">
+
+                <i class="menu-icon fa fa-user"></i>
+                <span class="menu-text">
+								用户管理
+							</span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="">
+                    <a href="{:url('User/Index')}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        我的面板
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="{:url('User/Userlist')}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        用户列表
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+
+            </ul>
+        </li>
+
+        <li class="open">
+            <a href="#" class="dropdown-toggle">
+
+                <i class="menu-icon fa fa-user"></i>
+                <span class="menu-text">
+								系统设置
+							</span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="hide">
+                    <a href="{:url('Sysconf/Index')}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        权限设置
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="">
+                    <a href="{:url('Sysconf/SysSet')}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        系统设置
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="hide">
+                    <a href="{:url('Sysconf/MenuSet')}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        后台菜单设置
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+
+            </ul>
+        </li>
+    </ul><!-- /.nav-list -->
+
+    <!-- #section:basics/sidebar.layout.minimize -->
+    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+        <i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+    </div>
+
+
+</div> <!-- leftside end -->

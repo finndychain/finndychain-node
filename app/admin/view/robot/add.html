@@ -1,0 +1,1107 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+
+
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">数据管理</a></li>
+                    <li class="active">创建数据源</li>
+                </ul>
+                <!-- #section:basics/content.searchbox -->
+                <!--<div class="nav-search" id="nav-search">-->
+                    <!--<form class="form-search">-->
+								<!--<span class="input-icon">-->
+									<!--<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />-->
+									<!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
+								<!--</span>-->
+                    <!--</form>-->
+                <!--</div>&lt;!&ndash; /.nav-search &ndash;&gt;-->
+                <!-- /section:basics/content.searchbox -->
+            </div>
+
+
+
+
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                创建数据源
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    使用云采集引擎发布创建一个新的数据源
+                                </small>
+                            </h1>
+                        </div>
+                        <div class="col-md-6">
+				        <span class="pull-right inline">
+
+                            <span class="btn-toolbar inline middle no-margin">
+                                <span class="btn-group no-margin">
+                                    <a href="{:url('robot/import')}" class="btn btn-sm btn-yellow ">
+                                        <i class="ace-icon fa fa-cloud-upload"></i>导入云采集规则
+                                    </a>
+
+                                </span>
+                            </span>
+				        </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form method="post" name="thevalueform" id="theform" action='{:url("Robot/$op")}' enctype="multipart/form-data" onSubmit="return validate(this)">
+                            <input type="hidden" name="formhash" value="$formhash">
+                            <table cellspacing="0" cellpadding="0" width="100%"  class="table no-border" >
+                                <tbody>
+                                    <tr>
+                                        <th>源名称</th>
+                                        <td><input name="name" type="text" placeholder="数据源名称字数10个字以上" id="name" size="30" style="width:275px;" value="{$thevalue['name']|default=''}" /></td>
+                                        <th>来源网站 <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_sourcesitename_tips}" ></i></th>
+                                        <td><input name="sourcesitename" type="text" placeholder="如：新浪微博" id="sourcesitename" size="30" value="{$thevalue['sourcesitename']|default=''}" style="width:275px;" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th rowspan="2">源描述</th>
+                                        <td rowspan="2"><textarea id="description" placeholder="详细描述数据源的字段、用途等" name="description" id="description" style="width:275px;" rows="4">{$thevalue['description']|default=''}</textarea></td>
+                                        <th>预估数据量 <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_estimatedsourcedata_tips}"></i></th>
+                                        <td>
+                                            <div style="width:275px;">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="input-group" >
+                                                            <input class="form-control" name="sourcedatanum" type="text" value="{$thevalue['sourcedatanum']|default=''}" placeholder=" 如: 100000" id="sourcedatanum" maxlength="16" value="" onkeyup="value=value.replace(/\D/g,'');" onblur="value=value.replace(/\D/g,'');"/>
+                                                            <span class="input-group-addon">
+                                条
+                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>数据分类</th>
+                                        <td>
+                                            <select name="import" id="import" class="form-control" style="width: 275px;">
+                                                <option value="0">请选择分类</option>
+                                                {volist name='catarr' id='vo'}
+                                                <option value="news_{$vo.catid}"
+                                                {if condition="$thevalue.importcatid == $vo.catid"} selected {/if}
+                                                >{$vo.name}</option>
+                                                {/volist}
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="space-12"></div>
+
+                            <div class="tabbable" style="position: relative; bottom: -2px;">
+                                <ul id="" class="nav nav-tabs tab-size-bigger ">
+                                    <li class="active width-25">
+                                        <a data-toggle="tab" id="entry-ctrl" href="#entry-box" data-target="inbox" aria-expanded="true">
+                                            <i class="ace-icon fa fa-globe bigger-150"></i>
+                                            <span class="bigger-110">数据链接</span>
+                                        </a>
+                                    </li>
+                                    <li class="width-25">
+                                        <a data-toggle="tab" id="field-ctrl" href="#field-box" data-target="inbox" aria-expanded="true">
+                                            <i class="ace-icon fa fa-table bigger-150"></i>
+                                            <span class="bigger-110">数据字段</span>
+                                        </a>
+                                    </li>
+                                    <li class="width-25">
+                                        <a data-toggle="tab" id="post-ctrl" href="#post-box" data-target="inbox" aria-expanded="true">
+                                            <i class="ace-icon fa fa-random bigger-150"></i>
+                                            <span class="bigger-110">数据发布</span>
+                                        </a>
+                                    </li>
+                                    <li class="width-25">
+                                        <a data-toggle="tab" id="setting-ctrl" href="#setting-box" data-target="inbox" aria-expanded="true">
+                                            <i class="ace-icon fa fa-cog bigger-150"></i>
+                                            <span class="bigger-110">高级功能</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div class="tabbable" id="entry-box">
+                                <ul id="" class="nav nav-tabs padding-12 tab-color-blue background-blue shadowa">
+                                    <li class="active">
+                                        <a href="#tb_11" data-toggle="tab" aria-expanded="false">{$Think.lang.robot_list}</a>
+                                    </li>
+                                    <li class="" style="display:none" id="li_tb_12">
+                                        <a href="#tb_12" data-toggle="tab" aria-expanded="false">{$Think.lang.robot_secondlist}</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#tb_13" data-toggle="tab" aria-expanded="false">{$Think.lang.robot_msg_setting}</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="tb_11" class="tab-pane fade active in">
+                                        <p class="tabhelp"><i class="ace-icon fa fa-bullhorn"></i> {$Think.lang.robot_help_tab1}</p>
+                                        <table cellspacing="0" cellpadding="0" width="100%"  class="table no-border" >
+                                            <thead id="hiddendebugframe" style="display: none;">
+                                            <tr id="tr_debugframe">
+                                                <th>{$Think.lang.robot_debugframe}<br /><input name="f_debugurl" placeholder="http://www.xxx.com/abc.html" type="text" id="f_debugurl" style="width: 100%"><br />
+                                                    <input name="f_allowurlnull" type="checkbox" id="f_allowurlnull">{$Think.lang.robot_allowurlnull_0}&nbsp;&nbsp;
+                                                    <a href="javascript:;" onclick="document.getElementById('f_debugurl').value='';">{$Think.lang.robot_allowurlnull_1}</a><br /><br />
+                                                    {$Think.lang.robot_debugframe_info}
+                                                    <div><a href="javascript:;" onclick="closedebugframe();" class="btn btn-sm btn-block btn-danger btn-round">{$Think.lang.robot_debugframe_close}</a></div></th>
+                                                <td><iframe id="debugframe" name="debugframe" width="100%" height="300" marginwidth="0" scrolling="auto" frameborder="0" src="about:blank"></iframe></td>
+                                            </tr>
+                                            </thead>
+                                            <tr id="tr_robot_listurltype">
+                                                <td valign="top" class="width-50 ">
+                                                    <div style="padding-right:30px;">
+                                                        {$Think.lang.robot_listurltype_manual} <i class="fa fa-question-circle grey" data-rel="tooltip" data-original-title="{$Think.lang.robot_listurltype_manual_tips}"></i><br /><br />
+                                                        <p class="alert alert-warning widget-main padding-10">{$Think.lang.add_a_new_link}<p>
+                                                        <div class="input-group">
+                                                            <textarea type="text" id="url" name="url" size="40" placeholder="http://www.xxx.com/list.html" class="form-control" style="height:58px;"></textarea>
+                                                            <span class="input-group-btn">
+											<button type="button" onclick="insertitem();" class="btn btn-sm btn-default" style="height:58px;">
+												<i class="ace-icon glyphicon glyphicon-plus bigger-110"></i>
+												{$Think.lang.space_add_tag}
+											</button>
+										</span>
+                                                        </div>
+                                                        <div id="udiv" style="margin-top:20px;"></div>
+                                                    </div>
+                                                </td>
+                                                <td valign="top" class="width-50  ">
+                                                    {$Think.lang.robot_listurltype_auto} <i class="fa fa-question-circle grey" data-rel="tooltip" data-original-title="{$Think.lang.robot_listurltype_auto_tips}"></i><br /><br />
+                                                    {$Think.lang.robot_urltitle} <input type="text" name="listurl_auto" id="listurl_auto" style="width:88%" placeholder="http://www.xxx.com/list_[page].html" value="{$thevalue['listurl_auto']|default=''}" onblur="inputcheck(this);" /><br />
+                                                    <div class="space-8"></div>
+                                                    {$Think.lang.robot_from} <input type="text" id="listpagestart" name="listpagestart" value="{$thevalue['listpagestart']|default='0'}" size="6" maxlength="10" onkeyup="inputcheck(this);" /> {$Think.lang.robot_to} <input type="text" id="listpageend" name="listpageend" value="{$thevalue['listpageend']|default='0'}" size="6" maxlength="10" onkeyup="inputcheck(this);" /> {$Think.lang.wildcard_page_note}
+                                                    <div class="space-8"></div>
+                                                    <span id="wildcard">{$Think.lang.robot_listpageoffset} <input type="text" id="listpageoffset" name="listpageoffset" value="{$thevalue['listpageoffset']|default=''}" size="6" placeholder="1" onkeyup="inputcheck(this);" /> {$Think.lang.robot_listpageoffset_note} &nbsp;&nbsp;&nbsp; {$Think.lang.wildcard_length} <input type="text" id="wildcardlen" name="wildcardlen" value="{$thevalue['wildcardlen']|default=''}" size="6" placeholder="自动" maxlength="1" onkeyup="inputcheck(this);" />  &nbsp;<i class="fa fa-question-circle grey" data-rel="tooltip" data-original-title="{$Think.lang.wildcard_length_note}"></i> </span>
+                                                    <div id="str_wc" style="max-width: 410px; word-wrap: break-word;color: #aaa; display: none; margin:6px 0;"></div>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_robot_debug">
+                                                <td align="left" class="col-sm-4">
+                                                    <a id="usesecondlist-ctrl" href="#entry-ctrl" class="btn btn-white btn-warning" style="">{$Think.lang.robot_usesecondlist_show}</a>
+                                                </td>
+                                                <td align="right" class="col-sm-8">
+                                                    <input type="button" class="btn btn-white btn-info" value="{$Think.lang.robot_debug_showlisturl}" onclick="debugsubmit(this, 'tr_robot_debug', 'showlisturl');">
+                                                    <input type="button" class="btn btn-white btn-info" value="{$Think.lang.robot_debug_pinglisturl}" onclick="debugsubmit(this, 'tr_robot_debug', 'pinglisturl');">
+                                                    &nbsp;&nbsp;&nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div id="tb_12" class="tab-pane fade">
+                                        <p class="tabhelp"><i class="ace-icon fa fa-bullhorn"></i> {$Think.lang.robot_help_tab20}</p>
+                                        <table cellspacing="0" cellpadding="0" width="100%"  class="table no-border">
+                                            <tr>
+                                                <th class="width-25">{$Think.lang.robot_usesecondlist} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_usesecondlist_tips}"></i></th>
+                                                <td>
+                                                    <label><input class="ace" name="usesecondlist" type="radio" value="0" checked="checked"  /><span class="lbl">&nbsp;{$Think.lang.robot_usesecondlist_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="usesecondlist" type="radio" value="1"  /><span class="lbl">&nbsp;{$Think.lang.robot_usesecondlist_1}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_subjecturlrule0">
+                                                <th>{$Think.lang.robot_subjecturlrule0} </th>
+                                                <td><textarea id="subjecturlrule0" name="subjecturlrule0" placeholder="{$Think.lang.robot_subjecturlrule_phd0}" style="width:71%;" rows="1"></textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturlrule0', 'subjecturlrule0');">
+                                                    <p style="display:none;"><a href="javascript:;" onclick="document.getElementById('subjecturlrule0').value='';">{$Think.lang.robot_debug_auto_recognition}</a> {$Think.lang.robot_debug_auto_subjecturlrule0}</p></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkrule0">
+                                                <th>{$Think.lang.robot_subjecturllinkrule0} </th>
+                                                <td><textarea id="subjecturllinkrule0" name="subjecturllinkrule0" placeholder="{$Think.lang.robot_subjecturllinkrule_phd0}" style="width:71%;" rows="1"></textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkrule0', 'subjecturllinkrule0');">
+                                                    <p style="display:none;"><a href="javascript:;" onclick="document.getElementById('subjecturllinkrule0').value='';">{$Think.lang.robot_debug_auto_recognition}</a> {$Think.lang.robot_debug_auto_subjecturllinkrule0}</p></td>
+                                            </tr>
+                                            <tr id="tab20-ctrl" $tabctrl>
+                                                <td colspan="2"><button type="button" class="btn btn-light btn-block" style="opacity: 0.8; filter: alpha(opacity=80);"><i id="tab2-i" class="fa fa-angle-double-down" aria-hidden="true"></i> {$Think.lang.robot_btn_ctrl_tab}</button></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkinclude0" {$tabbox}>
+                                                <th>{$Think.lang.robot_debug_info_subjecturllinkinclude0} </th>
+                                                <td>
+                                                    <textarea id="subjecturllinkinclude0" name="subjecturllinkinclude0" style="width:71%;" rows="1"> {$thevalue.subjecturllinkinclude0|default=''}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkinclude0', 'subjecturllinkinclude0');">
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkcancel0" {$tabbox}>
+                                                <th>{$Think.lang.robot_debug_info_subjecturllinkcancel0}</th>
+                                                <td><textarea id="subjecturllinkcancel0" name="subjecturllinkcancel0" style="width:71%;" rows="1">{$thevalue.subjecturllinkcancel0|default=''}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkcancel0', 'subjecturllinkcancel0');"></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkfilter0" {$tabbox}>
+                                                <th>{$Think.lang.robot_debug_info_subjecturllinkfilter0} </th>
+                                                <td><textarea id="subjecturllinkfilter0" name="subjecturllinkfilter0" style="width:71%;" rows="1">{$thevalue.subjecturllinkfilter0|default=''}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkfilter0', 'subjecturllinkfilter0');"></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkpre0" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjecturllinkpre0} </th>
+                                                <td><input name="subjecturllinkpre0" type="text" id="subjecturllinkpre0" placeholder="{$Think.lang.robot_debug_auto_subjecturllinkpre0}" size="60" value="{$thevalue['subjecturllinkpre0']|default=''}" />
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkpre0', 'subjecturllinkpre0');">
+                                                    <p style="display:none;"><a href="javascript:;" onclick="document.getElementById('subjecturllinkpre0').value='';">{$Think.lang.robot_debug_auto_recognition}</a> {$Think.lang.robot_debug_auto_subjecturllinkpre0}</p></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkpf0" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjecturllinkpf0} </th>
+                                                <td><input name="subjecturllinkpf0" type="text" id="subjecturllinkpf0" size="60" value="{$thevalue['subjecturllinkpf0']|default=''}" />
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkpf0', 'subjecturllinkpf0');"></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkallcustom0" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjecturllinkallcustom0}</th>
+                                                <td><textarea id="subjecturllinkallcustom0" name="subjecturllinkallcustom0" style="width:71%;height:100px;background-color:#fefef3;">{$thevalue['subjecturllinkallcustom0']|default=''}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug_evalrun}" onclick="debugsubmit(this, 'tr_subjecturllinkallcustom0', 'subjecturllinkallcustom0');">
+                                                    <BR><a href="javascript:;" onclick="document.getElementById('subjecturllinkallcustom0').value='{$Think.lang.robot_custom_code}';document.getElementById('subjecturllinkallcustom0').style.height='180px';"><i class="fa fa-code"></i>{$Think.lang.robot_debug_addevaltag}</a>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_reverseorder0" {$tabbox}>
+                                                <th>{$Think.lang.robot_reverseorder0}</th>
+                                                <td><label><input class="ace" name="reverseorder0" type="radio" value="0" {$thevalue[reverseorder0] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_reverseorder_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="reverseorder0" type="radio" value="1" {$thevalue[reverseorder0] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_reverseorder_1}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div id="tb_13" class="tab-pane fade">
+                                        <p class="tabhelp"><i class="ace-icon fa fa-bullhorn"></i> {$Think.lang.robot_help_tab2}</p>
+                                        <table cellspacing="0" cellpadding="0" width="100%"  class="table no-border">
+                                            <tr id="tr_encode">
+                                                <th class="width-25">{$Think.lang.robot_encode}</th>
+                                                <td><input name="encode" type="text" id="encode" size="10" placeholder="utf-8" value="{$thevalue['encode']|default=''}" />
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug_auxiliary}" onclick="debugsubmit(this, 'tr_encode', 'charset');">
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_subjecturlrule">
+                                                <th class="width-25">{$Think.lang.robot_subjecturlrule} </th>
+                                                <td><textarea id="subjecturlrule" name="subjecturlrule" placeholder="{$Think.lang.robot_subjecturlrule_phd}" style="width:71%;" rows="1">{$thevalue['subjecturlrule']|default=''}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturlrule', 'subjecturlrule');">
+                                                    <p style="display:none;"><a href="javascript:;" onclick="document.getElementById('subjecturlrule').value='';">{$Think.lang.robot_debug_auto_recognition}</a> {$Think.lang.robot_debug_auto_subjecturlrule}</p></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkrule">
+                                                <th>{$Think.lang.robot_subjecturllinkrule}</th>
+                                                <td><textarea id="subjecturllinkrule" name="subjecturllinkrule" placeholder="{$Think.lang.robot_subjecturllinkrule_phd}" style="width:71%;" rows="1">{$thevalue['subjecturllinkrule']}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkrule', 'subjecturllinkrule');">
+                                                    <p style="display:none;"><a href="javascript:;" onclick="document.getElementById('subjecturllinkrule').value='';">{$Think.lang.robot_debug_auto_recognition}</a> {$Think.lang.robot_debug_auto_subjecturllinkrule}</p></td>
+                                            </tr>
+                                            <tr id="tab2-ctrl" $tabctrl>
+                                                <td colspan="2"><button type="button" class="btn btn-light btn-block" style="opacity: 0.8; filter: alpha(opacity=80);"><i id="tab2-i" class="fa fa-angle-double-down" aria-hidden="true"></i> {$Think.lang.robot_btn_ctrl_tab}</button></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkinclude" {$tabbox}>
+                                                <th>{$Think.lang.robot_debug_info_subjecturllinkinclude} </th>
+                                                <td><textarea id="subjecturllinkinclude" name="subjecturllinkinclude" style="width:71%;" rows="1">{$thevalue.subjecturllinkinclude}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkinclude', 'subjecturllinkinclude');"></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkcancel" {$tabbox}>
+                                                <th>{$Think.lang.robot_debug_info_subjecturllinkcancel} </th>
+                                                <td><textarea id="subjecturllinkcancel" name="subjecturllinkcancel" style="width:71%;" rows="1">{$thevalue.subjecturllinkcancel}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkcancel', 'subjecturllinkcancel');"></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkfilter" {$tabbox}>
+                                                <th>{$Think.lang.robot_debug_info_subjecturllinkfilter} </th>
+                                                <td><textarea id="subjecturllinkfilter" name="subjecturllinkfilter" style="width:71%;" rows="1">{$thevalue.subjecturllinkfilter}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkfilter', 'subjecturllinkfilter');"></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkpre" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjecturllinkpre} </th>
+                                                <td><input name="subjecturllinkpre" type="text" id="subjecturllinkpre" placeholder="{$Think.lang.robot_debug_auto_subjecturllinkpre}" size="60" value="{$thevalue.subjecturllinkpre}" />
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkpre', 'subjecturllinkpre');">
+                                                    <p style="display:none;"><a href="javascript:;" onclick="document.getElementById('subjecturllinkpre').value='';">{$Think.lang.robot_debug_auto_recognition}</a> {$Think.lang.robot_debug_auto_subjecturllinkpre}</p></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkpf" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjecturllinkpf} </th>
+                                                <td><input name="subjecturllinkpf" type="text" id="subjecturllinkpf" size="60" value="{$thevalue.subjecturllinkpf}" />
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjecturllinkpf', 'subjecturllinkpf');"></td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkallcustom" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjecturllinkallcustom}</th>
+                                                <td><textarea id="subjecturllinkallcustom" name="subjecturllinkallcustom" style="width:71%;height:100px;background-color:#fefef3;">{$thevalue.subjecturllinkallcustom}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug_evalrun}" onclick="debugsubmit(this, 'tr_subjecturllinkallcustom', 'subjecturllinkallcustom');">
+                                                    <BR><a href="javascript:;" onclick="document.getElementById('subjecturllinkallcustom').value='{$Think.lang.robot_custom_code}';document.getElementById('subjecturllinkallcustom').style.height='180px';"><i class="fa fa-code"></i>{$Think.lang.robot_debug_addevaltag}</a>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_reverseorder" {$tabbox}>
+                                                <th>{$Think.lang.robot_reverseorder}</th>
+                                                <td><label><input class="ace" name="reverseorder" type="radio" value="0" {$thevalue[reverseorder] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_reverseorder_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="reverseorder" type="radio" value="1" {$thevalue[reverseorder] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_reverseorder_1}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_subjecturllinkcustom" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjecturllinkcustom} </th>
+                                                <td><textarea id="subjecturllinkcustom" name="subjecturllinkcustom" style="width:71%;" rows="2">{$thevalue.subjecturllinkcustom}</textarea></td>
+                                            </tr>
+                                            <tr id="tr_subjectallowrepeat" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjectallowrepeat}</th>
+                                                <td><label><input class="ace" name="subjectallowrepeat" type="radio" value="0" {$thevalue[subjectallowrepeat] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_subjectallowrepeat_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="subjectallowrepeat" type="radio" value="1" {$thevalue[subjectallowrepeat] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_subjectallowrepeat_1}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tabbable" id="field-box" style="display:none;">
+                                <ul id="" class="nav nav-tabs padding-12 tab-color-blue background-blue shadowa">
+                                    <li class="active">
+                                        <a href="#tb_21" data-toggle="tab" aria-expanded="false">{$Think.lang.robot_message}</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#tb_22" data-toggle="tab" aria-expanded="false">{$Think.lang.robot_extfield_setting}</a>
+                                    </li>
+                                    <label class="pull-right inline" style="margin:3px 10px 0 0;">
+                                        <button type="button" id="uploadhelptip-ctrl" class="btn btn-white btn-warning btn-sm" style="border-radius: 100%;padding:2px 6px;display:none;">
+                                            <i class="ace-icon fa fa-lightbulb-o icon-only bigger-120"></i>
+                                        </button>
+                                    </label>
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="tb_21" class="tab-pane fade active in">
+                                        <p class="tabhelp"><i class="ace-icon fa fa-bullhorn"></i> {$Think.lang.robot_help_tab3}</p>
+                                        <table cellspacing="0" cellpadding="0" width="100%"  class="table no-border">
+
+                                            <tr id="tr_subjectrule">
+                                                <th class="width-25">{$Think.lang.robot_subjectrule}</th>
+                                                <td><textarea id="subjectrule" name="subjectrule" placeholder="{$Think.lang.robot_subjectrule_info}" style="width:71%;" rows="1">{$thevalue.subjectrule}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjectrule', 'subjectrule');"></td>
+                                            </tr>
+                                            <tr id="tr_subjectfilter">
+                                                <th>{$Think.lang.robot_subjectfilter}</th>
+                                                <td><textarea id="subjectfilter" name="subjectfilter" style="width:71%;" rows="1">{$thevalue.subjectfilter}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjectfilter', 'subjectfilter');"></td>
+                                            </tr>
+                                            <tr id="tab31-ctrl" $tabctrl>
+                                                <td colspan="2"><button type="button" class="btn btn-light btn-block" style="opacity: 0.8; filter: alpha(opacity=80);"><i id="tab31-i" class="fa fa-angle-double-down" aria-hidden="true"></i> {$Think.lang.robot_btn_ctrl_tab}</button></td>
+                                            </tr>
+                                            <tr id="tr_subjectreplace_title" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjectreplace_title}</th>
+                                                <td>
+                                                    <div id="td_subjectreplace_title" class="col-md-10" style="margin-left:-12px;"></div>
+                                                    <br />
+                                                    <div class="pull-right">
+                                                        <input type="button" class="btn btn-white btn-info " value="{$Think.lang.robot_debug_add}" onclick="addreplace('subjectreplace', '', '');">
+                                                        &nbsp;<input type="button" class="btn btn-white btn-info " value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjectreplace_title', 'subjectreplace');">
+                                                    </div>
+                                                    <script>
+                                                    $(function(){
+                                                        addreplace('subjectreplace', '', '');
+                                                    });
+                                                    </script>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_subjectkey" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjectkey}</th>
+                                                <td><textarea id="subjectkey" name="subjectkey" style="width:71%;" rows="1">{$thevalue.subjectkey}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjectkey', 'subjectkey');"></td>
+                                            </tr>
+                                            <tr id="tr_subjectkeycancel" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjectkeycancel}</th>
+                                                <td><textarea id="subjectkeycancel" name="subjectkeycancel" style="width:71%;" rows="1">{$thevalue.subjectkeycancel}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjectkeycancel', 'subjectkeycancel');"></td>
+                                            </tr>
+                                            <tr id="tr_subjectcontentcustom" {$tabbox}>
+                                                <th>{$Think.lang.robot_subjectcontentcustom}</th>
+                                                <td><textarea id="subjectcontentcustom" name="subjectcontentcustom" style="width:71%;height:100px;background-color:#fefef3;">{$thevalue.subjectcontentcustom}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug_evalrun}" onclick="debugsubmit(this, 'tr_subjectcontentcustom', 'subjectcontentcustom');">
+                                                    <BR><a href="javascript:;" onclick="document.getElementById('subjectcontentcustom').value='{$Think.lang.robot_custom_code}';document.getElementById('subjectcontentcustom').style.height='180px';"><i class="fa fa-code"></i>{$Think.lang.robot_debug_addevaltag}</a>
+                                                </td>
+                                            </tr>
+
+                                            <tr id="tr_hr" {$tabbox}><td colspan="2"><hr></td></tr>
+                                            <tr id="tr_messagerule">
+                                                <th>{$Think.lang.robot_messagerule}</th>
+                                                <td><textarea id="messagerule" name="messagerule" style="width:71%;" rows="1">{$thevalue.messagerule}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagerule', 'messagerule');">
+
+                                            </tr>
+                                            <tr id="tr_messagefilter">
+                                                <th>{$Think.lang.robot_messagefilter}</th>
+                                                <td><textarea id="messagefilter" name="messagefilter" style="width:71%;" rows="1">{$thevalue.messagefilter}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagefilter', 'messagefilter');"></td>
+                                            </tr>
+                                            <tr id="tab32-ctrl" $tabctrl>
+                                                <td colspan="2"><button type="button" class="btn btn-light btn-block" style="opacity: 0.8; filter: alpha(opacity=80);"><i id="tab32-i" class="fa fa-angle-double-down" aria-hidden="true"></i> {$Think.lang.robot_btn_ctrl_tab}</button></td>
+                                            </tr>
+                                            <tr id="tr_messagereplace_title" {$tabbox}>
+                                                <th>{$Think.lang.robot_messagereplace_title}</th>
+                                                <td>
+                                                    <div id="td_messagereplace_title" class="col-md-10" style="margin-left:-12px;"></div>
+                                                    <br />
+                                                    <div class="pull-right">
+                                                        <input type="button" class="btn btn-white btn-info " value="{$Think.lang.robot_debug_add}" onclick="addreplace('messagereplace', '', '');">
+                                                        &nbsp;<input type="button" class="btn btn-white btn-info " value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagereplace_title', 'messagereplace');">
+                                                    </div>
+                                                    <script>
+                                                        addreplace('messagereplace', '', '');
+                                                    </script>
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_messagekey" {$tabbox}>
+                                                <th>{$Think.lang.robot_messagekey}</th>
+                                                <td><textarea id="messagekey" name="messagekey" style="width:71%;" rows="1">{$thevalue.messagekey}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagekey', 'messagekey');"></td>
+                                            </tr>
+                                            <tr id="tr_messagekeycancel" {$tabbox}>
+                                                <th>{$Think.lang.robot_messagekeycancel}</th>
+                                                <td><textarea id="messagekeycancel" name="messagekeycancel" style="width:71%;" rows="1">{$thevalue.messagekeycancel}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagekeycancel', 'messagekeycancel');"></td>
+                                            </tr>
+                                            <tr id="tr_messageformat" {$tabbox}>
+                                                <th>{$Think.lang.robot_messageformat}</th>
+                                                <td><label><input class="ace" name="messageformat" type="radio" value="0" {$thevalue[messageformat] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_messageformat_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="messageformat" type="radio" value="1" {$thevalue[messageformat] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_messageformat_1}&nbsp;&nbsp;</span> </label>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messageformat', 'messageformat');"></td>
+                                            </tr>
+                                            <tr id="tr_messagepagetype" style="display:none;">
+                                                <th>{$Think.lang.robot_messagepagetype}</th>
+                                                <td><label><input class="ace" name="messagepagetype" type="radio" value="page" $messagepagetypearr[tpage] /><span class="lbl">&nbsp;{$Think.lang.robot_messagepagetype_page}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="messagepagetype" type="radio" value="next" $messagepagetypearr[tnext] /><span class="lbl">&nbsp;{$Think.lang.robot_messagepagetype_next}&nbsp;&nbsp;</span> </label>
+                                            </tr>
+                                            <tr id="tr_messagepagerule" style="display:none;">
+                                                <th>{$Think.lang.robot_messagepagerule}</th>
+                                                <td><textarea id="messagepagerule" name="messagepagerule" style="width:71%;" rows="1">{$thevalue.messagepagerule}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagepagerule', 'messagepagerule');"></td>
+                                            </tr>
+                                            <tr id="tr_messagepageurlrule" style="display:none;">
+                                                <th>{$Think.lang.robot_messagepageurlrule}</th>
+                                                <td><textarea id="messagepageurlrule" name="messagepageurlrule" style="width:71%;" rows="1">{$thevalue.messagepageurlrule}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagepageurlrule', 'messagepageurlrule');"></td>
+                                            </tr>
+                                            <tr id="tr_messagepageurllinkpre" style="display:none;">
+                                                <th>{$Think.lang.robot_messagepageurllinkpre}</th>
+                                                <td><input name="messagepageurllinkpre" type="text" placeholder="{$Think.lang.robot_debug_auto_messagepageurllinkpre}" id="messagepageurllinkpre" size="60" value="{$thevalue.messagepageurllinkpre}" />
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagepageurllinkpre', 'messagepageurllinkpre');">
+                                                    <p style="display:none;"><a href="javascript:;" onclick="document.getElementById('messagepageurllinkpre').value='';">{$Think.lang.robot_debug_auto_recognition}</a> {$Think.lang.robot_debug_auto_messagepageurllinkpre}</p></td>
+                                            </tr>
+                                            <tr id="tr_messagepageurllinkpf" style="display:none;">
+                                                <th>{$Think.lang.robot_messagepageurllinkpf}</th>
+                                                <td><input name="messagepageurllinkpf" type="text" id="messagepageurllinkpf" size="60" value="{$thevalue.messagepageurllinkpf}" />
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagepageurllinkpf', 'messagepageurllinkpf');"></td>
+                                            </tr>
+                                            <tr id="tr_messagecontentcustom" {$tabbox}>
+                                                <th>{$Think.lang.robot_messagecontentcustom}</th>
+                                                <td><textarea id="messagecontentcustom" name="messagecontentcustom" style="width:71%;height:100px;background-color:#fefef3;">{$thevalue.messagecontentcustom}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug_evalrun}" onclick="debugsubmit(this, 'tr_messagecontentcustom', 'messagecontentcustom');">
+                                                    <p><a href="javascript:;" onclick="document.getElementById('messagecontentcustom').value='{$Think.lang.robot_custom_code}';document.getElementById('messagecontentcustom').style.height='180px';"><i class="fa fa-code"></i>{$Think.lang.robot_debug_addevaltag}</a></p></td>
+                                            </tr>
+                                            <tr id="tr_messagecheckhtml" {$tabbox}>
+                                                <th>{$Think.lang.robot_messagecheckhtml}</th>
+                                                <td><label><input class="ace" name="messagecheckhtml" type="radio" value="0" {$thevalue[messagecheckhtml] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_messagecheckhtml_1}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="messagecheckhtml" type="radio" value="1" {$thevalue[messagecheckhtml] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_messagecheckhtml_0}&nbsp;&nbsp;</span> </label>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagecheckhtml', 'messagecheckhtml');"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div id="tb_22" class="tab-pane fade">
+                                        <p class="tabhelp">
+
+                                            <!--{if condition="$thevalue['extfieldreg1'] =='' "}-->
+                                            <!--1111-->
+                                            <!--{else /}-->
+                                            <!--3222-->
+                                            <!--{/if}-->
+
+
+
+
+                                            <i class="ace-icon fa fa-bullhorn"></i> {$Think.lang.robot_help_tab4}</p>
+                                        <table cellspacing="0" cellpadding="0" width="100%"  class="table no-border">
+                                            <tr>
+                                                <td colspan=2>{$Think.lang.robot_extfield_settingtips}
+                                                    {for start="1" end="49"  step="1" name="tmpid" }
+
+
+
+
+                                                        <input id="inputext{$tmpid}" type="button" class="dbtn" value="extfield{$tmpid}" onclick="javascript:showextfield(this,{$tmpid});" style="background-color:#ffffff;{$extColorArr['extfieldreg$tmpid']}"> {if condition="($tmpid%10) == 0 "} <br>{/if}
+                                                    {/for}
+
+                                                </td>
+                                            </tr>
+
+                                            {for start="1" end="49"  step="1" name="tmpid" }
+                                            <!--{$tmprule	= 'extfieldrule'.$tmpid}-->
+                                            <!--{$tmpalias	= 'extfieldalias'.$tmpid}-->
+                                            <!--{$tmpfilter	= 'extfieldfilter'.$tmpid}-->
+                                            <!--{$tmpcustom	= 'extfieldcustom'.$tmpid}-->
+                                            <!--{if condition="$tmpid == 1 "} {$dspcss = 'display:;'}-->
+                                            <!--{else /}{$dspcss = "display:none;"}-->
+                                            <!--{/if}-->
+                                            <tr id="tr_extfieldrule{$tmpid}" style="{$dspcss}" >
+                                                <th class="width-25">{$Think.lang.robot_robot_extfield}{$tmpid}{$Think.lang.robot_extfield_rule} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_extfield_fixedstr}"></i>{$Think.lang.robot_fieldsettag}
+                                                    <p>
+                                                        STR1<a href="javascript:insertAtCursor('extfieldrule{$tmpid}','[extfield{$tmpid}]')">[extfield{$tmpid}]</a>
+                                                        STR2,(<a href="javascript:insertAtCursor('extfieldrule{$tmpid}','*')">*</a>),
+                                                             (<a href="javascript:insertAtCursor('extfieldrule{$tmpid}','[poundstr]')">[poundstr]</a>),
+                                                             (<a href="javascript:insertAtCursor('extfieldrule{$tmpid}','[currenturl]')">[currenturl]</a>)
+                                                    </p>
+                                                </th>
+                                                <td>
+                                                    <textarea id="{$tmprule}" name="{$tmprule}" style="width:71%;" rows="1">{$thevalue["extfieldrule$tmpid"]}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_{$tmprule}', {$tmprule})"></td>
+                                            </tr>
+                                            <tr id="tr_{$tmpalias}" style="{$dspcss}">
+                                                <th>{$Think.lang.robot_robot_extfield}{$tmpid}{$Think.lang.robot_extfield_aliasrule}</th>
+                                                <td>
+                                                    <input id="{$tmpalias}" name="{$tmpalias}" type="text" placeholder="{$Think.lang.robot_extfield_alias_null}" size="60" maxlength="12" value="{$thevalue["extfieldalias$tmpid"]}" />
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_{$tmpfilter}" style="{$dspcss}">
+                                                <th>{$Think.lang.robot_robot_extfield}{$tmpid}{$Think.lang.robot_extfield_filterrule}{$Think.lang.robot_fieldsettag}
+                                                    <p>
+                                                        (<a href="javascript:insertAtCursor('extfieldfilter{$tmpid}','*')">*</a>),
+                                                        (<a href="javascript:insertAtCursor('extfieldfilter{$tmpid}','|')">|</a>)
+                                                    </p>
+                                                </th>
+                                                <td>
+                                                    <textarea id="{$tmpfilter}" name="{$tmpfilter}" style="width:71%;" rows="1">{$thevalue["extfieldfilter$tmpid"]}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_{$tmpfilter}', {$tmpfilter})">
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_{$tmpcustom}" style="{$dspcss}">
+                                                <th>{$Think.lang.robot_robot_extfield}{$tmpid}{$Think.lang.robot_extfield_customrule}{$Think.lang.robot_fieldsettag}
+                                                    <p>
+                                                        (<a href="javascript:insertAtCursor('extfieldcustom{$tmpid}','$PARASTR')">[$PARASTR]</a>),
+                                                        (<a href="javascript:insertAtCursor('extfieldcustom{$tmpid}','[poundstr]')">[poundstr]</a>),
+                                                        (<a href="javascript:insertAtCursor('extfieldcustom{$tmpid}','[currenturl]')">[currenturl]</a>)
+                                                    </p>
+                                                </th>
+                                                <td>
+                                                    <textarea id="{$tmpcustom}" name="{$tmpcustom}" style="width:71%;height:100px;background-color:#fefef3;{$disabledbg}" $readonlytext>{$thevalue["extfieldcustom$tmpid"]}</textarea>
+                                                    <input type="button" class="btn btn-white btn-info pull-right" value="{$Think.lang.robot_debug_evalrun}" onclick="debugsubmit(this, 'tr_{$tmpcustom}', {$tmpcustom});">
+                                                    <p>
+                                                        <a href="javascript:;" onclick="document.getElementById('extfieldcustom{$tmpid}').value='{$Think.lang.robot_custom_code}';document.getElementById('extfieldcustom{$tmpid}').style.height='180px';"><i class="fa fa-code"></i>{$Think.lang.robot_debug_addevaltag}</a>
+                                                    </p>
+                                                </td>
+                                            </tr>
+
+                                            <!--$ptitle_ext     = $thepostvalue['ptitle'] == 'extfield'.$tmpid ? 'selected="selected"' : '';-->
+                                            <!--$pcontent_ext   = $thepostvalue['pcontent'] == 'extfield'.$tmpid ? 'selected="selected"' : '';-->
+                                            <!--$pauthor_ext    = $thepostvalue['pauthor'] == 'extfield'.$tmpid ? 'selected="selected"' : '';-->
+                                            <!--$pdateline_ext  = $thepostvalue['pdateline'] == 'extfield'.$tmpid ? 'selected="selected"' : '';-->
+                                            <!--$selectfieldstr_title    .= '<option value="extfield'.$tmpid.'" '.$ptitle_ext.'>'.{$Think.lang.robot_grid_title_extfield}.' '.$tmpid.'</option>';-->
+                                            <!--$selectfieldstr_content  .= '<option value="extfield'.$tmpid.'" '.$pcontent_ext.'>'.{$Think.lang.robot_grid_title_extfield}.' '.$tmpid.'</option>';-->
+                                            <!--$selectfieldstr_author   .= '<option value="extfield'.$tmpid.'" '.$pauthor_ext.'>'.{$Think.lang.robot_grid_title_extfield}.' '.$tmpid.'</option>';-->
+                                            <!--$selectfieldstr_dateline .= '<option value="extfield'.$tmpid.'" '.$pdateline_ext.'>'.{$Think.lang.robot_grid_title_extfield}.' '.$tmpid.'</option>';-->
+
+                                            {/for}
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tabbable" id="post-box" style="display:none;">
+                                <ul id="" class="nav nav-tabs padding-12 tab-color-blue background-blue shadowa">
+                                    <li class="active">
+                                        <a href="#tb_31" data-toggle="tab" aria-expanded="false">{$Think.lang.robot_data_post}</a>
+                                    </li>
+                                    <!--<a href="$s_url/doc" target="_blank" class="pull-right inline" style="margin:3px 10px 0 0;">-->
+                                        <!--<button type="button"  class="btn btn-white btn-warning btn-sm" style="padding:2px 6px;">-->
+                                            <!--<i class="ace-icon fa fa-book icon-only"></i> 下载发布插件-->
+                                        <!--</button>-->
+                                    <!--</a>-->
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="tb_31" class="tab-pane fade active in">
+                                        <p class="tabhelp"><i class="ace-icon fa fa-bullhorn"></i> {$Think.lang.robot_help_tab31}</p>
+                                        <table cellspacing="0" cellpadding="0" width="100%"  class="table no-border">
+                                            <tr>
+                                                <th class="width-25">{$Think.lang.robot_needpost}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_needpost_tips}"></i></th>
+                                                <td>
+                                                    <label><input class="ace" name="needpost" type="radio" value="0" {$thevalue[needpost] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_needpost_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="needpost" type="radio" value="1" {$thevalue[needpost] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_needpost_1}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="width-25">{$Think.lang.robot_ptype}</th>
+                                                <td>
+                                                    <label style="display:none;"><input class="ace" name="ptype" type="radio" value="0" {$thevalue[ptype] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="1" {$thevalue[ptype] ==1?checked:''}/><span class="lbl">&nbsp;{$Think.lang.robot_ptype_1}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="2" {$thevalue[ptype] ==2?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_2}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="3" {$thevalue[ptype] ==3?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_3}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="4" {$thevalue[ptype] ==4?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_4}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="5" {$thevalue[ptype] ==5?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_5}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="6" {$thevalue[ptype] ==6?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_6}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="7" {$thevalue[ptype] ==7?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_7}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_phost} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_phost_tips}"></i></th>
+                                                <td><input id="phost" name="phost" type="text" placeholder="{$Think.lang.robot_phost_phd}" size="60" maxlength="255" value="{$thepostvalue[phost]}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_ptoken}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_ptoken_tips}"></i></th>
+                                                <td><input id="ptoken" name="ptoken" type="text" placeholder="{$Think.lang.robot_ptoken_phd}" size="60" maxlength="32" value="{$thepostvalue[ptoken]}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_pfid} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_pfid_tips}"></i></th>
+                                                <td><select id="pfid" name="pfid" class="form-control inline" style="width:275px;">$thepostvalue[pfidoption]</select>
+                                                    <input id="pfidoption" name="pfidoption" type="hidden" value='$thepostvalue[pfidoption_old]' />
+                                                    &nbsp;&nbsp; <button id="loadingbtn" style="width:154px;" data-loading-text="loading ..." type="button" class="btn btn-white btn-info">验证并加载分类</button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_ptitle}</th>
+                                                <td>
+                                                    <select name="ptitle" class="form-control" style="width:275px;">
+                                                        <option value="0">请选择关联字段</option>
+                                                        <option value="subject">标题(核心字段)</option>
+                                                        <option value="message">内容(核心字段)</option>
+                                                        {for start='1' end='49' }
+                                                        <option value="extfield{$i}">扩展字段 {$i}</option>
+                                                        {/for}
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_pcontent}</th>
+                                                <td>
+                                                    <select name="pcontent" class="form-control" style="width:275px;">
+                                                        <option value="0">请选择关联字段</option>
+                                                        <option value="subject">标题(核心字段)</option>
+                                                        <option value="message">内容(核心字段)</option>
+                                                        {for start='1' end='49' }
+                                                        <option value="extfield{$i}">扩展字段 {$i}</option>
+                                                        {/for}
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_pauthor}</th>
+                                                <td>
+                                                    <select name="pauthor" class="form-control" style="width:275px;">
+                                                        <option value="0">请选择关联字段</option>
+                                                        <option value="subject">标题(核心字段)</option>
+                                                        <option value="message">内容(核心字段)</option>
+                                                        {for start='1' end='49' }
+                                                        <option value="extfield{$i}">扩展字段 {$i}</option>
+                                                        {/for}
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_pdateline}</th>
+                                                <td>
+                                                    <select name="pdateline" class="form-control" style="width:275px;">
+                                                        <option value="0">请选择关联字段</option>
+                                                        <option value="subject">标题(核心字段)</option>
+                                                        <option value="message">内容(核心字段)</option>
+                                                        {for start='1' end='49' }
+                                                        <option value="extfield{$i}">扩展字段 {$i}</option>
+                                                        {/for}
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="width-25">{$Think.lang.robot_pneedcheck} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_pneedcheck_tips}"></i></th>
+                                                <td><label><input class="ace" name="pneedcheck" type="radio" value="0" {$thevalue[pneedcheck] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_pneedcheck_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="pneedcheck" type="radio" value="1" {$thevalue[pneedcheck] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_pneedcheck_1}&nbsp;&nbsp;</span> </label></td>
+                                            </tr>
+
+                                        </table>
+
+                                    </div>
+                                    <div id="tb_32" class="tab-pane fade" style="display:none;">
+                                    </div>
+                                    <div id="tb_33" class="tab-pane fade" style="display:none;">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="tabbable" id="setting-box" style="display:none;">
+                                <ul id="" class="nav nav-tabs padding-12 tab-color-blue background-blue shadowa">
+                                    <li class="active">
+                                        <a href="#tb_41" data-toggle="tab" aria-expanded="false">{$Think.lang.robot_other_setting}</a>
+                                    </li>
+                                    <!--<a href="$s_url/midycp.php?action=profile&op=robot" target="_blank" class="pull-right inline" style="margin:3px 10px 0 0;">-->
+                                        <!--<button type="button"  class="btn btn-white btn-warning btn-sm" style="padding:2px 6px;">-->
+                                            <!--<i class="ace-icon fa fa-arrow-circle-up icon-only"></i> 升级引擎版本-->
+                                        <!--</button>-->
+                                    <!--</a>-->
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="tb_41" class="tab-pane fade active in">
+                                        <p class="tabhelp"><i class="ace-icon fa fa-bullhorn"></i> {$Think.lang.robot_help_tab5}</p>
+                                        <table cellspacing="0" cellpadding="0" width="100%"  class="table no-border">
+
+                                            <tr>
+                                                <th>{$Think.lang.robot_dsnodeai}</th>
+                                                <td>
+                                                    <label><input class="ace" name="dsnodeai" type="radio" value="0" {$thevalue[dsnodeai] == 0 ?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_dsnodeai_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="dsnodeai" type="radio" value="1" {$thevalue[dsnodeai] == 1 ?checked:''}  /><span class="lbl">&nbsp;{$Think.lang.robot_dsnodeai_1}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_pernum}</th>
+                                                <td>
+                                                    <input name="pernum" type="text" id="pernum-spinner" size="30" {if condition="$thevalue[pernum] =='' " }  value="2" {else /} value="{$thevalue[pernum]}"{/if}/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_intervals}</th>
+                                                <td>
+                                                    <input name="intervals" type="text" id="intervals-spinner" size="30" {if condition="$thevalue[intervals] =='' " }  value="1000" {else /} value="{$thevalue[intervals]}"{/if}/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_allnum}</th>
+                                                <td>
+                                                    <input name="allnum" type="text" id="allnum-spinner" size="30" {if condition="$thevalue[allnum] =='' " }  value="1" {else /} value="{$thevalue[allnum]}"{/if}/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_sourcefrequency} </th>
+                                                <td><input name="sourcefrequency" type="text" id="sourcefrequency-spinner"  size="30" value="{$thevalue[sourcefrequency]}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_savepic}</th>
+                                                <td>
+                                                    <label><input class="ace" name="savepic" type="radio" value="0" {$thevalue[savepic] == 0 ?checked:''} disabled /><span class="lbl">&nbsp;{$Think.lang.robot_savepic_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="savepic" type="radio" value="1" {$thevalue[savepic] == 1 ?checked:''} disabled/><span class="lbl">&nbsp;{$Think.lang.robot_savepic_1}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                            <tr style="display:none;">
+                                                <th>{$Think.lang.robot_saveflash}</th>
+                                                <td>
+                                                    <label><input class="ace" name="saveflash" type="radio" value="0" $saveflasharr[0] $theuser_vsavefile_disable/><span class="lbl">&nbsp;{$Think.lang.robot_saveflash_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="saveflash" type="radio" value="1" $saveflasharr[1] $theuser_vsavefile_disable/><span class="lbl">&nbsp;{$Think.lang.robot_saveflash_1}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_picurllinkpre}</th>
+                                                <td><input name="picurllinkpre" type="text" placeholder="{$Think.lang.robot_debug_auto_picurllinkpre}" id="picurllinkpre" size="60" value="{$thevalue[picurllinkpre]}" $theuser_vsavefile_disable/>
+                                                    <p style="display:none;"><a href="javascript:;" onclick="document.getElementById('picurllinkpre').value='';">{$Think.lang.robot_debug_auto_recognition}</a> {$Think.lang.robot_debug_auto_picurllinkpre}</p></td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_requesttype}</th>
+                                                <td>
+                                                    <label><input class="ace" name="requesttype" type="radio" value="0" {$thevalue[requesttype] == 0 ?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_requesttype_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="requesttype" type="radio" value="2" {$thevalue[requesttype] == 2 ?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_requesttype_2}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="requesttype" type="radio" value="1" {$thevalue[requesttype] == 1 ?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_requesttype_1}&nbsp;&nbsp;</span> </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_sendcookie}</th>
+                                                <td><input name="sendcookie" type="text" id="sendcookie" placeholder="{$Think.lang.robot_debug_auto_picurllinkpre}" size="60" value="{$thevalue[sendcookie]}" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_senduseragent}</th>
+                                                <td><input name="senduseragent" type="text" id="senduseragent" placeholder="{$Think.lang.robot_debug_auto_picurllinkpre}" size="60" value="{$thevalue[senduseragent]}" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_sendreferer}</th>
+                                                <td><input name="sendreferer" type="text" id="sendreferer" placeholder="{$Think.lang.robot_debug_auto_picurllinkpre}" size="60" value="{$thevalue[sendreferer]}" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>{$Think.lang.robot_sendcontenttype}</th>
+                                                <td><input name="sendcontenttype" type="text" id="sendcontenttype" placeholder="{$Think.lang.robot_debug_auto_picurllinkpre}" size="60" value="{$thevalue[sendcontenttype]}" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-6"></div>
+                            <div class="col-xs-12 align-center">
+                                <button data-loading-text="提交中..." class="btn btn-info $btn_save_disabled" style="min-width:200px;" type="submit" id="thevaluesubmit" name="thevaluesubmit"><i class="ace-icon fa fa-check bigger-110"></i> {$Think.lang.common_submit_release} </button>
+                            </div>
+                            <div class="col-xs-12 align-center" style="margin-top:5px;">
+                                <input type="checkbox" name="accede" id="accede" value="1" checked>
+                                <label for="accede" style="color:grey;"> 我已阅读并接受<a href="{:url('robot/policy')}" target="_blank">《私有云服务条款》</a></label>
+                            </div>
+                            <input id="valuesubmit" name="valuesubmit" type="hidden" value="yes" />
+                            <input id="robotid" name="robotid" type="hidden"  value="{$thevalue[robotid]}" />
+                            <input id="debugurl" name="debugurl" type="hidden"  />
+                            <input id="debugprocess" name="debugprocess" type="hidden" value="" />
+                        </form>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+
+
+
+
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='__ADMIN__/js/jquery.js'>"+"<"+"/script>");
+</script>
+<script type="text/javascript">
+    jQuery(function($) {
+        $('[data-rel=tooltip]').tooltip();
+        $('#entry-ctrl').click(function() {
+            $("#entry-box").show();
+            $("#field-box").hide();
+            $("#post-box").hide();
+            $("#setting-box").hide();
+        });
+        $('#field-ctrl').click(function() {
+            $("#entry-box").hide();
+            $("#field-box").show();
+            $("#post-box").hide();
+            $("#setting-box").hide();
+        });
+        $('#post-ctrl').click(function() {
+            $("#entry-box").hide();
+            $("#field-box").hide();
+            $("#post-box").show();
+            $("#setting-box").hide();
+        });
+        $('#setting-ctrl').click(function() {
+            $("#entry-box").hide();
+            $("#field-box").hide();
+            $("#post-box").hide();
+            $("#setting-box").show();
+        });
+
+        $('#helptip-ctrl').click(function() {
+            $("#helptip").slideToggle();
+        });
+        $('#usesecondlist-ctrl').click(function() {
+            $('#usesecondlist-ctrl').fadeOut();
+            $('#li_tb_12').fadeIn(1000);
+        });
+        $('#tab20-ctrl').click(function() {
+            $("#tr_subjecturllinkinclude0,#tr_subjecturllinkcancel0,#tr_subjecturllinkfilter0,#tr_subjecturllinkpre0,#tr_subjecturllinkpf0,#tr_subjecturllinkallcustom0,#tr_reverseorder0").fadeIn();
+            $('#tab20-ctrl').hide();
+        });
+        $('#tab2-ctrl').click(function() {
+            $("#tr_subjecturllinkinclude,#tr_subjecturllinkcancel,#tr_subjecturllinkfilter,#tr_subjecturllinkpre,#tr_subjecturllinkpf,#tr_subjecturllinkallcustom,#tr_reverseorder,#tr_subjecturllinkcustom,#tr_subjectallowrepeat").fadeIn();
+            $('#tab2-ctrl').hide();
+        });
+        $('#tab31-ctrl').click(function() {
+            $("#tr_subjectreplace_title,#tr_subjectkey,#tr_subjectkeycancel,#tr_subjectcontentcustom,#tr_hr,#tr_messagerule,#tr_messagefilter").fadeIn();
+            $('#tab31-ctrl').hide();
+        });
+        $('#tab32-ctrl').click(function() {
+            $("#tr_messagereplace_title,#tr_messagekey,#tr_messagekeycancel,#tr_messageformat,#tr_messagecontentcustom,#tr_messagecheckhtml").fadeIn();
+            $('#tab32-ctrl').hide();
+        });
+        $("#sourceopenlbl0").click(function () {
+            $("#sourcepayment-box").hide();
+        });
+        $("#sourceopenlbl1").click(function () {
+            //$("#sourcepayment-box").show();
+            $("#sourcepayment-box").show().css("display","inline-block");
+        });
+        $('#sourcepayment-spinner').ace_spinner({value:0, min:0, max:9999999, step:100, btn_up_class:'btn-info btn-mini', btn_down_class:'btn-info btn-mini'})
+            .closest('.ace-spinner')
+            .on('changed.fu.spinbox', function(){
+                //alert($('#sourcepayment-spinner').val())
+            });
+//        $('#sourcepayment-spinner').ace_spinner('$sourcepaymentdisabled_str');
+
+        $('#sourcefrequency-spinner').ace_spinner({value:99999, min:{$theuser['_vfrequency']}, max:99999, step:1, btn_up_class:'btn-info btn-mini', btn_down_class:'btn-info btn-mini'});
+       $('#sourcefrequency-spinner').ace_spinner('disable');
+
+
+
+        $('#pernum-spinner').ace_spinner({value:0, min:1, max:{$theuser['_vpernum']}, step:1, btn_up_class:'btn-info btn-mini', btn_down_class:'btn-info btn-mini'});
+        $('#intervals-spinner').ace_spinner({value:0, min:{$theuser['_vintervals']}, max:30000, step:500, btn_up_class:'btn-info btn-mini', btn_down_class:'btn-info btn-mini'});
+
+        $('#allnum-spinner').ace_spinner({value:0, min:1, max:{$theuser[_vallnum]}, step:1, btn_up_class:'btn-info btn-mini', btn_down_class:'btn-info btn-mini'});
+
+
+        //发布数据
+        $("#loadingbtn").on(ace.click_event, function() {
+            if ($("#phost").val() == '') {
+                $("#phost").focus();
+                Msg('请先配置域名及TOKEN');
+                return false;
+            }
+            if ($("#ptoken").val() == '') {
+                $("#ptoken").focus();
+                Msg('请先配置域名及TOKEN');
+                return false;
+            }
+            var tbtn = $(this);
+            tbtn.button('loading');
+            setTimeout(function () {
+                tbtn.button('reset')
+            }, 3000);
+            var purl = '$s_url/batch.common.php?action=loadingpostcat';
+            var pdat = "ptype=" + $('input:radio[name=ptype]:checked').val() + '&phost=' + $('#phost').val() + '&ptoken=' + $('#ptoken').val() + '&robotid=' + $('#robotid').val();
+            $.post(purl,pdat,function(res){
+                //res = {"status":1,"msg":"","data":[{"id":1,"name":"\u9ed8\u8ba4"},{"id":2,"name":"\u6d4b\u8bd5"}]}
+                //alert(JSON.stringify(res));
+                if (res) {
+                    if (res.status == 0) {
+                        Msg('加载失败');
+                        return false;
+                    }
+                    var str = '';
+                    $.each(res.data,function(k,v){
+                        str += '<option value="'+v.id+'">'+v.name+'</option>';
+                    });
+                    $('#pfid').html(str);
+                    $('#pfidoption').val(JSON.stringify(res));
+                }else{
+                    Msg('加载失败');
+                }
+            },'json');
+        });
+
+    });
+
+
+    function GetRTime(){
+        var EndTime= new Date('$thereqlogvalue[flowdeadline]');
+        var NowTime = new Date();
+        var t =EndTime.getTime() - NowTime.getTime();
+        var d=Math.floor(t/1000/60/60/24);
+        var h=Math.floor(t/1000/60/60%24);
+        var m=Math.floor(t/1000/60%60);
+        var s=Math.floor(t/1000%60);
+        if(document.getElementById("t_d") && t>0){
+            document.getElementById("t_d").innerHTML = d + "天";
+            document.getElementById("t_h").innerHTML = h + "时";
+            document.getElementById("t_m").innerHTML = m + "分";
+            document.getElementById("t_s").innerHTML = s + "秒";
+        }
+    }
+    setInterval(GetRTime,1000);
+
+    var objdebugframe;
+
+    function debugsubmit(obj, nodename, process) {
+        var debugurl = '';
+        var allowurlnull = false;
+        if(objdebugframe == null) {
+            objdebugframe = document.getElementById('tr_debugframe').cloneNode(true);
+        }
+        var objnode = document.getElementById(nodename);
+        if(document.getElementById('tr_debugframe') != null) {
+            debugurl = document.getElementById('f_debugurl').value;
+            if(document.getElementById('f_allowurlnull').checked) {
+                debugurl = '';
+                allowurlnull = document.getElementById('f_allowurlnull').checked;
+            }
+        }
+        closedebugframe();
+        objnode.parentNode.insertBefore(objdebugframe, objnode.nextSibling);
+        editdoc = document.getElementById("debugframe").contentWindow.document;
+        editdoc.open('text/html', 'replace');
+        editdoc.write('loading...');
+        editdoc.close();
+        document.getElementById('f_debugurl').value = debugurl;
+        document.getElementById('f_allowurlnull').checked = allowurlnull;
+        objsubmit = document.getElementById('valuesubmit');
+        objsubmit.name = 'debug';
+        obj.form.target = 'debugframe';
+        obj.form.action = 'midycp.php?action=robottest';
+        document.getElementById('debugurl').value = debugurl;
+        document.getElementById('debugprocess').value = process;
+        obj.form.submit();
+        objsubmit.name = 'valuesubmit';
+        obj.form.target = '';
+        obj.form.action = 'midycp.php?action=robots';
+        document.getElementById('debugurl').value = '';
+        document.getElementById('debugprocess').value = '';
+    }
+    function closedebugframe() {
+        var objnode = document.getElementById('tr_debugframe');
+        if(objnode != null) {
+            objnode.parentNode.removeChild(objnode);
+        }
+    }
+
+    var r = 0;
+    function addreplace(str, replace, replaceto) {
+        objtd = document.getElementById('td_'+str+'_title');
+        if(objtd.lastChild != null) {
+            pn = objtd.lastChild
+            pn.appendChild(document.createTextNode(' '));
+            oBody = document.createElement('input');
+            oBody.type = 'button';
+            oBody.value = '{$Think.lang.robot_delete}';
+            oBody.className = 'btn btn-white btn-warning btn-xs';
+            if(window.document.all != null) {
+                oBody.attachEvent('onclick', new Function('delreplace(\''+pn.id+'\');'));
+            } else {
+                oBody.addEventListener('click', new Function('delreplace(\''+pn.id+'\');'), false);
+            }
+            pn.appendChild(oBody);
+            var dnode1 = document.createElement('div');
+            dnode1.className = 'space-8';
+            pn.appendChild(dnode1);
+        }
+        pn = document.createElement('div');
+        pn.id = 'replace_'+(r+1);
+
+        //pn.appendChild(document.createElement('br'));
+        oBody = document.createElement("input");
+        oBody.id = str+'[]';
+        oBody.name = str+'[]';
+        oBody.type = 'text';
+        oBody.style.width = '71%';
+        oBody.placeholder = '{$Think.lang.robot_subjectreplace}';
+        oBody.value = replace;
+        pn.appendChild(oBody);
+        var dnode2 = document.createElement('div');
+        dnode2.className = 'space-2';
+        pn.appendChild(dnode2);
+        oBody = document.createElement("input");
+        oBody.id = str+'to[]';
+        oBody.name = str+'to[]';
+        oBody.type = 'text';
+        oBody.style.width = '71%';
+        oBody.placeholder = '{$Think.lang.robot_subjectreplaceto}';
+        oBody.value = replaceto;
+        pn.appendChild(oBody);
+        //pn.appendChild(document.createElement('br'));
+        objtd.appendChild(pn);
+        r++
+    }
+    function delreplace(str) {
+        pn = document.createElement("div");
+        pn.id = str;
+        pn.style.display = 'none';
+        document.getElementById(str).parentNode.replaceChild(pn, document.getElementById(str));
+    }
+    function showextfield(obj,objid){
+        if(objdebugframe == null) {
+            objdebugframe = document.getElementById('tr_debugframe').cloneNode(true);
+        }
+        closedebugframe();
+        for(var i=1; i<=48; i++){
+            if(objid == "" + i){
+                document.getElementById("inputext" + i).style.backgroundColor = "#DDDDDD";
+                document.getElementById("tr_extfieldrule" + i).style.display="";//not block
+                document.getElementById("tr_extfieldalias" + i).style.display="";
+                document.getElementById("tr_extfieldfilter" + i).style.display="";
+                document.getElementById("tr_extfieldcustom" + i).style.display="";
+            }else{
+                document.getElementById("inputext" + i).style.backgroundColor = "#FFFFFF";
+                document.getElementById("tr_extfieldrule" + i).style.display="none";
+                document.getElementById("tr_extfieldalias" + i).style.display="none";
+                document.getElementById("tr_extfieldfilter" + i).style.display="none";
+                document.getElementById("tr_extfieldcustom" + i).style.display="none";
+            }
+        }
+    }
+</script>
+<!-- <![endif]-->
+
+<!--[if IE]>

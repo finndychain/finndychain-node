@@ -1,0 +1,183 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<style>
+
+
+</style>
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">系统设置</a></li>
+                    <li class="active">后台菜单设置</li>
+                </ul>
+                <div class="nav-search" id="nav-search">
+                    <form class="form-search">
+								<span class="input-icon">
+									<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+									<i class="ace-icon fa fa-search nav-search-icon"></i>
+								</span>
+                    </form>
+                </div><!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                后台菜单设置
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    修改和设置后台菜单
+                                </small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="space-12"></div>
+                        <div class="tab-pane active">
+                            <form method="post" name="thevalueform"  class="form-horizontal" id="theform" action="http://www.finndy.test/midycp.php?action=settings" enctype="multipart/form-data">
+                                <div class="space-12"></div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 label_control no-padding-right" > 标题 </label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  name="menuname"  class="col-xs-10 col-sm-5">
+                                        <span class="help-inline col-xs-12 col-sm-7 pt">
+                                            <span class="middle">用于后台显示的配置标题</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 label_control no-padding-right" > 所属模块 </label>
+                                    <div class="col-sm-10">
+                                        <select name="module" id="" class="col-xs-10 col-sm-5">
+                                            <option value="0">后台模块</option>
+                                            <option value="1">前台模块</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 label_control no-padding-right" > 上级菜单 </label>
+                                    <div class="col-sm-10">
+                                        <select name="parentmenu" id="" class="col-xs-10 col-sm-5">
+                                            <option value="0">顶级菜单</option>
+                                            <option value="1">数据管理</option>
+                                            <option value="1">用户管理</option>
+                                            <option value="1">系统设置</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 label_control no-padding-right" > 字体图标 </label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  name="font" class="col-xs-10 col-sm-5">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 label_control no-padding-right" > 链接 </label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  name="sec_title" class="col-xs-10 col-sm-5">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 label_control no-padding-right" > 后台菜单 </label>
+                                    <div class="col-sm-10 pt">
+                                        <label >
+                                            <input name="show" type="radio" checked class="ace">
+                                            <span class="lbl">是</span>
+                                        </label>
+                                        <label style="margin-left: 50px;">
+                                            <input name="show" type="radio" class="ace">
+                                            <span class="lbl">否</span>
+                                        </label>
+                                        <div  class="col-xs-12 " style="margin-left: -12px;">
+                                            是否标记为后台菜单
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 label_control no-padding-right" > Pjax加载 </label>
+                                    <div class="col-sm-10 pt">
+                                        <label >
+                                            <input name="pjax" type="radio" checked class="ace">
+                                            <span class="lbl">是</span>
+                                        </label>
+                                        <label style="margin-left: 50px;">
+                                            <input name="pjax" type="radio" class="ace">
+                                            <span class="lbl">否 </span>
+                                        </label>
+                                        <div  class="col-xs-12 " style="margin-left: -12px;">
+                                            标记后台菜单后,是否Pjax方式打开该页面
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 label_control no-padding-right" > 排序 </label>
+                                    <div class="col-sm-10">
+                                        <input type="text"  name="sort" class="col-xs-10 col-sm-5">
+                                    </div>
+                                </div>
+                                <div class="space-12"></div>
+                                <div class="row ">
+                                    <div class="col-xs-12 align-center">
+                                        <input type="submit" name="thevaluesubmit" value="提交保存" class="btn btn-info input-small" onclick="this.form.action+='&subtype=comments';">
+                                        <input type="reset" class="btn btn-light input-small" name="thevaluereset" value="重置">
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+</div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<script>
+
+    function validate (theform){
+        var addusername = $('#addusername').val();
+        var adduserpwd = $('#adduserpwd').val();
+        if(addusername == '' ){
+            alert('用户名不能为空');
+            return false;
+        }
+        if(adduserpwd == '' ){
+            alert('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+    function edit_validate (theform){
+        var editusername = $('#editusername').val();
+        var editpwd = $('#editpwd').val();
+
+        if(editusername == '' ){
+            alert('用户名不能为空');
+            return false;
+        }
+        if(editpwd == '' ){
+            alert('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+
+
+</script>

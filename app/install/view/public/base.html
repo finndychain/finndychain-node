@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{$product_name}系统安装</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link type="text/css" rel="stylesheet" href="__STATIC__/assets/css/bootstrap.min.css">
+	<link type="text/css" rel="stylesheet" href="__STATIC__/assets/css/font-awesome.min.css">
+	<link type="text/css" rel="stylesheet" href="__STATIC__/assets/css/ace.min.css"/>
+	<link type="text/css" rel="stylesheet" href="__STATIC__/assets/css/all-skins.min.css"/>
+	<link type="text/css" rel="stylesheet" href="__STATIC__/assets/css/base.css"/>
+	<script type="text/javascript" src="__STATIC__/assets/js/jquery-1.10.2.min.js"></script>
+</head>
+
+<body style="background:  rgb(230, 234, 234)">
+<div class="container">
+	<div class="margin" style="margin: 10px 90px 80px;">
+		<div class="text-center header-title margin-top">
+			<h1>{$product_name}{if session('update')}升级{else/}安装{/if}</h1>
+		</div>
+		<div class="progress-tool  margin-top">
+			<span class="label label-xlg label-{$status.index}  arrowed-right" style="width: 18%;">系统安装</span>
+			<span class="label label-xlg label-{$status.check}  arrowed-in arrowed-right" style="width: 18%;">环境检测</span>
+			<span class="label label-xlg label-{$status.config} arrowed-in arrowed-right" style="width: 18%;">系统配置</span>
+			<span class="label label-xlg label-{$status.sql}  arrowed-in arrowed-right" style="width: 18%;">数据库安装</span>
+			<span class="label label-xlg label-{$status.complete} arrowed-in " style="width: 18%;">安装完成</span>
+		</div>
+		<div class="article margin-top">
+			{block name="main"}{/block}
+		</div>
+	</div>
+</div>
+</body>
+</html>

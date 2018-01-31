@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="$_SC[charset]" />
+    <title>{$title}</title>
+    <meta name="description" content="$_SCONFIG[seodescription]" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <script>var siteUrl='$_SC[siteurl]';</script>
+    <script language="javascript" type="text/javascript" src="__ADMIN__/js/common.js"></script>
+    <script language="javascript" type="text/javascript" src="__ADMIN__/js/edit.js"></script>
+    <script language="javascript" type="text/javascript" src="__ADMIN__/js/admin.js"></script>
+    <script src="__ADMIN__/js/jquery-1.9.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="__ADMIN__/js/ajax.js"></script>
+    <script language="javascript" type="text/javascript" src="__ADMIN__/js/selectdate.js"></script>
+    <script language="javascript" type="text/javascript" src="__ADMIN__/js/infomanage.js"></script>
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="__ADMIN__/css/bootstrap.css" />
+    <link rel="stylesheet" href="__ADMIN__/css/jquery-ui.css" />
+    <link rel="stylesheet" href="__ADMIN__/css/jqgrid.css" />
+    <link rel="stylesheet" href="__ADMIN__/css/ui.jqgrid.css" />
+    <link rel="stylesheet" href="__ADMIN__/css/jquery-ui.css" />
+    <link rel="stylesheet" href="__ADMIN__/css/font-awesome.css" />
+    <link rel="stylesheet" href="__ADMIN__/css/validform.css" />
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='__ADMIN__/js/jquery.js'>"+"<"+"/script>");
+    </script>
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='__ADMIN__/js/jquery1x.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+    <!-- ace settings handler -->
+    <script src="__ADMIN__/js/ace-extra.js"></script>
+    <script src="__ADMIN__/js/infoajax.js"></script>
+    <script type="text/javascript">
+        if('ontouchstart' in document.documentElement) document.write("<script src='__ADMIN__/js/jquery.mobile.custom.js'>"+"<"+"/script>");
+    </script>
+    <script src="__ADMIN__/js/bootstrap.js"></script>
+    <script src="__ADMIN__/js/bootstrap-wysiwyg.js"></script>
+    <script src="__ADMIN__/js/jquery.jqGrid.src.js"></script>
+    <script src="__ADMIN__/js/grid.locale-en.js"></script>
+    <script src="__ADMIN__/js/jquery-ui.custom.js"></script>
+    <script src="__ADMIN__/js/jquery.ui.touch-punch.js"></script>
+    <script src="__ADMIN__/js/jquery.ui.touch-punch.js"></script>
+
+    <script src="__ADMIN__/js/Validform_v5.3.2.js"></script>
+    <!--[if lte IE 8]>
+    <script src="__ADMIN__/js/excanvas.js"></script>
+    <![endif]-->
+    <script src="__ADMIN__/js/fuelux.spinner.js"></script>
+    <script src="__ADMIN__/js/bootbox.js"></script>
+    <script src="__ADMIN__/js/jquery-ui.custom.js"></script>
+    <script src="__ADMIN__/js/jquery.ui.touch-punch.js"></script>
+    <script src="__ADMIN__/js/jquery.easypiechart.js"></script>
+    <script src="__ADMIN__/js/jquery.sparkline.js"></script>
+    <script src="__ADMIN__/js/jquery.flot.js"></script>
+    <script src="__ADMIN__/js/jquery.flot.pie.js"></script>
+    <script src="__ADMIN__/js/jquery.flot.resize.js"></script>
+
+    <script src="__ADMIN__/js/jquery.flot.js"></script>
+    <script src="__ADMIN__/js/jquery.flot.pie.js"></script>
+    <script src="__ADMIN__/js/jquery.flot.resize.js"></script>
+    <!-- ace scripts -->
+    <script src="__ADMIN__/js/elements.scroller.js"></script>
+    <script src="__ADMIN__/js/elements.colorpicker.js"></script>
+    <script src="__ADMIN__/js/elements.fileinput.js"></script>
+    <script src="__ADMIN__/js/elements.typeahead.js"></script>
+    <script src="__ADMIN__/js/elements.wysiwyg.js"></script>
+    <script src="__ADMIN__/js/elements.spinner.js"></script>
+    <script src="__ADMIN__/js/elements.treeview.js"></script>
+    <script src="__ADMIN__/js/elements.wizard.js"></script>
+    <script src="__ADMIN__/js/elements.aside.js"></script>
+    <script src="__ADMIN__/js/ace.js"></script>
+    <script src="__ADMIN__/js/ace.ajax-content.js"></script>
+    <script src="__ADMIN__/js/ace.touch-drag.js"></script>
+    <script src="__ADMIN__/js/ace.sidebar.js"></script>
+    <script src="__ADMIN__/js/ace.sidebar-scroll-1.js"></script>
+    <script src="__ADMIN__/js/ace.submenu-hover.js"></script>
+    <script src="__ADMIN__/js/ace.widget-box.js"></script>
+    <script src="__ADMIN__/js/ace.settings.js"></script>
+    <script src="__ADMIN__/js/ace.settings-rtl.js"></script>
+    <script src="__ADMIN__/js/ace.settings-skin.js"></script>
+    <script src="__ADMIN__/js/ace.widget-on-reload.js"></script>
+    <script src="__ADMIN__/js/ace.searchbox-autocomplete.js"></script>
+    <link rel="stylesheet" href="__ADMIN__/css/ace.onpage-help.css" />
+    <link rel="stylesheet" href="__ADMIN__/css/sunburst.css" />
+    <script type="text/javascript"> ace.vars['base'] = '..'; </script>
+    <script src="__ADMIN__/js/elements.onpage-help.js"></script>
+    <script src="__ADMIN__/js/ace.onpage-help.js"></script>
+
+
+    <link rel="stylesheet" href="__ADMIN__/css/edit.css" />
+    <!-- text fonts -->
+    <link rel="stylesheet" href="__ADMIN__/css/ace-fonts.css" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="__ADMIN__/css/ace.css" class="ace-main-stylesheet" id="main-ace-style" />
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="__ADMIN__/css/ace-part2.css" class="ace-main-stylesheet" />
+    <![endif]-->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="__ADMIN__/css/ace-ie.css" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="__ADMIN__/js/html5shiv.js"></script>
+    <script src="__ADMIN__/js/respond.js"></script>
+    <![endif]-->
+    <link href="__ADMIN__/css/customize.css" rel="stylesheet" />
+    <style>
+        .paddingr{
+            padding-left:249px !important;
+        }
+        .label_control{
+            text-align:center;
+            margin-bottom: 0;
+            padding-top: 10px;
+            font-weight: bold;
+
+        }
+        .pt{
+            padding-top: 10px;
+        }
+
+    </style>
+</head>
+<body class="no-skin">
+
+<!-- top -->
+<div id="navbar" class="navbar navbar-default">
+    <script type="text/javascript">
+        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+    </script>
+    <div class="navbar-container" id="navbar-container">
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    <img  width='50' src="__ADMIN__/image/logowhite.png" alt="">
+
+                    私有云
+                </small>
+            </a>
+        </div>
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                <li class="light-blue">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                        <!-- <img class="nav-user-photo" src="{UC_API}/avatar.php?uid=$_SGLOBAL[supe_uid]&rand=$_SGLOBAL[timestamp]" alt="" /> -->
+                        <span class="">欢迎您： {$Think.session.username}
+								</span>
+
+
+                    </a>
+
+                </li>
+
+                <li class="light-blue">
+                    <a href="{:url('Login/loginout')}">
+                        退出
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div><!-- top end -->

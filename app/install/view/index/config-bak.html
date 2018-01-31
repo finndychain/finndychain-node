@@ -1,0 +1,238 @@
+{extend name="public/base"/}
+{block name="main"}
+<h2 class="text-center">创建数据库</h2>
+<script type="text/javascript" src="__STATIC__/libs/layer/layer.js"></script>
+<form method="post" action="{:url('index/config')}" target="_self" id="form-1" class="layui-form">
+	<div class="create-database">
+		<h2>
+			数据库连接信息
+		</h2>
+		<table class="table-hover table ">
+			<input type="hidden" name="db[type]" value="mysql" class="layui-input"  lay-verify="db[type]">
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="db[hostname]" type="text" value="127.0.0.1" class="layui-input"  lay-verify="db[hostname]"  />
+				</td>
+				<td>
+					<span>
+						数据库服务器，数据库服务器IP，一般为127.0.0.1，使用localhost可能导致网站速度变慢
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="db[database]" type="text" value="finndy_cloud" autocomplete="on" class="layui-input"   lay-verify="db[database]"  />
+				</td>
+				<td>
+					<span>
+						数据库名
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="db[username]" type="text" value="root" required class="layui-input"  lay-verify="db[username]"   />
+				</td>
+				<td>
+					<span>
+						数据库用户名
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="db[password]" type="password" value="" class="layui-input"  lay-verify="db[password]"    />
+				</td>
+				<td>
+					<span>
+						数据库密码
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="db[hostport]" type="text" value="3306" lay-filter="encrypt" class="layui-input"  lay-verify="db[hostport]" />
+				</td>
+				<td>
+					<span>
+						数据库端口，数据库服务连接端口，一般为3306
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="db[prefix]" type="text" value="{:config('original_table_prefix')}" class="layui-input"  lay-verify="db[prefix]" />
+				</td>
+				<td>
+					<span>
+						数据表前缀，同一个数据库运行多个系统时请修改为不同的前缀
+					</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="create-database">
+		<h2>
+			网站配置
+		</h2>
+		<table class="table-hover table">
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="webconfig[web_site_title]" type="text" value="云采集开源框架" />
+				</td>
+				<td>
+					<span>
+						网站名称
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="webconfig[index_url]" type="text" value="{$Request.domain}" />
+				</td>
+				<td>
+					<span>
+						网站域名
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="webconfig[web_site_description]" type="text" value="云采集开源框架 ThinkPHP" />
+				</td>
+				<td>
+					<span>
+						关键词
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="webconfig[web_site_keyword]" type="text" value="Finndy cloud是基于ThinkPHP5开发的一套轻量级云采集框架，追求高效，简单，灵活。" />
+				</td>
+				<td>
+					<span>
+						描述
+					</span>
+				</td>
+			</tr>
+		</table>
+		</div>
+
+	<div class="create-database">
+		<h2>
+			创始人帐号信息
+		</h2>
+		<table class="table-hover table">
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="admin[admin_username]" type="text" value="admin" /> 
+				</td>
+				<td>
+					<span>
+						用户名(
+						<span class="text-danger">
+							英文+数字，严禁中文与特殊字符
+						</span>
+						)
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="admin[admin_password]" type="text" value="123456" />
+				</td>
+				<td>
+					<span>
+						密码
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="admin[admin_repassword]" type="text" value="123456" />
+				</td>
+				<td>
+					<span>
+						确认密码
+					</span>
+				</td>
+			</tr>
+			<tr>
+				<td width="360">
+					<input class="form-control input-sm" name="admin[admin_email]" type="text" value="admin@admin.com" />
+				</td>
+				<td>
+					<span>
+						邮箱，请填写正确的邮箱便于收取提醒邮件
+					</span>
+				</td>
+			</tr>
+		</table>
+	</div>
+</form>
+<div class="margin-top">
+	<div class="text-center">
+		<a class="btn btn-default" href="{:url('index/check')}">上一步</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<!--<button class="btn btn-primary" id="submit" onclick="$('form').submit();return false;" type="button">下一步</button>-->
+		<!--<button class="btn btn-primary" id="submit" lay-filter="demo2" type="button" >下一步</button>-->
+	</div>
+</div>
+<script type="text/javascript">
+   /* $(function(){
+        $("#submit").click(function(){
+            $('form').submit();return false;
+            var params = $("#form-1").serializeArray();
+            var values = {};
+            for( x in params ){
+                values[params[x].name] = params[x].value;
+            }
+            var data = JSON.stringify(values)
+            $.post("{:url('index/config')}",data,function(result){
+                if(result.code==1){
+                    //window.location.href=result.url
+                    layer.alert(result.msg, {icon: 1});
+                }else{
+                    layer.alert(result.msg, {icon: 2});
+                }
+            })
+        })
+    });*/
+</script>
+<script>
+    layui.use(['form','laydate'], function(){
+        var form = layui.form,
+            layer = layui.layer;
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }, fname: function(value){
+                if(value.length < 4){
+                    return '请输入至少4位的用户名';
+                }
+            }, contact: function(value){
+                if(value.length < 4){
+                    return '内容请输入至少4个字符';
+                }
+            }
+            ,phone: [/^1[3|4|5|7|8]\d{9}$/, '手机必须11位，只能是数字！']
+            ,email: [/^[a-z0-9._%-]+@([a-z0-9-]+\.)+[a-z]{2,4}$|^1[3|4|5|7|8]\d{9}$/, '邮箱格式不对']
+        });
+
+        //监听提交
+        form.on('submit(demo2)', function(data){
+            console.log(data);
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            return false;
+        });
+
+        form.render(); //更新全部
+    });
+</script>
+{/block}

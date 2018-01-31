@@ -1,0 +1,644 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <script type="text/javascript">
+                    try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+                </script>
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">数据管理</a></li>
+                    <li class="active">数据预览</li>
+                </ul>
+                <!-- #section:basics/content.searchbox -->
+                <!--<div class="nav-search" id="nav-search">-->
+                    <!--<form class="form-search">-->
+								<!--<span class="input-icon">-->
+									<!--<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />-->
+									<!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
+								<!--</span>-->
+                    <!--</form>-->
+                <!--</div>&lt;!&ndash; /.nav-search &ndash;&gt;-->
+                <!-- /section:basics/content.searchbox -->
+            </div>
+
+
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                数据预览
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    查看预览数据源
+                                </small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="widget-box">
+                            <div class="widget-header">
+                                <h5 class="widget-title" style="color: #2679b5; font-size: 16px;">&nbsp;{$thevaluearr.name}</h5>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main padding-16">
+
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <table class="table table-nobordered">
+                                                <tr>
+                                                    <td>数据量：</td>
+                                                    <td>采集 {$datacount} 条 <a id="cleardata-confirm" style="" href="javascript:;" data-rel="tooltip" data-original-title="{$Think.lang.robot_robot_op_cleardata}"><i class="ace-icon fa fa-trash-o bigger-110 red"></i></i></a> | 预估 {$thevaluearr.sourcedatanum|default=0} 条 </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="70">状&nbsp;&nbsp;&nbsp;&nbsp;态：</td>
+                                                    <td id="progress$processid">
+                                                        <div style="display:inline-block; vertical-align: middle;">
+                                                            <div class="progress pos-rel tooltip-info" data-percent="0%" data-rel="tooltip" data-original-title=" Starting ... " style="display:none;margin-bottom:0px;width:100px;">
+                                                                <div class="progress-bar" style="width:0%;"></div>
+                                                            </div>
+                                                        </div>
+                                                        {$thevaluearr.status_desc}
+                                                        &nbsp;<a class="btn btn-minier btn-warning btn-white" href='$robotlogurl'"><i class="fa fa-file-text-o"></i> 日志 </a></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="90">数据简介：</td>
+                                                    <td>{$thevaluearr.description}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="space-10"></div>
+                                            <div class="align-right">
+                                                <p>
+                                                <span class="grey" style="line-height:28px;">
+                                                     <button class="btn btn-mini btn-success tooltip-success runstyle $btndisabledrun " type="button" data-rel="tooltip" data-original-title="{$Think.lang.robot_robot_op_run}" data-robot="$theviewvalue[real_robotid]" data-run="$theviewvalue[runurl]" data-runstop="$theviewvalue[stopurl]" onclick="run(this);"><i class="ace-icon fa fa-play "></i></button>
+                                                    <button class="btn btn-mini btn-warning tooltip-warning $btndisabledrun " type="button" data-rel="tooltip" data-original-title="{$Think.lang.robot_robot_op_start}" onclick="window.location.href='$thetesturl&clearcache=1&robotid=$theviewvalue[real_robotid]'"><i class="ace-icon fa fa-bug bigger-110"></i></button>
+                                                    <button class="btn btn-mini btn-success tooltip-success $btndisabledcopy " type="button"  data-rel="tooltip" data-original-title="{$Think.lang.robot_robot_op_copy}" onclick="window.location.href='{:url("Robot/Copy",array("robotid"=>$thevaluearr.robotid))}'"><i class="ace-icon fa fa-copy "></i></button>
+                                                    <button class="btn btn-mini btn-warning tooltip-warning $btndisabledexport " type="button"  data-rel="tooltip" data-original-title="{$Think.lang.robot_robot_op_export}" onclick="window.location.href='{:url("Robot/export",array("robotid"=>$thevaluearr.robotid,'robotname'=>$thevaluearr.name))}'"><i class="ace-icon fa fa-save "></i></button>
+                                                    <button class="btn btn-mini btn-info tooltip-info $btndisablededitview " type="button" data-rel="tooltip" data-original-title="查看"  onclick="window.location.href='{:url("Robot/Edit",array("robotid"=>$thevaluearr.robotid))}'"><i class="ace-icon fa fa-pencil"></i></button>
+                                                </span>
+                                                </p>
+                                            </div>
+                                            <div class="space-10"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="row" style="position: relative;top:-5px">-->
+                    <!--<div class="col-xs-12">-->
+                        <!--<div class="widget-box">-->
+                            <!--<div class="widget-main row">-->
+                                <!--<div class="col-xs-2" style="width:95px;">数据简介：</div>-->
+                                <!--<div class="col-xs-10" style=" padding:0px;">-->
+                                    <!--$theviewvalue[description]-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-12">-->
+                                    <!--<br>   <span style="color:#DAA458">友情提示：&nbsp;&nbsp;&nbsp;如需定制该网站全量数据或其它分类数据，请联系官方客服或供应商</span></div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="hr-32"></div>
+                <div class="row">
+                    <div class="col-xs-12 grid-content">
+                        <div class="">
+                            <ul class="nav nav-tabs" id="myTab2">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#div-caiji" aria-expanded="$btn_type_caiji"><i class="ace-icon fa fa-globe "></i> 数据预览</a>
+                                </li>
+                                <a href="javascript:void(0);" onclick="apiCustomButtonClicked()" class="pull-right inline" style="margin:7px 10px 0 0;">
+                                    <button type="button"  class="btn btn-white btn-warning btn-sm" style="padding:2px 6px;">
+                                        <i class="ace-icon fa fa-share-alt icon-only"></i> API调用
+                                    </button>
+                                </a>
+                                <a href="javascript:void(0);" onclick="exportCustomButtonClicked()" class="pull-right inline" style="margin:7px 10px 0 0;">
+                                    <button type="button"  class="btn btn-white btn-warning btn-sm" style="padding:2px 6px;">
+                                        <i class="ace-icon fa fa-cloud-download icon-only"></i> 导出数据
+                                    </button>
+                                </a>
+                            </ul>
+                            <div class="">
+                                <div class="">
+                                    <div class="tab-content no-border no-padding">
+                                        <!-- GRID CONTENT BEGINS -->
+                                        <div id="div-caiji" class="tab-pane active">
+                                            <table id="grid-table"></table>
+                                            <div id="grid-pager"></div>
+
+                                            <script type="text/javascript">
+                                                var s__path_base = ".."; //in Ace demo this will be used for editurl parameter
+                                            </script>
+                                            <!-- GRID CONTENT ENDS -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<!-- basic scripts -->
+
+<!--[if !IE]> -->
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='__ADMIN__/js/jquery.js'>"+"<"+"/script>");
+</script>
+<!-- <![endif]-->
+
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+    jQuery(function($) {
+        $('[data-rel=tooltip]').tooltip();
+
+        var grid_selector = "#grid-table";
+        var pager_selector = "#grid-pager";
+
+        //resize to fit page size
+        $(window).on('resize.jqGrid', function () {
+            $(grid_selector).jqGrid( 'setGridWidth', $(".grid-content").width() );
+        })
+        //resize on sidebar collapse/expand
+        var parent_column = $(grid_selector).closest('[class*="col-"]');
+        $(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
+            if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+                //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+                setTimeout(function() {
+                    $(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
+                }, 0);
+            }
+        })
+
+        jQuery(grid_selector).jqGrid({
+            url: "{:url('Robot/getJsonp',array('robotid'=>$thevaluearr.robotid))}",
+            mtype: "GET",
+            datatype: "jsonp",
+            colModel: {$thevaluearr['cpmodels_str']},
+            height: 250,
+            shrinkToFit:false,
+            viewrecords : true,
+            rowNum:3,
+            pager: pager_selector,
+            altRows: true,
+            editurl: "../assets/dummy.html",//nothing is saved
+            loadComplete : function() {
+                var table = this;
+                setTimeout(function(){
+                    styleCheckbox(table);
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+                //no records tips
+                var ret_records = jQuery(grid_selector).getGridParam('records');
+                if(ret_records == 0 || ret_records == null){
+                    if($(".norecords").html() == null){
+                        jQuery(grid_selector).parent().append("<div class='norecords'><i class='fa fa-info-circle'></i> 暂无采集数据</div>");
+                    }
+                    $(".norecords").show();
+                }else{
+                    $(".norecords").hide(); //need to add before reloadGrid?
+                }
+            },
+
+            onCellSelect : function(rowid, index, contents, event){
+                //jQuery(grid_selector).setCell(rowid,index,'',{background:'#ff0000'});
+
+                //var contents = jQuery(grid_selector).jqGrid('getCell',rowid,iCol);
+                contents = htmlspecialchars_decode(contents);
+                $("#editor1").html(contents);
+                $("#editortextarea").val(contents);
+
+
+            }
+
+        });
+        $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+        jQuery(grid_selector).jqGrid('navGrid',pager_selector,
+            {
+                edit: false,
+                editicon : 'ace-icon fa fa-pencil blue',
+                add: false,
+                addicon : 'ace-icon fa fa-plus-circle purple',
+                del: false,
+                delicon : 'ace-icon fa fa-trash-o red',
+                search: false,
+                searchicon : 'ace-icon fa fa-search orange',
+
+                refresh: true,
+                refreshicon : 'ace-icon fa fa-refresh orange',
+                view: false,
+                viewicon : 'ace-icon fa fa-search-plus blue',
+            },
+            {
+                //search form
+                recreateForm: true,
+                afterShowSearch: function(e){
+                    var form = $(e[0]);
+                    form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+                    style_search_form(form);
+                },
+                afterRedraw: function(){
+                    style_search_filters($(this));
+                }
+                ,
+                multipleSearch: true,
+                /**
+                 multipleGroup:true,
+                 showQuery: true
+                 */
+            },
+            {
+                //view record form
+                recreateForm: true,
+                beforeShowForm: function(e){
+                    var form = $(e[0]);
+                    form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
+                }
+            }
+        )
+        // add first custom button
+        jQuery(grid_selector).navButtonAdd(pager_selector,
+            {
+                buttonicon: "fa fa-cloud-download green",
+                title: "导出数据",
+                caption: "导出",
+                position: "last",
+                onClickButton: exportCustomButtonClicked
+            });
+        // add second custom button
+        jQuery(grid_selector).navButtonAdd(pager_selector,
+            {
+                buttonicon: "fa fa fa-share-alt blue",
+                title: "API调用",
+                caption: "API &nbsp;",
+                position: "last",
+                onClickButton: apiCustomButtonClicked
+            });
+        function beforeDeleteCallback(e) {
+            var form = $(e[0]);
+            if(form.data('styled')) return false;
+
+            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            style_delete_form(form);
+
+            form.data('styled', true);
+        }
+
+        function beforeEditCallback(e) {
+            var form = $(e[0]);
+            form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
+            style_edit_form(form);
+        }
+
+
+
+        //it causes some flicker when reloading or navigating grid
+        //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
+        //or go back to default browser checkbox styles for the grid
+        function styleCheckbox(table) {
+            /**
+             $(table).find('input:checkbox').addClass('ace')
+             .wrap('<label />')
+             .after('<span class="lbl align-top" />')
+
+
+             $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
+             .find('input.cbox[type=checkbox]').addClass('ace')
+             .wrap('<label />').after('<span class="lbl align-top" />');
+             */
+        }
+
+
+        //unlike navButtons icons, action icons in rows seem to be hard-coded
+        //you can change them like this in here if you want
+        function updateActionIcons(table) {
+            /**
+             var replacement =
+             {
+             'ui-ace-icon fa fa-pencil' : 'ace-icon fa fa-pencil blue',
+             'ui-ace-icon fa fa-trash-o' : 'ace-icon fa fa-trash-o red',
+             'ui-icon-disk' : 'ace-icon fa fa-check green',
+             'ui-icon-cancel' : 'ace-icon fa fa-times red'
+             };
+             $(table).find('.ui-pg-div span.ui-icon').each(function(){
+                    var icon = $(this);
+                    var s__class = $.trim(icon.attr('class').replace('ui-icon', ''));
+                    if(s__class in replacement) icon.attr('class', 'ui-icon '+replacement[s__class]);
+                    })
+             */
+        }
+
+        //replace icons with FontAwesome icons like above
+        function updatePagerIcons(table) {
+            var replacement =
+                {
+                    'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+                    'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+                    'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+                    'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+                };
+            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+                var icon = $(this);
+                var s__class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+                if(s__class in replacement) icon.attr('class', 'ui-icon '+replacement[s__class]);
+            })
+        }
+
+        function enableTooltips(table) {
+            $('.navtable .ui-pg-button').tooltip({container:'body'});
+            $(table).find('.ui-pg-div').tooltip({container:'body'});
+        }
+
+        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+
+        $(document).one('ajaxloadstart.page', function(e) {
+            $(grid_selector).jqGrid('GridUnload');
+            $('.ui-jqdialog').remove();
+        });
+
+        $('#caijibtn').on('click', function(e){
+            $('#caijibtn').removeClass('btn-default').addClass('btn-info');
+            $('#shchuanbtn').removeClass('btn-info').addClass('btn-default');
+        });
+        $('#shchuanbtn').on('click', function(e){
+            $('#caijibtn').removeClass('btn-info').addClass('btn-default');
+            $('#shchuanbtn').removeClass('btn-default').addClass('btn-info');
+        });
+    });
+    //全局
+    function apiCustomButtonClicked() {
+        bootbox.dialog({
+            message: "<span class='bigger-110'>请选择调用的API格式：</span>",
+            buttons:
+                {
+                    "click" :
+                        {
+                            "label" : "<i class='ace-icon fa fa-code-fork'></i> JSON格式",
+                            "className" : "btn-sm btn-white btn-info",
+                            "callback": function() {
+                                window.open("{:url('Robot/export_json',array('robotid'=>$thevaluearr.robotid,'pagesize'=>'20','pageindex'=>'0','sortby'=>'desc'))}");
+                            }
+                        },
+                }
+        });
+    }
+
+    function exportCustomButtonClicked() {
+        bootbox.dialog({
+            message: "<span class='bigger-110'>请选择数据导出格式：</span>",
+            buttons:
+                {
+
+                    "danger" :
+                        {
+                            "label" : "<i class='ace-icon fa fa-file-o'></i> CSV",
+                            "className" : "btn-sm btn-white btn-info",
+                            "callback": function() {
+                                window.open("{:url('Robot/export_csv',array('robotid'=>$thevaluearr.robotid))}");
+                            }
+                        },
+
+                }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    jQuery(function($){
+        function showErrorAlert (reason, detail) {
+            var msg='';
+            if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
+            else {
+                //console.log("error uploading file", reason, detail);
+            }
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+
+                '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
+        }
+
+        //$('#editor1').ace_wysiwyg();//this will create the default editor will all buttons
+
+        //but we want to change a few buttons colors for the third style
+        $('#editor1').css({'height':'100px'}).ace_wysiwyg({
+            toolbar:
+                [
+                    'foreColor',
+                    null,
+                    'font',
+                    null,
+                    'fontSize',
+                    null,
+                    {name:'bold', className:'btn-info'},
+                    {name:'italic', className:'btn-info'},
+//                        {name:'strikethrough', className:'btn-info'},
+                {name:'underline', className:'btn-info'},
+                null,
+                {name:'insertunorderedlist', className:'btn-success'},
+                {name:'insertorderedlist', className:'btn-success'},
+//                        {name:'outdent', className:'btn-purple'},
+//                        {name:'indent', className:'btn-purple'},
+                null,
+                {name:'justifyleft', className:'btn-primary'},
+                {name:'justifycenter', className:'btn-primary'},
+                {name:'justifyright', className:'btn-primary'},
+//                        {name:'justifyfull', className:'btn-inverse'},
+                null,
+                {name:'createLink', className:'btn-pink'},
+                {name:'unlink', className:'btn-pink'},
+                null,
+                {name:'insertImage', className:'btn-success'},
+                null,
+                {name:'undo', className:'btn-grey'},
+                {name:'redo', className:'btn-grey'},
+                null,
+                {name:'viewSource', className:'btn-grey'}
+            ],
+            'wysiwyg': {
+                fileUploadError: showErrorAlert
+            }
+        }).prev().addClass('wysiwyg-style2');
+
+        //初始化为显示源代码模式
+        $('<textarea id="editortextarea" />')
+            .css({'width':'100%', 'height':$('#editor1').outerHeight()})
+            .val($('#editor1').html())
+            .insertAfter($('#editor1'));
+        $('#editor1').hide();
+
+        /**
+         //make the editor have all the available height
+         $(window).on('resize.editor', function() {
+                    var offset = $('#editor1').parent().offset();
+                    var winHeight =  $(this).height();
+
+                    $('#editor1').css({'height':winHeight - offset.top - 10, 'max-height': 'none'});
+                }).triggerHandler('resize.editor');
+         */
+
+        //RESIZE IMAGE
+
+        //Add Image Resize Functionality to Chrome and Safari
+        //webkit browsers don't have image resize functionality when content is editable
+        //so let's add something using jQuery UI resizable
+        //another option would be opening a dialog for user to enter dimensions.
+        if ( typeof jQuery.ui !== 'undefined' && ace.vars['webkit'] ) {
+
+            var lastResizableImg = null;
+            function destroyResizable() {
+                if(lastResizableImg == null) return;
+                lastResizableImg.resizable( "destroy" );
+                lastResizableImg.removeData('resizable');
+                lastResizableImg = null;
+            }
+
+            var enableImageResize = function() {
+                $('.wysiwyg-editor')
+                    .on('mousedown', function(e) {
+                        var target = $(e.target);
+                        if( e.target instanceof HTMLImageElement ) {
+                            if( !target.data('resizable') ) {
+                                target.resizable({
+                                    aspectRatio: e.target.width / e.target.height,
+                                });
+                                target.data('resizable', true);
+
+                                if( lastResizableImg != null ) {
+                                    //disable previous resizable image
+                                    lastResizableImg.resizable( "destroy" );
+                                    lastResizableImg.removeData('resizable');
+                                }
+                                lastResizableImg = target;
+                            }
+                        }
+                    })
+                    .on('click', function(e) {
+                        if( lastResizableImg != null && !(e.target instanceof HTMLImageElement) ) {
+                            destroyResizable();
+                        }
+                    })
+                    .on('keydown', function() {
+                        destroyResizable();
+                    });
+            }
+
+            enableImageResize();
+
+            /**
+             //or we can load the jQuery UI dynamically only if needed
+             if (typeof jQuery.ui !== 'undefined') enableImageResize();
+             else {//load jQuery UI if not loaded
+                        //in Ace demo ../assets will be replaced by correct assets path
+                        $.getScript("../assets/js/jquery-ui.custom.min.js", function(data, textStatus, jqxhr) {
+                            enableImageResize()
+                        });
+                    }
+             */
+        }
+        $("#cleardata-confirm").on(ace.click_event, function() {
+            bootbox.dialog({
+                message: "<BR>确认清空最近一天内或所有采集的数据？（无数据时修改规则需重新测试执行一次）<BR><BR>",
+                buttons:
+                    {
+                        "button" :
+                            {
+                                "label" : "暂不清空",
+                                "className" : "btn-sm"
+                            },
+                        "danger_one" :
+                            {
+                                "label" : "清空最近一天数据",
+                                "className" : "btn-sm btn-warning",
+                                "callback": function() {
+                                    window.location.href="{:url('Robot/cleardata',array('robotid'=>$thevaluearr.robotid,'type'=>1))}";
+                                }
+                            },
+                        "danger_all" :
+                            {
+                                "label" : "清空所有的数据！",
+                                "className" : "btn-sm btn-danger",
+                                "callback": function() {
+                                    window.location.href="{:url('Robot/cleardata',array('robotid'=>$thevaluearr.robotid,'type'=>9999))}";
+                                }
+                            }
+
+                    }
+            });
+        });
+        $("#postcheck-confirm").on(ace.click_event, function() {
+            var hasdata = $hasdata;
+            var datacount = $datacount;
+            var uploadnum = $uploadnum;
+            var isimage = $isimage;
+            if(hasdata == 0){
+                bootbox.alert({
+                        message: "<BR>您未上传或采集任何数据，请重新上传或采集数据后提交验收<BR><BR>",
+                        buttons: {
+                            ok: {
+                                label: "确  认",
+                                className: "btn-primary btn-sm",
+                            }
+
+                        },
+                        callback: function() {
+
+                        }
+                    }
+                );
+                return false;
+            }
+            if(hasdata == 1 && datacount <1){
+                bootbox.alert({
+                        message: "<BR>您未进行云采集数据测试，请先测试<BR><BR>",
+                        buttons: {
+                            ok: {
+                                label: "确  认",
+                                className: "btn-primary btn-sm",
+                            }
+
+                        },
+                        callback: function() {
+
+                        }
+                    }
+                );
+                return false;
+            }
+
+
+
+
+
+
+
+        });
+
+    });
+</script>
+
+
+
+

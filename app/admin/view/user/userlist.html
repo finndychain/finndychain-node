@@ -1,0 +1,181 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<style>
+
+
+</style>
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">用户管理</a></li>
+                    <li class="active">用户列表</li>
+                </ul>
+                <!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                用户列表
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    查看管理用户列表
+                                </small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn  btn-info btn-round" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">新增会员</button>
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content" style="width:350px;margin:5px auto" >
+                                                <div class="modal-body">
+                                                    <form action="{:url('User/AddUser')}" method="POST" id="addsubmit" onsubmit="return validate(this)">
+                                                        <div class="form-group" >
+                                                            <label  for class="control-label">用户名:</label>
+                                                            <input type="text" class="form-control" id="addusername" name="username">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="control-label">密码:</label>
+                                                            <input type="text" class="form-control" id="adduserpwd" name="password">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label  class="control-label">权限:</label>
+                                                            <select name="user_type" id="user_type" class="form-control">
+                                                                <option value="1">普通会员</option>
+                                                                <option value="2">管理员</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="modal-footer" style="background-color: #fff;text-align: center">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                            <button type="submit" class="btn btn-info">提交</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div><!-- /.page-header -->
+                            <div class="space-12"></div>
+                            <table cellspacing="0" cellpadding="0" width="100%" class="table table-striped table-bordered table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>用户名</th>
+                                        <th>权限</th>
+                                        <th>创建时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    <!--数据行-->
+                                    {volist name='userlist' id='vo'}
+                                    <tr>
+                                        <td>{$vo.uid}</td>
+                                        <td>{$vo.username}</td>
+                                        <td>{$vo.user_type}</td>
+                                        <td>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
+                                        <td>
+                                            <div>
+                                            <button type="button" class="btn btn-mini  btn-info btn-round" data-toggle="modal" data-target="#exampleModal{$vo.uid}" data-whatever="@mdo"><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
+                                            <div class="modal fade" id="exampleModal{$vo.uid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content" style="width:350px;margin:5px auto" >
+                                                        <div class="modal-body" ">
+                                                                <form action="{:url('User/EditUser')}" method="post" id="editsubmit" onsubmit="return edit_validate(this)">
+                                                                <div class="form-group">
+                                                                    <label  class="control-label">用户名:</label>
+                                                                    <input type="text" class="form-control" id="editusername" name="username" value="{$vo.username}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control"  name="password" value="">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label  class="control-label">权限:</label>
+                                                                    <select name="user_type" id="edit_user_type" class="form-control">
+
+                                                                        <option value="1" {if condition="$vo.user_type eq 1"} selected{/if}>普通会员</option>
+                                                                        <option value="2" {if condition="$vo.user_type eq 2"} selected{/if}>管理员</option>
+                                                                    </select>
+                                                                </div>
+                                                                    <input type="hidden" name="uid" value="{$vo.uid}">
+                                                                <div class="modal-footer" style="background-color: #fff;text-align: center">
+                                                                    <button type="button" class="btn btn-mini  btn-default btn-round" data-dismiss="modal">关闭</button>
+                                                                    <button type="submit" class="btn btn-mini  btn-info ">提交</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                                <!--{if condition="$vo.user_type eq 0"}-->
+                                                <!--<button class="btn btn-mini btn-success tooltip-warning btn-round" type="submit" onclick=""><i class="ace-icon fa fa-ban " onclick="window.location.href='{:url(\'User/BanUser\', [\'uid\' => $vo[uid],\'status\'=>$vo[status]])}'"></i>  恢复</button>-->
+                                                <!--{else /}-->
+                                                <!--<button class="btn btn-mini btn-warning tooltip-warning btn-round" type="submit" onclick=""><i class="ace-icon fa fa-ban " onclick="window.location.href='{:url(\'User/BanUser\', [\'uid\' => $vo[uid],\'status\'=>$vo[status]])}'"></i> 禁用</button>-->
+                                                <!--{/if}-->
+
+                                        </td>
+                                    </tr>
+                                {/volist}
+                                </tbody>
+                            </table>
+
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<script>
+
+    function validate (theform){
+        var addusername = $('#addusername').val();
+        var adduserpwd = $('#adduserpwd').val();
+        if(addusername == '' ){
+            alert('用户名不能为空');
+            return false;
+        }
+        if(adduserpwd == '' ){
+            alert('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+    function edit_validate (theform){
+        var editusername = $('#editusername').val();
+        var editpwd = $('#editpwd').val();
+
+        if(editusername == '' ){
+            alert('用户名不能为空');
+            return false;
+        }
+        if(editpwd == '' ){
+            alert('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+
+
+</script>
