@@ -2,17 +2,19 @@
 namespace app\admin\model;
 use think\Model;
 use think\Session;
-
+use think\Lang;
 
 class SysConf extends  Model
 {
     protected $table = 'cloud_sys_conf';
 
 
+
     /**获取所有系统配置信息
      * @return array|mixed
      */
     public function getSysConf(){
+
         $sys_conf = Session::get('sys_conf');
         if(empty($sys_conf)){
             $sys_conf_result = $this->select();

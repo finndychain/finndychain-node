@@ -32,7 +32,7 @@ class Login extends Controller
                 Session::set('username',$res['result']['username']);
                 unset($res['result']['password']);
                 Session::set('userinfo',$res['result']);
-                $this->success('登录成功','index/index');
+                $this->success('登录成功','index/index','',1);
             }
         }
         if(Session::get('uid') && Session::get('userinfo') && Session::get('username')){
@@ -48,6 +48,6 @@ class Login extends Controller
         Session::delete('uid');
         Session::delete('username');
         Session::delete('userinfo');
-        $this->redirect('login/dologin');
+        $this->redirect('dologin');
     }
 }
