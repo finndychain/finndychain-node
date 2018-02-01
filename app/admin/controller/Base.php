@@ -13,9 +13,9 @@ class Base extends  Controller
             $this->redirect('install/index/index');
         }
 
-        if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
-            $this->error('您尚未登录系统',url('login/dologin'));
-        }
+//        if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
+//            $this->error('您尚未登录系统',url('login/dologin'));
+//        }
         if(empty(Session::get('sys_conf'))){
             $sysconf = new SysConf();
             $sys_conf_result = $sysconf->select();
