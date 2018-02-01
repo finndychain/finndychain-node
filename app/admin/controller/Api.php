@@ -1,13 +1,16 @@
 <?php
 namespace app\admin\controller;
-class Index extends Base
+use think\Controller;
+
+class Api extends Controller
 {
     public function Index()
     {
-        $title = '云采集';
-        $this->assign([
-            'title' => $title,
-        ]);
-        return $this->fetch();
+        $result = array(
+            "error_code"=> 0,
+            "reason"=> 'ok',
+            "result"=> '',
+        );
+        echo json_encode($result);exit();
     }
 }

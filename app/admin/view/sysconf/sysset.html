@@ -62,8 +62,8 @@
                                                         <label class="col-sm-2 label_control no-padding-right" > 站点开关 </label>
                                                         <div class="col-sm-10">
                                                             <select name="toggle_web_site" id="toggle_web_site" class="col-xs-10 col-sm-5">
-                                                                <option value="1" {if condition="$vo.toggle_web_site eq '1'"} selected{/if} >开启</option>
-                                                                <option value="0" {if condition="$vo.toggle_web_site eq '0'"} selected{/if}>关闭</option>
+                                                                <option value="1" {if condition="$systeminfo.toggle_web_site eq '1'"} selected{/if} >开启</option>
+                                                                <option value="0" {if condition="$systeminfo.toggle_web_site eq '0'"} selected{/if}>关闭</option>
                                                             </select>
                                                             <span class="help-inline col-xs-12 col-sm-7 pt">
                                                                     <span class="middle">站点关闭后将提示网站已关闭，不能正常访问</span>

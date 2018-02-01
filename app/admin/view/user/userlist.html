@@ -92,7 +92,7 @@
                                         <td>{$vo.uid}</td>
                                         <td>{$vo.username}</td>
                                         <td>{$vo.user_type}</td>
-                                        <td>{$vo.create_time|date='Y-m-d H:i:s',###}</td>
+                                        <td>{$vo.create_time}</td>
                                         <td>
                                             <div>
                                             <button type="button" class="btn btn-mini  btn-info btn-round" data-toggle="modal" data-target="#exampleModal{$vo.uid}" data-whatever="@mdo"><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
@@ -127,12 +127,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                                <!--{if condition="$vo.user_type eq 0"}-->
-                                                <!--<button class="btn btn-mini btn-success tooltip-warning btn-round" type="submit" onclick=""><i class="ace-icon fa fa-ban " onclick="window.location.href='{:url(\'User/BanUser\', [\'uid\' => $vo[uid],\'status\'=>$vo[status]])}'"></i>  恢复</button>-->
-                                                <!--{else /}-->
-                                                <!--<button class="btn btn-mini btn-warning tooltip-warning btn-round" type="submit" onclick=""><i class="ace-icon fa fa-ban " onclick="window.location.href='{:url(\'User/BanUser\', [\'uid\' => $vo[uid],\'status\'=>$vo[status]])}'"></i> 禁用</button>-->
-                                                <!--{/if}-->
 
                                         </td>
                                     </tr>

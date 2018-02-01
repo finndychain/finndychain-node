@@ -20,18 +20,20 @@ class Login extends Controller
                 $this->error('验证码错误!');
             }
             $password = passwordencrypt($postdata['password']);
-            $users = new Users();
+
             $data['username'] = $username;
             $data['password'] = $password;
-            $res = $users->login($data);
-            if($res['code'] == '10001'){
+            $users = new Users();
+
+            $res = $users->getUserinfo($data);
+            if(empty($res)){
                 $this->error('账号或密码错误!');
             }
-            if($res['code'] == '1'){
-                Session::set('uid',$res['result']['uid']);
-                Session::set('username',$res['result']['username']);
-                unset($res['result']['password']);
-                Session::set('userinfo',$res['result']);
+            if($res){
+                Session::set('uid',$res['uid']);
+                Session::set('username',$res['username']);
+                unset($res['password']);
+                Session::set('userinfo',$res);
                 $this->success('登录成功','index/index');
             }
         }
