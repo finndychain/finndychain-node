@@ -755,6 +755,6 @@ return [
     'robot_sourcesitename_tips' => '如：新浪微博',
     'robot_sourcedata_tips' => '可选。发布数据时，也可上传数据包进行交易',
     'robot_subjecturllinkrule' => '数据链接URL识别规则 <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="数据链接URL指下文提取标签数据的字段入口链接。识别规则采用前后截取式，支持任意字符通配符（*）和数据入口通配符 [entryurl] 。符合规则的所有URL将被作为采集对象。想要采集的URL用 [url] 来代替。例如：数据链接URL识别规则为<div class=\'fm-movie-title\'>*<a href=\'[url]/\'>。这是表示以<div class=\'fm-movie-title\'>开始，中间可以间隔任意内容，包括回车直至下一个以<a href=\'开始，以/\'>结束的字符串，即为数据链接URL"></i><p>STR1<a href="javascript:insertAtCursor(\'subjecturllinkrule\',\'[url]\');">[url]</a>STR2,(<a href="javascript:insertAtCursor(\'subjecturllinkrule\',\'*\');">*</a>),(<a href="javascript:insertAtCursor(\'subjecturllinkrule\',\'[entryurl]\');">[entryurl]</a>)</p>',
-
+    'robot_estimatedsourcedata_tips' => '必选，填写该数据源的数据总量',
 
 ];

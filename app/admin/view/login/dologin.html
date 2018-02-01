@@ -34,9 +34,7 @@
     <script src="../assets/js/respond.js"></script>
     <![endif]-->
     <style>
-        body{
-            background-color:#efefef !important;
-        }
+
         .box_top{
             margin:30px auto;
             width:60%;
@@ -46,28 +44,27 @@
         }
         .box_right{
             float:left;
-            font-size:30px;
+            font-size:25px;
             color:#19a2e8;
-            margin-top:15px;
+            margin-top:4px;
+            margin-left:5px
 
         }
     </style>
 </head>
-
-<body class="login-layout">
+<body class="login-layout light-login">
 <div class="main-container">
     <div class="main-content">
         <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <div class="login-container" style="margin-top:250px">
-                    <div class="space-6"></div>
+            <div class="col-sm-10 col-sm-offset-1"><br>
+                <div class="login-container">
                     <div class="position-relative">
-                        <div id="login-box" class="login-box visible  no-border" >
+                        <div id="login-box" class="login-box visible widget-box no-border" style="margin-top:40px">
                             <div class="widget-body">
-                                <div class="widget-main" style="padding:22px;background-color: #fff !important;">
+                                <div class="widget-main">
                                     <div class="box_top clearfix">
                                         <div class="box_left">
-                                            <img width="80" src="__ADMIN__/image/logo.png" alt="">
+                                            <img width="60" src="__ADMIN__/image/logo.png" alt="">
                                         </div>
                                         <div class="box_right">
                                             &nbsp;私有云
@@ -77,45 +74,87 @@
 
                                     <div class="space-6"></div>
 
-                                    <form action="{:url('login/dologin')}" method="post">
+                                    <form method="post" name="login" action="{:url('login/dologin')}">
                                         <fieldset>
-                                            <label class="block clearfix" style="margin-bottom: 30px">
-														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="用户名"  name="username"/>
-															<i class="ace-icon fa fa-user"></i>
-														</span>
+                                            <label class="block clearfix">
+<span class="block input-icon input-icon-right">
+<input type="text" class="form-control" placeholder="用户名" value="">
+<i class="ace-icon fa fa-user"></i>
+</span>
                                             </label>
-                                            <label class="block clearfix" style="margin-bottom: 30px">
-														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="密码" name="password"/>
-															<i class="ace-icon fa fa-lock"></i>
-														</span>
+
+                                            <label class="block clearfix">
+<span class="block input-icon input-icon-right">
+<input type="password" id="admin_password" name="admin_password" class="form-control" placeholder="密码">
+<i class="ace-icon fa fa-lock"></i>
+</span>
                                             </label>
-                                            <label class="block clearfix" style="margin-bottom: 30px">
-														<span class="block input-icon input-icon-right">
-                                                            <div class="col-xs-6 col-md-6" style="margin-left: -12px;">
-															<input type="text"  placeholder="验证码" id="seccode" autocomplete="off" size="12" value="" name="seccode" />  </div>
-                                                            <div class="col-xs-6 col-md-6" style="margin-left: -12px;">
-                                                                <img  style="" id="verify_img" src="{:captcha_src()}" alt="captcha" onclick="refreshVerify()">
-                                                            </div>
-                                                        </span>
+
+                                            <label class="block clearfix">
+<span class="block input-icon input-icon-right">
+<input name="seccode" type="text" title="" placeholder="验证码" class="col-xs-4">
+</span>
+
+                                                &nbsp; <img  style="" id="verify_img" src="{:captcha_src()}" alt="captcha" onclick="refreshVerify()">
+                                                <p></p>
+
                                             </label>
+
                                             <div class="space"></div>
+
                                             <div class="clearfix">
-                                                <button type="submit" class="width-100 pull-right btn btn-sm btn-primary">
+                                                <label class="inline">
+                                                    <input type="checkbox" class="ace">
+                                                    <span class="lbl"> 记住我</span>
+                                                </label>
+
+                                                <button type="submit" name="dologinbtn" class="width-35 pull-right btn btn-sm btn-info">
                                                     <i class="ace-icon fa fa-key"></i>
-                                                    <span class="bigger-110">登录</span>
+                                                    <span class="bigger-110">登 录</span>
                                                 </button>
                                             </div>
 
                                             <div class="space-4"></div>
                                         </fieldset>
+
                                     </form>
-                                    <div class="space-6"></div>
                                 </div><!-- /.widget-main -->
+
+                                <div class="toolbar clearfix">
+                                    <div>
+                                        <!--<a href="#" data-target="#signup-box" class="user-signup-link">-->
+                                        <a href="{:url('login/register')}" class="user-signup-link">
+                                            注册账号
+                                            <i class="ace-icon fa fa-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
                             </div><!-- /.widget-body -->
                         </div><!-- /.login-box -->
+
+
+
+
+                        <!--<p style="margin: 0.5em 0; text-align: center; font-size: 10px;">-->
+                            <!--发源地 @ <a href="http://www.finndy.test" target="_self">Finndy.com</a>-->
+                        <!--</p>-->
+
                     </div><!-- /.position-relative -->
+
+                    <div class="navbar-fixed-top align-right" style="display: none;">
+                        <br><br>
+                        &nbsp;
+                        <a id="btn-login-dark" href="#">Dark</a>
+                        &nbsp;
+                        <span class="blue">/</span>
+                        &nbsp;
+                        <a id="btn-login-blur" href="#">Blur</a>
+                        &nbsp;
+                        <span class="blue">/</span>
+                        &nbsp;
+                        <a id="btn-login-light" href="#">Light</a>
+                        &nbsp; &nbsp; &nbsp;
+                    </div>
                 </div>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -124,21 +163,14 @@
 
 <!-- basic scripts -->
 
-<!--[if !IE]> -->
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='__ADMIN__/js/jquery.js'>"+"<"+"/script>");
-</script>
+
 
 <!-- <![endif]-->
 
 <!--[if IE]>
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='__ADMIN__/js/jquery1x.js'>"+"<"+"/script>");
-</script>
+
 <![endif]-->
-<script type="text/javascript">
-    if('ontouchstart' in document.documentElement) document.write("<script src='__ADMIN__/js/jquery.mobile.custom.js'>"+"<"+"/script>");
-</script>
+
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
@@ -147,42 +179,8 @@
         var img = document.getElementById('verify_img');
         img.src = "/captcha?id="+ts;
     }
-    jQuery(function($) {
-        $(document).on('click', '.toolbar a[data-target]', function(e) {
-            e.preventDefault();
-            var target = $(this).data('target');
-            $('.widget-box.visible').removeClass('visible');//hide others
-            $(target).addClass('visible');//show target
-        });
-    });
 
-
-
-    //you don't need this, just used for changing background
-//    jQuery(function($) {
-//        $('#btn-login-dark').on('click', function(e) {
-//            $('body').attr('class', 'login-layout');
-//            $('#id-text2').attr('class', 'white');
-//            $('#id-company-text').attr('class', 'blue');
-//
-//            e.preventDefault();
-//        });
-//        $('#btn-login-light').on('click', function(e) {
-//            $('body').attr('class', 'login-layout light-login');
-//            $('#id-text2').attr('class', 'grey');
-//            $('#id-company-text').attr('class', 'blue');
-//
-//            e.preventDefault();
-//        });
-//        $('#btn-login-blur').on('click', function(e) {
-//            $('body').attr('class', 'login-layout blur-login');
-//            $('#id-text2').attr('class', 'white');
-//            $('#id-company-text').attr('class', 'light-blue');
-//
-//            e.preventDefault();
-//        });
-//
-//    });
 </script>
+
 </body>
 </html>

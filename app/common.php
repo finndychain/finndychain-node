@@ -11,7 +11,7 @@
 
 // 应用公共文件
 function api_request($method, $url, $fields=''){
-    $url = 'http://finndy.test/api/robot/'.$url;
+    $url = 'http://www.finndy.test/api/robot/'.$url;
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

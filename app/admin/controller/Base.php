@@ -13,12 +13,13 @@ class Base extends  Controller
             $this->redirect('install/index/index');
         }
 
-        if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
-            $this->error('您尚未登录系统',url('login/dologin'));
-        }
+//        if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
+//            $this->error('您尚未登录系统',url('login/dologin'));
+//        }
         if(empty(Session::get('sys_conf'))){
             $sysconf = new SysConf();
             $sys_conf_result = $sysconf->select();
+            $sys_conf_result = collection($sys_conf_result)->toArray();
             //系统配置转换成键值对存储
             $sys_conf = array_column($sys_conf_result,'value','name');
             Session::set('sys_conf',$sys_conf);

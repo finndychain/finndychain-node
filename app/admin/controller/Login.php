@@ -7,10 +7,12 @@ use app\admin\model\Users;
 class Login extends Controller
 {
     //登录
-    public function dologin()
+    public function doLogin()
     {
         if(request()->isPost()){
             $postdata = input();
+            $password = passwordencrypt($postdata['password']);
+            //dump($password);die;
             $username = $postdata['username'];
             if(empty($username) || empty($postdata['password'])){
                 $this->error('账号或密码不能为空!');
@@ -19,11 +21,11 @@ class Login extends Controller
             if(!captcha_check($captcha)){
                 $this->error('验证码错误!');
             }
-            $password = passwordencrypt($postdata['password']);
+
             $users = new Users();
             $data['username'] = $username;
             $data['password'] = $password;
-            $res = $users->login($data);
+            $res = $users->getLogin($data);
             if($res['code'] == '10001'){
                 $this->error('账号或密码错误!');
             }
@@ -49,5 +51,9 @@ class Login extends Controller
         Session::delete('username');
         Session::delete('userinfo');
         $this->redirect('login/dologin');
+    }
+
+    public function register(){
+        return $this->fetch('login/register');
     }
 }
