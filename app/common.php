@@ -60,8 +60,11 @@ function api_build_url($path='',$params=array()){
 
 }
 
-function api_build_params($params=array()){
-    $params['appkey']= api_get_appkey('app_key');
+function api_build_params($params=array(),$appkey = ''){
+    if(empty($appkey)){
+        $appkey = api_get_appkey('app_key');
+    }
+    $params['appkey']= $appkey;
     $params['time']=time();
     $params['sign'] = api_sign_create($params);
     return http_build_query($params);
@@ -83,10 +86,9 @@ function check_api_result($params=array()){
 function api_get_appkey($name='app_key'){
 
     if(empty($name))return false;
-    $modelSysConf = new app\admin\model\SysConf();
-    $sys_conf = $modelSysConf->getSysConf();
+    $base = new app\admin\controller\Base();
+    $sys_conf = $base->getSysConf();
     if(!isset($sys_conf[$name]))return false;
-
     return $sys_conf[$name];
 }
 

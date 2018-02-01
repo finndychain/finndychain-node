@@ -2,14 +2,19 @@
 namespace app\admin\controller;
 use think\Session;
 use think\Db;
-use app\admin\model\Users;
+
+use app\admin\model\Users as Users_model;
+
 
 class User extends Base
 {
 
+
+
     public function Index()
     {
         $title = '我的面板';
+        $lang = lang('robot_robot_status');
         $this->setPageSeo();
         $params['op'] = 'getuserinfo';
         $params['uid'] = $this->getSysConfValue('app_key');
@@ -34,19 +39,20 @@ class User extends Base
         if(request()->isPost()){
             $postdata = input();
 
-            $validate = $this->validate($postdata,'User.Resetpwd');//使用validate验证
+
+              $validate = $this->validate($postdata,'User.Resetpwd');//使用validate验证
             if(true !== $validate){
                 // 验证失败 输出错误信息
                 $this->error($validate);
             }
             if($postdata['set_newpass'] != $postdata['set_okpass']){$this->error('新密码两次输入不一致!');}
-            $postdata['set_oldpass'] = passwordencrypt($postdata['set_oldpass']);
-            $postdata['set_okpass'] = passwordencrypt($postdata['set_okpass']);
-            $postdata['username'] = Session::get('username');
-            $user = new Users();
-            $res = $user->getPwd($postdata);
-            if($res === '10001' ){$this->error('原始密码错误!');}
-            if($res === '10002'){
+            $users_model = new Users_model();
+
+            $userinfo =$users_model->getUserinfo(['username'=>Session::get('username'),'password'=>passwordencrypt($postdata['set_oldpass'])]);
+            if(empty($userinfo)){$this->error('原始密码错误!');}
+
+            $updage_res = $users_model->setUserValue(array('uid'=>$userinfo['uid']),'password',passwordencrypt($postdata['set_okpass']));
+            if(!$updage_res){
                 $this->error('网络原因稍后再试!');
             }
             if($res === 0){
@@ -58,12 +64,11 @@ class User extends Base
     public function UserList()
     {
         $title = '用户列表';
-        $user = new Users();
-        $userlist = $user->select();
-        $this->assign([
-            'title' => $title,
-            'userlist' => $userlist
-        ]);
+
+        $users_model = new Users_model();
+        $userlist = $users_model->getUsers();
+        $this->assign('title',$title);
+        $this->assign('userlist',$userlist);
         return $this->fetch('userlist');
     }
 
@@ -78,12 +83,13 @@ class User extends Base
                 $this->error($validate);
             }
             $data['password'] = passwordencrypt($data['password']);
-            $user_info = Db::name('users')->where('username',$data['username'])->find();
+            $users_model = new Users_model();
+            $user_info = $users_model->getUserinfo(array('username'=>$data['username']));
             if($user_info){
                 $this->error('用户名已存在!');
             }
-            $data['create_time'] = time();
-            $inser_res = Db::name('users')->insert($data);
+
+            $inser_res = $users_model->insertUserinfo($data);
             if(!$inser_res){
                 $this->error('网络原因稍后再试!');
             }
@@ -112,8 +118,8 @@ class User extends Base
                 $data['password'] = passwordencrypt($password);
             }
 
-
-            $inser_res = Db::name('users')->where('uid',$uid)->update($data);
+            $users_model = new Users_model();
+            $inser_res = $users_model->setUserValues(array('uid'=>$uid),$data);
             if(!$inser_res){
                 $this->error('网络原因稍后再试!');
             }
@@ -135,7 +141,8 @@ class User extends Base
             $status = 1;
         }
         if(empty($uid)){$this->error('参数错误!');}
-        $status_res = Db::name('users')->where('uid',$uid)->setField('status',$status);
+        $users_model = new Users_model();
+        $status_res =$users_model->setUserValue(array('uid'=>$uid),'status',$status);
         if(!$status_res){
             $this->error('网络原因稍后再试!');
         }
