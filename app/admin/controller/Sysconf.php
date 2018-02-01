@@ -1,7 +1,8 @@
 <?php
 namespace app\admin\controller;
 use think\Db;
-
+use app\admin\model\SysConf as SysConf_model;
+use think\Cache;
 
 class Sysconf extends Base
 {
@@ -42,17 +43,25 @@ class Sysconf extends Base
     {
         if(request()->isPost()) {
             $data = input();
-            foreach($data as $k=>$v){
-                Db::name('sys_conf')->where('name',$k)->setField('value',$v);
+            //校验appkey配置
+            if(!empty($data['app_key'])){
+                $params['op'] = 'checkappkey';
+                $params['appsecret'] = $data['app_secret'];
+                $res = api_request('POST' ,'api.php', api_build_params($params,$data['app_key']));
+                if($res['error_code'] != 0){
+                    $this->error('授权账号或密钥存在错误！');
+                }
             }
-
+            $sysconf_mode = new SysConf_model();
+            $sysconf_mode->updateSysConf($data);
+            //每次更新完重新设置缓存
+            $sysconf_mode->delSysConfCache('sys_conf');
             $this->success('修改成功','sysconf/sysset');
         }
 
         $title = '系统设置';
 
         $systeminfo = $this->getSysConf();
-
         $this->assign('systeminfo',$systeminfo);
         $this->assign([
             'title' => $title,

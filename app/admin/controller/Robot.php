@@ -38,12 +38,14 @@ class Robot extends Base
         $title = '创建数据源';
         $tabbox  = 'style="display:none;"';
         $op = 'add';
+        $thevalue = array();
         $this->assign([
             'title' => $title,
             'tabbox' => $tabbox,
             'catarr' => $catarr,
             'op' => $op,
             'theuser' => $theuser,
+            'thevalue' =>$thevalue,
         ]);
         return $this->fetch('add');
     }
@@ -67,6 +69,8 @@ class Robot extends Base
                 $this->error($res['reason']);
             }
         }
+
+        $thevalue = '';
         $op = 'edit';
         //不同saas版本权限的前端最大最小显示值处理
         $theuser = $this->getuserrobotver();
@@ -90,7 +94,7 @@ class Robot extends Base
                 'theuser' => $theuser,
                 'thevalue' => $thevalue,
             ]);
-            return $this->fetch('add');
+            return $this->fetch('edit');
         }
 
     }
@@ -118,6 +122,8 @@ class Robot extends Base
 
             return;
         }
+        //不同saas版本权限的前端最大最小显示值处理
+        $theuser = $this->getuserrobotver();
         $op = 'copy';
         $robotid = intval(input('robotid'));
         $catarr = getcategory();
@@ -138,8 +144,9 @@ class Robot extends Base
                 'catarr' => $catarr,
                 'op' => $op,
                 'thevalue' => $thevalue,
+                'theuser' => $theuser,
             ]);
-            return $this->fetch('add');
+            return $this->fetch('edit');
         }
 
     }
@@ -183,6 +190,12 @@ class Robot extends Base
     {
         if(request()->isPost()){
             if(input('post.importtext')){
+                if(empty(trim(input('post.importtext')))){
+                    $this->error('请输入正确的数据源规则');
+                }
+                //不同saas版本权限的前端最大最小显示值处理
+                $theuser = $this->getuserrobotver();
+
                 $op = 'importcopy';
                 $params['importtext']=input('post.importtext');
                 $params['op']='importcopyrobotrule';
@@ -195,15 +208,12 @@ class Robot extends Base
                     'catarr' => $catarr,
                     'op' => $op,
                     'thevalue' => $thevalue,
+                    'theuser'=> $theuser,
                 ]);
-                return $this->fetch('add');
+                return $this->fetch('edit');
             }else{
+
                 $postdata = input();
-                $validate = $this->validate($postdata,'Robot.importcopy');//使用validate验证
-                if(true !== $validate){
-                    // 验证失败 输出错误信息
-                    $this->error($validate);
-                }
                 $params = $postdata;
                 $params['op']='valuesubmit';
                 $res = api_request('POST' ,'api.php', api_build_params($params));
@@ -211,7 +221,7 @@ class Robot extends Base
                 if($res['error_code'] === 0){
                     $this->success('创建数据源成功','robot/robotlist');
                 }else{
-                    $this->error($res['reason']);
+                    $this->error('创建失败,请重新编辑');
                 }
                 return;
             }
@@ -223,24 +233,6 @@ class Robot extends Base
     //数据源列表
     public function robotlist()
     {
-       /* if(request()->isPost()){
-            $title = '数据源列表';
-            $tabbox  = 'style="display:none;"';
-            $crid = intval(input('crid'))?intval(input('crid')):'';
-            $cname = trim(input('cname'));
-            $params['crid'] = $crid;
-            $params['cname'] = $cname;
-            $params['op'] = 'getrobotslist';
-            $res = api_request('get' ,api_build_url('api.php',$params));
-            dump($res);
-            $arr = check_api_result($res);
-            $listarr = $arr['data'];
-            foreach($listarr as &$item){
-                $item['status_desc']=lang('cp_source_available_font_'.$item['status']);
-            }
-            return view('robotlist',['title'=>$title,'tabbox'=>$tabbox,'listarr'=>$listarr] );
-
-        }*/
         $title = '数据源列表';
         $tabbox  = 'style="display:none;"';
         $params['op'] = 'getrobotslist';

@@ -103,7 +103,7 @@
                                                 <option value="0">请选择分类</option>
                                                 {volist name='catarr' id='vo'}
                                                 <option value="news_{$vo.catid}"
-                                                {if condition="$thevalue.importcatid == $vo.catid"} selected {/if}
+                                                {if condition="(!empty($thevalue)) AND ($thevalue.importcatid == $vo.catid)"} selected {/if}
                                                 >{$vo.name}</option>
                                                 {/volist}
                                             </select>
@@ -270,8 +270,8 @@
                                             </tr>
                                             <tr id="tr_reverseorder0" {$tabbox}>
                                                 <th>{$Think.lang.robot_reverseorder0}</th>
-                                                <td><label><input class="ace" name="reverseorder0" type="radio" value="0" {$thevalue[reverseorder0] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_reverseorder_0}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="reverseorder0" type="radio" value="1" {$thevalue[reverseorder0] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_reverseorder_1}&nbsp;&nbsp;</span> </label>
+                                                <td><label><input class="ace" name="reverseorder0" type="radio" value="0"  {$thevalue.reverseorder0 ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_reverseorder_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="reverseorder0" type="radio" value="1" {empty  name="$thevalue.reverseorder0" }{/empty} {$thevalue.reverseorder0 == 1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_reverseorder_1}&nbsp;&nbsp;</span> </label>
                                                 </td>
                                             </tr>
                                         </table>
@@ -395,11 +395,22 @@
                                                         <input type="button" class="btn btn-white btn-info " value="{$Think.lang.robot_debug_add}" onclick="addreplace('subjectreplace', '', '');">
                                                         &nbsp;<input type="button" class="btn btn-white btn-info " value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_subjectreplace_title', 'subjectreplace');">
                                                     </div>
+                                                    {if condition="is_array($thevalue['subjectreplace'])"}
                                                     <script>
-                                                    $(function(){
-                                                        addreplace('subjectreplace', '', '');
-                                                    });
+                                                        $(function(){
+                                                            {volist name="$thevalue['subjectreplace']" id="vo"  key="k"}
+                                                            addreplace('subjectreplace', '{$vo}', '{$thevalue['subjectreplaceto'][$k-1]}');
+                                                            {/volist}
+                                                        });
                                                     </script>
+
+                                                    {else /}
+                                                    <script>
+                                                        $(function(){
+                                                            addreplace('subjectreplace', '{$thevalue['subjectreplace']}', '{$thevalue['subjectreplaceto']}');
+                                                        });
+                                                    </script>
+                                                    {/if}
                                                 </td>
                                             </tr>
                                             <tr id="tr_subjectkey" {$tabbox}>
@@ -444,9 +455,22 @@
                                                         <input type="button" class="btn btn-white btn-info " value="{$Think.lang.robot_debug_add}" onclick="addreplace('messagereplace', '', '');">
                                                         &nbsp;<input type="button" class="btn btn-white btn-info " value="{$Think.lang.robot_debug}" onclick="debugsubmit(this, 'tr_messagereplace_title', 'messagereplace');">
                                                     </div>
+                                                    {if condition="is_array($thevalue['messagereplace'])"}
                                                     <script>
-                                                        addreplace('messagereplace', '', '');
+                                                        {volist name="$thevalue['messagereplace']" id="vo"  key="k"}
+                                                        $(function(){
+                                                            addreplace('messagereplace', '{$vo}', '{$thevalue['messagereplaceto'][$k]}');
+                                                        });
+                                                        {/volist}
                                                     </script>
+
+                                                    {else /}
+                                                    <script>
+                                                        $(function(){
+                                                            addreplace('messagereplace', '{$thevalue['messagereplace']}', '{$thevalue['messagereplaceto']}');
+                                                        });
+                                                    </script>
+                                                    {/if}
                                                 </td>
                                             </tr>
                                             <tr id="tr_messagekey" {$tabbox}>
