@@ -5,7 +5,8 @@ use think\Cache;
 
 class SysConf extends  Model
 {
-    protected $table = 'cloud_sys_conf';
+
+    protected $name = 'sys_conf';
 
     /**获取所有系统配置信息
      * @return array|mixed
