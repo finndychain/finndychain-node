@@ -2,11 +2,10 @@
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta charset="$_SC[charset]" />
-    <title>{$title}</title>
-    <meta name="description" content="$_SCONFIG[seodescription]" />
+    <title>{$title}-{$seoInfo.title}</title>
+    <meta content='{$seoInfo.kw}' name='Keywords'>
+    <meta content='{$seoInfo.desc}' name='Description'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <script>var siteUrl='$_SC[siteurl]';</script>
     <script language="javascript" type="text/javascript" src="__ADMIN__/js/common.js"></script>
     <script language="javascript" type="text/javascript" src="__ADMIN__/js/edit.js"></script>
     <script language="javascript" type="text/javascript" src="__ADMIN__/js/admin.js"></script>
@@ -91,7 +90,6 @@
     <script src="__ADMIN__/js/elements.onpage-help.js"></script>
     <script src="__ADMIN__/js/ace.onpage-help.js"></script>
 
-
     <link rel="stylesheet" href="__ADMIN__/css/edit.css" />
     <!-- text fonts -->
     <link rel="stylesheet" href="__ADMIN__/css/ace-fonts.css" />
@@ -145,18 +143,14 @@
     <div class="navbar-container" id="navbar-container">
         <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
             <span class="sr-only">Toggle sidebar</span>
-
             <span class="icon-bar"></span>
-
             <span class="icon-bar"></span>
-
             <span class="icon-bar"></span>
         </button>
         <div class="navbar-header pull-left">
             <a href="#" class="navbar-brand">
                 <small>
                     <img  width='50' src="__ADMIN__/image/logowhite.png" alt="">
-
                     私有云
                 </small>
             </a>
@@ -168,10 +162,7 @@
                         <!-- <img class="nav-user-photo" src="{UC_API}/avatar.php?uid=$_SGLOBAL[supe_uid]&rand=$_SGLOBAL[timestamp]" alt="" /> -->
                         <span class="">欢迎您： {$Think.session.username}
 								</span>
-
-
                     </a>
-
                 </li>
 
                 <li class="light-blue">
@@ -181,6 +172,5 @@
                 </li>
             </ul>
         </div>
-
     </div>
 </div><!-- top end -->

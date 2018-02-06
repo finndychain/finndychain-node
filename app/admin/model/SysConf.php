@@ -20,9 +20,6 @@ class SysConf extends  Model
         if(empty($sys_conf)){
             $sys_conf = $this->column('value','name');
 
-            //条件处理。
-            //系统配置转换成键值对存储
-            //$sys_conf = array_column($sys_conf_result,'value','name');
             Cache::set('sys_conf',$sys_conf);
         }
         return $sys_conf;
@@ -42,6 +39,9 @@ class SysConf extends  Model
         foreach($data as $k=>$v){
            $this->where('name',$k)->setField('value',$v);
         }
+
+        //每次更新完重新设置缓存
+        $this->delSysConfCache('sys_conf');
     }
 
 

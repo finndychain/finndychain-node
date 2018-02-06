@@ -1,9 +1,7 @@
 <?php
 namespace app\admin\controller;
-use think\Db;
-use app\admin\model\SysConf as SysConf_model;
-use think\Cache;
 
+use app\admin\model\SysConf as modelSysConf;
 class Sysconf extends Base
 {
     public function Index()
@@ -15,7 +13,6 @@ class Sysconf extends Base
     //增加角色
     public function AddRole()
     {
-
         $title = '新增角色';
         return view('addrole', ['title' => $title]);
     }
@@ -52,10 +49,8 @@ class Sysconf extends Base
                     $this->error('授权appKey或appSecret不正确！');
                 }
             }
-            $sysconf_mode = new SysConf_model();
-            $sysconf_mode->updateSysConf($data);
-            //每次更新完重新设置缓存
-            $sysconf_mode->delSysConfCache('sys_conf');
+            $modelSysConf = new modelSysConf();
+            $modelSysConf->updateSysConf($data);
             $this->success('修改成功','sysconf/sysset');
         }
 
