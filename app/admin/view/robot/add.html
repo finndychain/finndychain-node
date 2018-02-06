@@ -1034,13 +1034,13 @@
         objsubmit = document.getElementById('valuesubmit');
         objsubmit.name = 'debug';
         obj.form.target = 'debugframe';
-        obj.form.action = 'midycp.php?action=robottest';
+        obj.form.action = '{$Think.config.robot_debug_url}';
         document.getElementById('debugurl').value = debugurl;
         document.getElementById('debugprocess').value = process;
         obj.form.submit();
         objsubmit.name = 'valuesubmit';
         obj.form.target = '';
-        obj.form.action = 'midycp.php?action=robots';
+        obj.form.action = '{:url("Robot/$op")}';
         document.getElementById('debugurl').value = '';
         document.getElementById('debugprocess').value = '';
     }

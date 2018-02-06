@@ -11,7 +11,8 @@
 
 // 应用公共文件
 function api_request($method, $url, $fields=''){
-    $url = 'http://www.finndy.test/api/robot/'.$url;
+    $url = config('api_url').$url;
+
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -24,6 +25,22 @@ function api_request($method, $url, $fields=''){
     }
     $result = curl_exec($ch);
     $result = json_decode($result,true);
+    curl_close($ch);
+    return $result;
+}
+function api_request_html($method, $url, $fields=''){
+    $url = config('api_url').$url;
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    if ($method === 'POST')
+    {
+        curl_setopt($ch, CURLOPT_POST, true );
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+    }
+    $result = curl_exec($ch);
     curl_close($ch);
     return $result;
 }
@@ -185,4 +202,34 @@ function getcategory(){
     $res = api_request('get' ,api_build_url('api.php',$params));
     $catarr = check_api_result($res);
     return $catarr;
+}
+
+/**
+ * [[单汉字和单英文字母均为1长度]]
+ * 字符串按个数截取函数（不同于下面的msgarr按字节截取），支持中文和其它编码
+ * @param string $str 需要转换的字符串
+ * @param string $start 开始位置
+ * @param string $length 截取长度
+ * @param string $charset 编码格式，默认"utf-8"
+ * @param string $suffix 截断显示字符，默认"..."
+ * @return string
+ * echo msubstr("出门不带书没有安全感，虽然很多时候都没机会翻没有钱包",0,10); //出门不带书没有安全感...
+ * echo msubstr("昆仑2副本！坑爹了Powered by Discuz!",0,10);					 //昆仑2副本！坑爹了P...
+ */
+function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true)
+{
+//    if(function_exists("mb_substr"))
+//        return mb_substr($str, $start, $length, $charset);
+//    elseif(function_exists('iconv_substr')) {
+//        return iconv_substr($str,$start,$length,$charset);
+//    }
+    $re['utf-8']  = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
+    $re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
+    $re['gbk']    = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
+    $re['big5']   = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
+    preg_match_all($re[$charset], $str, $match);
+    $slice = join("",array_slice($match[0], $start, $length));
+    if(count($match[0]) - $start > $length)
+        return $suffix ? $slice."..." : $slice;
+    return $slice;
 }

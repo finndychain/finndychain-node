@@ -6,12 +6,14 @@ use app\admin\model\SysConf;
 
 class Base extends  Controller
 {
-    public function _initialize(){
+    public function _initialize()
+    {
 
         //验证安装文件
         if (!is_file(ROOT_PATH . 'data/install.lock') || !is_file(APP_PATH . 'database.php')) {
             $this->redirect('install/index/index');
         }
+
 
         if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
             $this->error('您尚未登录系统',url('login/dologin'));
