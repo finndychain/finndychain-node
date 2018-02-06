@@ -109,11 +109,11 @@
                                         <td><label><input class="ace" type="checkbox" name="item[]" value="1" /><span class="lbl"> </span><label></td>
                                         <td style="color:#454545;">{$vo.robotid}</td>
                                         <td><a href="{:url('robot/detail',array('robotid' => $vo.robotid))}"><b>{$vo.name|msubstr=0,39}</b></a> </td>
-                                        <td id="progressrobotid"><div style="display:inline-block; vertical-align: middle;"><div class="progress pos-rel tooltip-info" data-percent="0%" data-rel="tooltip" data-original-title=" Starting ... " style="display:none;margin-bottom:0px;width:60px;">
+                                        <td id="progress{$vo.robotid}"><div style="display:inline-block; vertical-align: middle;"><div class="progress pos-rel tooltip-info" data-percent="0%" data-rel="tooltip" data-original-title=" Starting ... " style="display:none;margin-bottom:0px;width:60px;">
                                             <div class="progress-bar" style="width:0%;"></div>
                                         </div></div>{$vo.status_desc}
                                         </td>
-                                        <td style="color:#454545;">{$vo.dateline|date="y-m-d",###}</td>
+                                        <td style="color:#454545;">{$vo.dateline|date="Y-m-d",###}</td>
                                         <td style="color:#454545;">
                                             {if condition="$vo.lasttime == 0"}--
                                             {else /}{$vo.lasttime|date="Y-m-d",###}
@@ -184,14 +184,12 @@
        // console.log(robotid);return;
         //请求服务器
         $.post("{:url('robot/progress')}",{'robotid':robotid},function(res){
-            console.log("{:url('robot/progress')}");
-            if (res) {
 
+            if (res) {
                 //返回json格式的数据,URL对应的进度数
                 $.each(res,function(i,v){
                     var s_btn = $("button[data-robot='"+i+"']");
                     var s_tr = $('#progress'+i);
-
                     if (v != false) { //如果对应的URL读取进步数则如下操作
                         s_tr.children('font').hide();
                         s_tr.children('div').children('div').show();

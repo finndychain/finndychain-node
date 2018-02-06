@@ -55,7 +55,7 @@ class User extends Base
             if(!$updage_res){
                 $this->error('网络原因稍后再试!');
             }
-            if($res === 0){
+            if($updage_res){
                 $this->success('密码修改成功,请重新登录','login/loginout');
             }
         }

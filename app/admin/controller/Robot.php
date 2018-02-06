@@ -16,9 +16,7 @@ class Robot extends Base
                 $this->error($validate);
             }
             $params = $postdata;
-
             $params['op'] = 'valuesubmit';
-
             $res = api_request('POST' ,'api.php', api_build_params($params));
 
             if($res['error_code'] === 0){
@@ -26,7 +24,6 @@ class Robot extends Base
             }else{
                 $this->error('创建失败');
             }
-
             return;
         }
         //不同saas版本权限的前端最大最小显示值处理
@@ -63,8 +60,8 @@ class Robot extends Base
             }
             $params = $postdata;
             $params['op'] = 'valuesubmit';
+            $a = api_build_params($params);
             $res = api_request('POST' ,'api.php', api_build_params($params));
-
             if($res['error_code'] === 0){
                 $this->success('编辑数据源成功','robot/robotlist');
             }else{
@@ -326,13 +323,12 @@ class Robot extends Base
         }
         $thevaluearr = $res['result'];
         $thevaluearr['status_desc'] = lang('cp_source_available_font_'.$thevaluearr['status']);
-        //$save_type = $this->getSysConfValue('save_type');
-        $save_type = 1;
-        if(empty($save_type)){
+        //存储位置
+        $save_method = $this->getSysConfValue('save_method');
+
+        if(empty($save_method)){
             //线上
             $datacount =$thevaluearr['datacount'];
-           // dump($thevaluearr);die;
-            //获取线上数据
             $params['op'] = 'getrobotdata';
             $params['robotid'] = $robotid;
             $res = api_request('get' ,api_build_url('api.php',$params));
@@ -349,13 +345,13 @@ class Robot extends Base
             }else{
                 $this->error('参数有误');
             }
-
+            //数据导出url
             $publuc_exportjson_url = $publuc_exporturl_arr['apiurl_json'];
             $publuc_exportcsv_url = $publuc_exporturl_arr['export_csv_url'];
+            //清除数据url
             $clear_data_all = $publuc_exporturl_arr['danger_all'];
             $clear_data_one = $publuc_exporturl_arr['danger_one'];
             $jsonpurl = $jsonpurl;
-
         }else{
             //本地
             $data = new FinndyData();
@@ -368,7 +364,6 @@ class Robot extends Base
             $clear_data_all = url('robot/cleardata' , array('robotid'=>$robotid,'type'=>9999));
             $clear_data_one = url('robot/cleardata' , array('robotid'=>$robotid,'type'=>1));
         }
-
         $this->assign([
             'publuc_exportjson_url' => $publuc_exportjson_url,
             'publuc_exportcsv_url' => $publuc_exportcsv_url,
@@ -385,8 +380,6 @@ class Robot extends Base
             'jsonpurl' => $jsonpurl,
         ]);
         return $this->fetch('detail');
-
-
     }
 
     //jqgrid 获取数据
@@ -439,8 +432,6 @@ class Robot extends Base
         $tmp= json_encode($retarray);
         echo $callback . '(' . $tmp .')';
     }
-
-
 
     //获取用户采集工具版本信息
     public function getuserrobotver(){

@@ -12,7 +12,7 @@
 // 应用公共文件
 function api_request($method, $url, $fields=''){
     $url = config('api_url').$url;
-
+    //dump($url)
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -65,22 +65,21 @@ function api_build_url($path='',$params=array()){
     if(empty($path)){
         return false;
     }
+    $params = array_filter($params);
     $params['appkey']= api_get_appkey('app_key');
     $params['time']=time();
     $params['sign'] = api_sign_create($params);
-
-
     $url = http_build_query($params);
     $url = $path.'?'.$url;
 
     return $url;
-
 }
 
 function api_build_params($params=array(),$appkey = ''){
     if(empty($appkey)){
         $appkey = api_get_appkey('app_key');
     }
+    $params = array_filter($params);
     $params['appkey']= $appkey;
     $params['time']=time();
     $params['sign'] = api_sign_create($params);
@@ -103,8 +102,8 @@ function check_api_result($params=array()){
 function api_get_appkey($name='app_key'){
 
     if(empty($name))return false;
-    $base = new app\admin\controller\Base();
-    $sys_conf = $base->getSysConf();
+    $model = new app\admin\model\SysConf;
+    $sys_conf = $model->getSysConf();
     if(!isset($sys_conf[$name]))return false;
     return $sys_conf[$name];
 }
