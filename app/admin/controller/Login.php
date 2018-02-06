@@ -33,12 +33,14 @@ class Login extends Controller
 
                 $this->error('账号或密码错误!');
             }
+
             if($res){
                 Session::set('uid',$res['uid']);
                 Session::set('username',$res['username']);
                 unset($res['password']);
                 Session::set('userinfo',$res);
                 $this->success('登录成功','index/index');
+
             }
         }
         if(Session::get('uid') && Session::get('userinfo') && Session::get('username')){
@@ -54,7 +56,7 @@ class Login extends Controller
         Session::delete('uid');
         Session::delete('username');
         Session::delete('userinfo');
-        $this->redirect('login/dologin');
+        $this->redirect('dologin');
     }
 
     public function register(){

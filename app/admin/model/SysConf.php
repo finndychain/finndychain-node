@@ -5,14 +5,17 @@ use think\Cache;
 
 class SysConf extends  Model
 {
-    protected $table = 'cloud_sys_conf';
 
+    protected $name = 'sys_conf';
 
     /**获取所有系统配置信息
      * @return array|mixed
      */
     public function getSysConf(){
-       // $sys_conf = Cache::get('sys_conf');
+
+
+        $sys_conf = Cache::get('sys_conf');
+
 
         if(empty($sys_conf)){
             $sys_conf = $this->column('value','name');
@@ -24,7 +27,6 @@ class SysConf extends  Model
         }
         return $sys_conf;
     }
-
 
     /**删除系统配置缓存
      * @return array|mixed

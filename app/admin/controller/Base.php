@@ -1,5 +1,5 @@
 <?php
-namespace app\admin\controller;
+namespace app\admin\Controller;
 use think\Controller;
 use think\Session;
 use app\admin\model\SysConf;
@@ -13,8 +13,15 @@ class Base extends  Controller
         if (!is_file(ROOT_PATH . 'data/install.lock') || !is_file(APP_PATH . 'database.php')) {
             $this->redirect('install/index/index');
         }
-        if (!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')) {
-            $this->error('您尚未登录系统', url('login/dologin'));
+
+
+        if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
+            $this->error('您尚未登录系统',url('login/dologin'));
+        }
+
+        if(empty($this->getSysConfValue('app_key'))&&$this->request->controller() != 'Sysconf'){
+            $this->error('未填写授权信息','Sysconf/SysSet');
+
         }
         $sys_conf_result = $this->getSysConf();
     }

@@ -6,7 +6,7 @@ use think\Model;
 class FinndyData extends  Model
 {
 
-    protected $table = 'cloud_finndy_data';
+    protected $name = 'finndy_data';
     //删除数据
     public function cleardata($robotid,$type)
     {
