@@ -47,7 +47,7 @@ class Sysconf extends Base
             if(!empty($data['app_key'])){
                 $params['op'] = 'checkappkey';
                 $params['appsecret'] = $data['app_secret'];
-                $res = api_request('POST' ,'api.php', api_build_params($params,$data['app_key']));
+                $res = api_request('POST' ,'appkey.php', api_build_params($params,$data['app_key']));
                 if($res['error_code'] != 0){
                     $this->error('授权账号或密钥存在错误！');
                 }

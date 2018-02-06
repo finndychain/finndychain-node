@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="space-2"></div>
-
+                    {if condition="$lv neq ''"}
                     <!-- #section:pages/profile.contact -->
                     <div class="profile-contact-info">
                         <div class="profile-contact-links">
@@ -97,7 +97,7 @@
                         <div class="space-6"></div>
 
                     </div>
-
+                    {/if}
                     <!-- /section:pages/profile.contact -->
 
                 </div>
@@ -124,7 +124,7 @@
 
                             <div class="profile-info-value"><a href="{:url('User/Resetpwd')}">修改密码</a>&nbsp;</div>
                         </div>
-
+                        {if condition="$lv neq ''"}
                         <div class="profile-info-row">
                             <div class="profile-info-name" style="vertical-align:unset;"> 云采集引擎 </div>
                             <div class="widget-body">
@@ -191,7 +191,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        {/if}
 
                     </div>
                     <div class="space-12"></div>
