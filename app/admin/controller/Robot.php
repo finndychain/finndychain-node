@@ -325,7 +325,7 @@ class Robot extends Base
         $thevaluearr['status_desc'] = lang('cp_source_available_font_'.$thevaluearr['status']);
         //存储位置
         $save_method = $this->getSysConfValue('save_method');
-
+        $save_method = 0;
         if(empty($save_method)){
             //线上
             $datacount =$thevaluearr['datacount'];

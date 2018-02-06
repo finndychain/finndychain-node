@@ -19,11 +19,12 @@ class Base extends  Controller
             $this->error('您尚未登录系统',url('login/dologin'));
         }
 
-        if(empty($this->getSysConfValue('app_key'))&&$this->request->controller() != 'Sysconf'){
-            $this->error('未填写授权信息','Sysconf/SysSet');
-
+        if(empty($this->getSysConfValue('app_key'))||empty($this->getSysConfValue('app_secret'))){
+           if($this->request->controller() != 'Sysconf'){
+               $this->error('未填写授权信息','Sysconf/SysSet');
+           }
         }
-        $sys_conf_result = $this->getSysConf();
+
     }
 
     /**获取所有系统配置信息

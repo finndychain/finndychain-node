@@ -1,15 +1,12 @@
 <?php
 namespace app\admin\controller;
 use think\Session;
-use think\Db;
 
 use app\admin\model\Users as Users_model;
 
 
 class User extends Base
 {
-
-
 
     public function Index()
     {
@@ -28,19 +25,17 @@ class User extends Base
         }
         $this->assign('finndy',$finndy_info);
         $this->assign('lv',$result_lv);
-        return $this->fetch('index',['title'=>$title]);
+        return $this->fetch('profile',['title'=>$title]);
     }
 
     public function Resetpwd()
     {
 
-
         $title = '修改密码';
         if(request()->isPost()){
             $postdata = input();
 
-
-              $validate = $this->validate($postdata,'User.Resetpwd');//使用validate验证
+            $validate = $this->validate($postdata,'User.Resetpwd');//使用validate验证
             if(true !== $validate){
                 // 验证失败 输出错误信息
                 $this->error($validate);
@@ -55,12 +50,11 @@ class User extends Base
             if(!$updage_res){
                 $this->error('网络原因稍后再试!');
             }
-            if($updage_res){
-                $this->success('密码修改成功,请重新登录','login/loginout');
-            }
+            $this->success('密码修改成功,请重新登录','login/loginout');
         }
         return view('resetpwd',['title'=>$title]);
     }
+
     public function UserList()
     {
         $title = '用户列表';
@@ -69,7 +63,7 @@ class User extends Base
         $userlist = $users_model->getUsers();
         $this->assign('title',$title);
         $this->assign('userlist',$userlist);
-        return $this->fetch('userlist');
+        return $this->fetch('list');
     }
 
     //增加用户
@@ -96,7 +90,8 @@ class User extends Base
             $this->success('添加成功','user/userlist');
         }
     }
-    //修改用户
+
+    //修改用户信息
     public function EditUser()
     {
         if(request()->isPost()) {
@@ -130,7 +125,6 @@ class User extends Base
     //禁用用户
     public function BanUser()
     {
-
         $data = input();
         $uid = $data['uid'];
         $status = $data['status'];
@@ -147,7 +141,6 @@ class User extends Base
             $this->error('网络原因稍后再试!');
         }
         $this->success('修改成功','user/userlist');
-
 
     }
 
