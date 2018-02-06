@@ -2,7 +2,7 @@
 namespace app\admin\Controller;
 use think\Controller;
 use think\Session;
-use app\admin\model\SysConf;
+use app\admin\model\SysConf as modelSysConf;
 
 class Base extends  Controller
 {
@@ -25,13 +25,15 @@ class Base extends  Controller
            }
         }
 
+        $this->setPageSeo();
+
     }
 
     /**获取所有系统配置信息
      * @return array|mixed
      */
     public function getSysConf(){
-       $modelSysConf = new SysConf();
+       $modelSysConf = new modelSysConf();
        $sys_conf = $modelSysConf->getSysConf();
        return $sys_conf;
     }
@@ -47,12 +49,12 @@ class Base extends  Controller
         return $sys_conf[$key];
     }
 
-
-    protected function setPageSeo($title=''){
-        $pageSeo['title']=$title;
-        $pageSeo['keywords']=$title;
-        $pageSeo['desc']=$title;
-        $this->assign($pageSeo);
+    /**系统SEO配置信息*/
+    public function setPageSeo(){
+        $seoInfo['title']=$this->getSysConfValue('web_site_title');;
+        $seoInfo['kw']=$this->getSysConfValue('web_site_keyword');;
+        $seoInfo['desc']=$this->getSysConfValue('web_site_description');
+        $this->assign('seoInfo',$seoInfo);
     }
 
 

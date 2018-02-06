@@ -24,7 +24,6 @@ class Robot extends Base
             }else{
                 $this->error('创建失败');
             }
-            return;
         }
         //不同saas版本权限的前端最大最小显示值处理
 
@@ -323,11 +322,10 @@ class Robot extends Base
         }
         $thevaluearr = $res['result'];
         $thevaluearr['status_desc'] = lang('cp_source_available_font_'.$thevaluearr['status']);
-        //存储位置
+
         $save_method = $this->getSysConfValue('save_method');
         $save_method = 0;
         if(empty($save_method)){
-            //线上
             $datacount =$thevaluearr['datacount'];
             $params['op'] = 'getrobotdata';
             $params['robotid'] = $robotid;
