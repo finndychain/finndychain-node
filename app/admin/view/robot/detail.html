@@ -22,12 +22,12 @@
                 </ul>
                 <!-- #section:basics/content.searchbox -->
                 <!--<div class="nav-search" id="nav-search">-->
-                    <!--<form class="form-search">-->
-								<!--<span class="input-icon">-->
-									<!--<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />-->
-									<!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
-								<!--</span>-->
-                    <!--</form>-->
+                <!--<form class="form-search">-->
+                <!--<span class="input-icon">-->
+                <!--<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />-->
+                <!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
+                <!--</span>-->
+                <!--</form>-->
                 <!--</div>&lt;!&ndash; /.nav-search &ndash;&gt;-->
                 <!-- /section:basics/content.searchbox -->
             </div>
@@ -87,8 +87,9 @@
                                             <div class="align-right">
                                                 <p>
                                                 <span class="grey" style="line-height:28px;">
-                                                     <button class="btn btn-mini btn-success tooltip-success runstyle $btndisabledrun " type="button" data-rel="tooltip" data-original-title="{$Think.lang.robot_robot_op_run}" data-robot="$theviewvalue[real_robotid]" data-run="$theviewvalue[runurl]" data-runstop="$theviewvalue[stopurl]" onclick="run(this);"><i class="ace-icon fa fa-play "></i></button>
-                                                    <button class="btn btn-mini btn-warning tooltip-warning $btndisabledrun " type="button" data-rel="tooltip" data-original-title="{$Think.lang.robot_robot_op_start}" onclick="window.location.href='$thetesturl&clearcache=1&robotid=$theviewvalue[real_robotid]'"><i class="ace-icon fa fa-bug bigger-110"></i></button>
+                                                     <button class="btn btn-mini btn-success tooltip-success runstyle  " type="button" data-rel="tooltip" data-original-title="云采集" data-robot="{$vo.robotid}" data-run="{:url('robot/startrun',[robotid=>$vo.robotid])}" data-runstop="{:url('robot/stoprun',[robotid=>$vo.robotid])}" onclick="run(this);" data-click="false"><i class="ace-icon fa fa-play "></i></button>
+
+                                            <button class="btn btn-mini btn-warning tooltip-warning  " type="button" data-rel="tooltip" data-original-title="测试采集" onclick="window.location.href='{:url("robot/debugrobot",[robotid=>$vo.robotid])}'"><i class="ace-icon fa fa-bug bigger-110"></i></button>
                                                     <button class="btn btn-mini btn-success tooltip-success $btndisabledcopy " type="button"  data-rel="tooltip" data-original-title="{$Think.lang.robot_robot_op_copy}" onclick="window.location.href='{:url("Robot/Copy",array("robotid"=>$thevaluearr.robotid))}'"><i class="ace-icon fa fa-copy "></i></button>
                                                     <button class="btn btn-mini btn-warning tooltip-warning $btndisabledexport " type="button"  data-rel="tooltip" data-original-title="{$Think.lang.robot_robot_op_export}" onclick="window.location.href='{:url("Robot/export",array("robotid"=>$thevaluearr.robotid,'robotname'=>$thevaluearr.name))}'"><i class="ace-icon fa fa-save "></i></button>
                                                     <button class="btn btn-mini btn-info tooltip-info $btndisablededitview " type="button" data-rel="tooltip" data-original-title="查看"  onclick="window.location.href='{:url("Robot/Edit",array("robotid"=>$thevaluearr.robotid))}'"><i class="ace-icon fa fa-pencil"></i></button>
@@ -104,19 +105,19 @@
                     </div>
                 </div>
                 <!--<div class="row" style="position: relative;top:-5px">-->
-                    <!--<div class="col-xs-12">-->
-                        <!--<div class="widget-box">-->
-                            <!--<div class="widget-main row">-->
-                                <!--<div class="col-xs-2" style="width:95px;">数据简介：</div>-->
-                                <!--<div class="col-xs-10" style=" padding:0px;">-->
-                                    <!--$theviewvalue[description]-->
-                                <!--</div>-->
-                                <!--<div class="col-xs-12">-->
-                                    <!--<br>   <span style="color:#DAA458">友情提示：&nbsp;&nbsp;&nbsp;如需定制该网站全量数据或其它分类数据，请联系官方客服或供应商</span></div>-->
-                            <!--</div>-->
+                <!--<div class="col-xs-12">-->
+                <!--<div class="widget-box">-->
+                <!--<div class="widget-main row">-->
+                <!--<div class="col-xs-2" style="width:95px;">数据简介：</div>-->
+                <!--<div class="col-xs-10" style=" padding:0px;">-->
+                <!--$theviewvalue[description]-->
+                <!--</div>-->
+                <!--<div class="col-xs-12">-->
+                <!--<br>   <span style="color:#DAA458">友情提示：&nbsp;&nbsp;&nbsp;如需定制该网站全量数据或其它分类数据，请联系官方客服或供应商</span></div>-->
+                <!--</div>-->
 
-                        <!--</div>-->
-                    <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
                 <!--</div>-->
                 <div class="hr-32"></div>
                 <div class="row">
@@ -172,6 +173,21 @@
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function($) {
+        //console.log('{$save_type}');
+//        if({$save_type} !== 0){
+//            //本地
+//            var jsonpurl = "{:url('Robot/getJsonp',array('robotid'=>$thevaluearr.robotid))}";
+//
+//            var publuc_exportcsv_url = "{:url('Robot/export_csv',array('robotid'=>$thevaluearr.robotid))}";
+//            var publuc_exportjson_url = "{:url('Robot/export_json',array('robotid'=>$thevaluearr.robotid,'pagesize'=>'20','pageindex'=>'0','sortby'=>'desc'))}";
+//        }else{
+//            //线上
+//            var jsonpurl = "{$jsonpurl}";
+//            var publuc_exportcsv_url = "{$publuc_exportcsv_url}";
+//            var publuc_exportjson_url = "{$publuc_exportjson_url}";
+//        }
+
+
         $('[data-rel=tooltip]').tooltip();
 
         var grid_selector = "#grid-table";
@@ -192,15 +208,16 @@
             }
         })
 
+
         jQuery(grid_selector).jqGrid({
-            url: "{:url('Robot/getJsonp',array('robotid'=>$thevaluearr.robotid))}",
+            url: '{$jsonpurl}',
             mtype: "GET",
             datatype: "jsonp",
             colModel: {$thevaluearr['cpmodels_str']},
             height: 250,
             shrinkToFit:false,
             viewrecords : true,
-            rowNum:3,
+            rowNum:10,
             pager: pager_selector,
             altRows: true,
             editurl: "../assets/dummy.html",//nothing is saved
@@ -401,7 +418,8 @@
                             "label" : "<i class='ace-icon fa fa-code-fork'></i> JSON格式",
                             "className" : "btn-sm btn-white btn-info",
                             "callback": function() {
-                                window.open("{:url('Robot/export_json',array('robotid'=>$thevaluearr.robotid,'pagesize'=>'20','pageindex'=>'0','sortby'=>'desc'))}");
+                                // window.open("{:url('Robot/export_json',array('robotid'=>$thevaluearr.robotid,'pagesize'=>'20','pageindex'=>'0','sortby'=>'desc'))}");
+                                window.open('{$publuc_exportjson_url}');
                             }
                         },
                 }
@@ -419,7 +437,8 @@
                             "label" : "<i class='ace-icon fa fa-file-o'></i> CSV",
                             "className" : "btn-sm btn-white btn-info",
                             "callback": function() {
-                                window.open("{:url('Robot/export_csv',array('robotid'=>$thevaluearr.robotid))}");
+                                //window.open("{:url('Robot/export_csv',array('robotid'=>$thevaluearr.robotid))}");
+                                window.open('{$publuc_exportcsv_url}');
                             }
                         },
 
@@ -637,6 +656,7 @@
         });
 
     });
+
 </script>
 
 

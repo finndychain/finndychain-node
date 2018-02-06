@@ -17,5 +17,10 @@ return [
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => APP_COMMON_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
     'dispatch_error_tmpl'    => APP_COMMON_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+    'robot_debug_url'    => 'http://www.finndy.com/finndyrobottest.php?op=debug',
+    'api_url'    => 'http://www.finndy.test/api/robot/',
+
+
+
 
 ];

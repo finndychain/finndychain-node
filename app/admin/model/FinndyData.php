@@ -22,7 +22,7 @@ class FinndyData extends  Model
             }
         } else {//删除最近一天的数据
             $map['robotid'] = $robotid;
-            $map['dateline'] = ['>', $onedayago];
+            $map['create_time'] = ['>', $onedayago];
             $res = $this->where($map)->delete();
             if ($res) {
                 return $msg = 'succ';
@@ -31,4 +31,5 @@ class FinndyData extends  Model
             }
         }
     }
+
 }

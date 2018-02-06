@@ -6,26 +6,17 @@ use app\admin\model\SysConf;
 
 class Base extends  Controller
 {
-    public function _initialize(){
+    public function _initialize()
+    {
 
         //验证安装文件
         if (!is_file(ROOT_PATH . 'data/install.lock') || !is_file(APP_PATH . 'database.php')) {
             $this->redirect('install/index/index');
         }
-
-//        if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
-//            $this->error('您尚未登录系统',url('login/dologin'));
-//        }
-        if(empty(Session::get('sys_conf'))){
-            $sysconf = new SysConf();
-            $sys_conf_result = $sysconf->select();
-            $sys_conf_result = collection($sys_conf_result)->toArray();
-            //系统配置转换成键值对存储
-            $sys_conf = array_column($sys_conf_result,'value','name');
-            Session::set('sys_conf',$sys_conf);
+        if (!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')) {
+            $this->error('您尚未登录系统', url('login/dologin'));
         }
-
-
+        $sys_conf_result = $this->getSysConf();
     }
 
     /**获取所有系统配置信息
