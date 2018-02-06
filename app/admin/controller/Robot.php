@@ -352,6 +352,8 @@ class Robot extends Base
 
             $publuc_exportjson_url = $publuc_exporturl_arr['apiurl_json'];
             $publuc_exportcsv_url = $publuc_exporturl_arr['export_csv_url'];
+            $clear_data_all = $publuc_exporturl_arr['danger_all'];
+            $clear_data_one = $publuc_exporturl_arr['danger_one'];
             $jsonpurl = $jsonpurl;
 
         }else{
@@ -363,13 +365,16 @@ class Robot extends Base
             $jsonpurl = url('robot/getjsonp' , array('robotid'=>$robotid));
             $publuc_exportcsv_url = url('robot/export_csv' , array('robotid'=>$robotid));
             $publuc_exportjson_url =url('robot/export_json' , array('robotid'=>$robotid,'pagesize'=>'20','pageindex'=>'0','sortby'=>'desc')) ;
-
+            $clear_data_all = url('robot/cleardata' , array('robotid'=>$robotid,'type'=>9999));
+            $clear_data_one = url('robot/cleardata' , array('robotid'=>$robotid,'type'=>1));
         }
 
         $this->assign([
             'publuc_exportjson_url' => $publuc_exportjson_url,
             'publuc_exportcsv_url' => $publuc_exportcsv_url,
             'jsonpurl' => $jsonpurl,
+            'clear_data_all' => $clear_data_all,
+            'clear_data_one' => $clear_data_one,
         ]);
         $this->assign([
             'title' => $title,

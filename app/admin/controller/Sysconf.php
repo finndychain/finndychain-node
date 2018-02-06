@@ -48,9 +48,9 @@ class Sysconf extends Base
                 $params['op'] = 'checkappkey';
                 $params['appsecret'] = $data['app_secret'];
                 $res = api_request('POST' ,'api.php', api_build_params($params,$data['app_key']));
-//                if($res['error_code'] != 0){
-//                    $this->error('授权账号或密钥存在错误！');
-//                }
+                if($res['error_code'] != 0){
+                    $this->error('授权账号或密钥存在错误！');
+                }
             }
             $sysconf_mode = new SysConf_model();
             $sysconf_mode->updateSysConf($data);
