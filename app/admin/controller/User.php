@@ -2,17 +2,35 @@
 namespace app\admin\controller;
 use think\Session;
 
-use app\admin\model\Users as Users_model;
+use app\admin\model\Users as modelUsers;
 
 
 class User extends Base
 {
+    public $modelUser = null;
 
-    public function Index()
+    public function _initialize()
+    {
+        parent::_initialize();
+        $this->modelUsers = new modelUsers();
+    }
+
+    public function index()
+    {
+
+        $title = '用户列表';
+
+        $userList = $this->modelUsers->getUsers();
+        $this->assign('title',$title);
+        $this->assign('userlist',$userList);
+
+        return $this->fetch('list');
+
+    }
+
+    public function profile()
     {
         $title = '我的面板';
-        $lang = lang('robot_robot_status');
-        $this->setPageSeo();
         $params['op'] = 'getuserinfo';
         $params['uid'] = $this->getSysConfValue('app_key');
         $res = api_request('get' ,api_build_url('api.php',$params));
@@ -28,7 +46,7 @@ class User extends Base
         return $this->fetch('profile',['title'=>$title]);
     }
 
-    public function Resetpwd()
+    public function resetpwd()
     {
 
         $title = '修改密码';
@@ -41,33 +59,23 @@ class User extends Base
                 $this->error($validate);
             }
             if($postdata['set_newpass'] != $postdata['set_okpass']){$this->error('新密码两次输入不一致!');}
-            $users_model = new Users_model();
 
-            $userinfo =$users_model->getUserinfo(['username'=>Session::get('username'),'password'=>passwordencrypt($postdata['set_oldpass'])]);
+            $userinfo =$this->modelUsers->getUserinfo(['username'=>Session::get('username'),'password'=>passwordencrypt($postdata['set_oldpass'])]);
             if(empty($userinfo)){$this->error('原始密码错误!');}
 
-            $updage_res = $users_model->setUserValue(array('uid'=>$userinfo['uid']),'password',passwordencrypt($postdata['set_okpass']));
+            $updage_res = $this->modelUsers->setUserValue(array('uid'=>$userinfo['uid']),'password',passwordencrypt($postdata['set_okpass']));
             if(!$updage_res){
                 $this->error('网络原因稍后再试!');
             }
             $this->success('密码修改成功,请重新登录','login/loginout');
         }
-        return view('resetpwd',['title'=>$title]);
+        return $this->fetch('resetpwd',['title'=>$title]);
     }
 
-    public function UserList()
-    {
-        $title = '用户列表';
 
-        $users_model = new Users_model();
-        $userlist = $users_model->getUsers();
-        $this->assign('title',$title);
-        $this->assign('userlist',$userlist);
-        return $this->fetch('list');
-    }
 
     //增加用户
-    public function AddUser()
+    public function add()
     {
         if(request()->isPost()) {
             $data = input();
@@ -77,22 +85,21 @@ class User extends Base
                 $this->error($validate);
             }
             $data['password'] = passwordencrypt($data['password']);
-            $users_model = new Users_model();
-            $user_info = $users_model->getUserinfo(array('username'=>$data['username']));
+            $user_info = $this->modelUsers->getUserinfo(array('username'=>$data['username']));
             if($user_info){
                 $this->error('用户名已存在!');
             }
 
-            $inser_res = $users_model->insertUserinfo($data);
+            $inser_res = $this->modelUsers->insertUserinfo($data);
             if(!$inser_res){
-                $this->error('网络原因稍后再试!');
+                $this->error('操作失败,稍后再试!');
             }
-            $this->success('添加成功','user/userlist');
+            $this->success('添加成功','user/index');
         }
     }
 
     //修改用户信息
-    public function EditUser()
+    public function edit()
     {
         if(request()->isPost()) {
             $data = input();
@@ -113,17 +120,16 @@ class User extends Base
                 $data['password'] = passwordencrypt($password);
             }
 
-            $users_model = new Users_model();
-            $inser_res = $users_model->setUserValues(array('uid'=>$uid),$data);
+            $inser_res = $this->modelUsers->setUserValues(array('uid'=>$uid),$data);
             if(!$inser_res){
-                $this->error('网络原因稍后再试!');
+                $this->error('操作失败,稍后再试!');
             }
-            $this->success('修改成功','user/userlist');
+            $this->success('修改成功','user/index');
         }
     }
 
     //禁用用户
-    public function BanUser()
+    public function ban()
     {
         $data = input();
         $uid = $data['uid'];
@@ -135,16 +141,14 @@ class User extends Base
             $status = 1;
         }
         if(empty($uid)){$this->error('参数错误!');}
-        $users_model = new Users_model();
-        $status_res =$users_model->setUserValue(array('uid'=>$uid),'status',$status);
+
+        $status_res =$this->modelUsers->setUserValue(array('uid'=>$uid),'status',$status);
         if(!$status_res){
-            $this->error('网络原因稍后再试!');
+            $this->error('操作失败,稍后再试!');
         }
-        $this->success('修改成功','user/userlist');
+        $this->success('修改成功','user/index');
 
     }
-
-
 
 
 }

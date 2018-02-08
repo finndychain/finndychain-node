@@ -41,7 +41,7 @@ class Sysconf extends Base
         if(request()->isPost()) {
             $data = input();
             if(empty($data['index_url'])){
-                $this->error('首页地址不能为空！');
+                $this->error('网站网址不能为空！');
             }
             if(empty($data['web_site_title'])){
                 $this->error('网站标题不能为空！');

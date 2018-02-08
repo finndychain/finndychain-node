@@ -45,20 +45,20 @@
                                     <button type="button" class="btn  btn-info btn-round" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">新增会员</button>
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                                         <div class="modal-dialog" role="document">
-                                            <div class="modal-content" style="width:350px;margin:5px auto" >
+                                            <div class="modal-content" style="width:350px;margin:180px auto" >
                                                 <div class="modal-body">
-                                                    <form action="{:url('User/AddUser')}" method="POST" id="addsubmit" onsubmit="return validate(this)">
+                                                    <form action="{:url('user/add')}" method="POST" id="addsubmit" onsubmit="return validate(this)">
                                                         <div class="form-group" >
                                                             <label  for class="control-label ml35">用户名:</label>
-                                                            <input type="text" class="form-control inputstyle" id="addusername" name="username">
+                                                            <input type="text" class="form-control inputstyle" id="addusername" name="username" >
                                                         </div>
                                                         <div class="form-group">
                                                             <label class="control-label ml35">密码:</label>
                                                             <input type="text" class="form-control inputstyle" id="adduserpwd" name="password" >
                                                         </div>
                                                         <div class="form-group">
-                                                            <label  class="control-label ml35 ">权限:</label>
-                                                            <select name="user_type " id="user_type" class="form-control inputstyle">
+                                                            <label  class="control-label ml35 ">用户组:</label>
+                                                            <select name="user_type" id="user_type" class="form-control inputstyle" >
                                                                 <option value="1">普通会员</option>
                                                                 <option value="2">管理员</option>
                                                             </select>
@@ -82,7 +82,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>用户名</th>
-                                        <th>权限</th>
+                                        <th>用户组</th>
                                         <th>创建时间</th>
                                         <th>操作</th>
                                     </tr>
@@ -98,23 +98,23 @@
                                             <button type="button" class="btn btn-mini  btn-info btn-round" data-toggle="modal" data-target="#exampleModal{$vo.uid}" data-whatever="@mdo"><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
                                             <div class="modal fade" id="exampleModal{$vo.uid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                                                 <div class="modal-dialog" role="document">
-                                                    <div class="modal-content" style="width:350px;margin:5px auto" >
-                                                        <div class="modal-body" ">
-                                                                <form action="{:url('User/EditUser')}" method="post" id="editsubmit" onsubmit="return edit_validate(this)">
+                                                    <div class="modal-content" style="width:350px;margin:180px auto" >
+                                                        <div class="modal-body">
+                                                                <form action="{:url('user/edit')}" method="post" id="editsubmit" onsubmit="return edit_validate(this)">
                                                                 <div class="form-group">
                                                                     <label  class="control-label ml35">用户名:</label>
-                                                                    <input type="text" class="form-control inputstyle" id="editusername" name="username" value="{$vo.username}">
+                                                                    <input type="text" class="form-control inputstyle" id="editusername" name="username" value="{$vo.username}" >
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label  class="control-label ml35">密码:</label>
-                                                                    <input type="text" class="form-control inputstyle"  name="password" value="">
+                                                                    <input type="text" class="form-control inputstyle"  name="password" value="" >
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label  class="control-label ml35">权限:</label>
-                                                                    <select name="user_type" id="edit_user_type" class="form-control inputstyle">
-
-                                                                        <option value="1" {if condition="$vo.user_type eq 1"} selected{/if}>普通会员</option>
-                                                                        <option value="2" {if condition="$vo.user_type eq 2"} selected{/if}>管理员</option>
+                                                                    <label  class="control-label ml35">用户组:</label>
+                                                                    <select name="user_type" id="edit_user_type" class="form-control inputstyle" >
+                                                                        <option value="1" {if condition="$vo.user_type eq 1"} selected{/if} >普通会员</option>
+                                                                        <option value="2" {if condition="$vo.user_type eq 2"} selected{/if} >管理员</option>
+                                                                        {if condition="$vo.user_type eq 3"}<option value="3"  selected>超级管理员</option> {/if}
                                                                     </select>
                                                                 </div>
                                                                     <input type="hidden" name="uid" value="{$vo.uid}">
@@ -128,7 +128,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </td>
                                     </tr>
                                 {/volist}
@@ -148,11 +147,11 @@
         var addusername = $('#addusername').val();
         var adduserpwd = $('#adduserpwd').val();
         if(addusername == '' ){
-            alert('用户名不能为空');
+            Msg('用户名不能为空');
             return false;
         }
         if(adduserpwd == '' ){
-            alert('密码不能为空');
+            Msg('密码不能为空');
             return false;
         }
         return true;
@@ -162,11 +161,11 @@
         var editpwd = $('#editpwd').val();
 
         if(editusername == '' ){
-            alert('用户名不能为空');
+            Msg('用户名不能为空');
             return false;
         }
         if(editpwd == '' ){
-            alert('密码不能为空');
+            Msg('密码不能为空');
             return false;
         }
         return true;
