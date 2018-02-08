@@ -6,7 +6,7 @@ use app\admin\model\SysConf as modelSysConf;
 
 class Base extends  Controller
 {
-    public function _initialize()
+    protected function _initialize()
     {
 
         //验证安装文件
@@ -32,7 +32,7 @@ class Base extends  Controller
     /**获取所有系统配置信息
      * @return array|mixed
      */
-    public function getSysConf(){
+    protected function getSysConf(){
        $modelSysConf = new modelSysConf();
        $sys_conf = $modelSysConf->getSysConf();
        return $sys_conf;
@@ -42,7 +42,7 @@ class Base extends  Controller
      * @param string $key
      * @return bool
      */
-    public function getSysConfValue($key='app_key'){
+    protected function getSysConfValue($key='app_key'){
         if(empty($key))return false;
         $sys_conf = $this->getSysConf();
         if(!isset($sys_conf[$key]))return false;
@@ -50,7 +50,7 @@ class Base extends  Controller
     }
 
     /**系统SEO配置信息*/
-    public function setPageSeo(){
+    protected function setPageSeo(){
         $seoInfo['title']=$this->getSysConfValue('web_site_title');;
         $seoInfo['kw']=$this->getSysConfValue('web_site_keyword');;
         $seoInfo['desc']=$this->getSysConfValue('web_site_description');

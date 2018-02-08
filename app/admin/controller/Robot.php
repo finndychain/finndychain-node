@@ -323,8 +323,8 @@ class Robot extends Base
         $thevaluearr = $res['result'];
         $thevaluearr['status_desc'] = lang('cp_source_available_font_'.$thevaluearr['status']);
 
+
         $save_method = $this->getSysConfValue('save_method');
-        $save_method = 0;
         if(empty($save_method)){
             $datacount =$thevaluearr['datacount'];
             $params['op'] = 'getrobotdata';

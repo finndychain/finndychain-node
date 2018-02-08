@@ -59,18 +59,6 @@
                                                 <div id="base" class="tab-pane active">
                                                     <div class="space-12"></div>
                                                     <div class="form-group">
-                                                        <label class="col-sm-1 label_control no-padding-right" > 站点开关 </label>
-                                                        <div class="col-sm-11">
-                                                            <select name="toggle_web_site" id="toggle_web_site" class="col-xs-10 col-sm-5">
-                                                                <option value="1" {if condition="$systeminfo.toggle_web_site eq '1'"} selected{/if} >开启</option>
-                                                                <option value="0" {if condition="$systeminfo.toggle_web_site eq '0'"} selected{/if}>关闭</option>
-                                                            </select>
-                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
-                                                                    <span class="middle">站点关闭后将提示网站已关闭，不能正常访问</span>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
                                                         <label class="col-sm-1 label_control no-padding-right" > 首页地址 </label>
                                                         <div class="col-sm-10">
                                                             <input type="text"  name="index_url"  class="col-xs-10 col-sm-5" value="{$systeminfo.index_url}">
@@ -115,6 +103,30 @@
                                                             <textarea name="web_site_statistics" id="web_site_statistics" cols="30" rows="5" class="col-xs-10 col-sm-5">{$systeminfo.web_site_statistics}</textarea>
                                                             <span class="help-inline col-xs-12 col-sm-7 pt">
                                                                 <span class="middle">支持百度、Google、cnzz等所有Javascript的统计代码</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-1 label_control no-padding-right" > 本地存储 </label>
+                                                        <div class="col-sm-11">
+                                                            <select name="save_method" id="save_method" class="col-xs-5 col-sm-1">
+                                                                <option value="1" {if condition="$systeminfo.save_method eq '1'"} selected {/if} >开启</option>
+                                                                <option value="0" {if condition="$systeminfo.save_method eq '0'"} selected {/if} >关闭</option>
+                                                            </select>
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                    <span class="middle">开启后采集数据将会存放在本地数据库</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-1 label_control no-padding-right" > 站点开关 </label>
+                                                        <div class="col-sm-11">
+                                                            <select name="toggle_web_site" id="toggle_web_site" class="col-xs-5 col-sm-1">
+                                                                <option value="1" {if condition="$systeminfo.toggle_web_site eq '1'"} selected{/if} >开启</option>
+                                                                <option value="0" {if condition="$systeminfo.toggle_web_site eq '0'"} selected{/if} >关闭</option>
+                                                            </select>
+                                                            <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                    <span class="middle">站点关闭后将提示网站已关闭，不能正常访问</span>
                                                             </span>
                                                         </div>
                                                     </div>
