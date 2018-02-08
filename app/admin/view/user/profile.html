@@ -83,14 +83,14 @@
                     <!-- #section:pages/profile.contact -->
                     <div class="profile-contact-info">
                         <div class="profile-contact-links">
+                            
                             <div class="profile-info-row">
-                                <div class="profile-info-name" style="width: 50%"> 云采集引擎: </div>
-                                <div class="profile-info-value"> {$lv}</div>
+                                <div class="profile-info-name">登录时间: </div>
+                                <div class="profile-info-value">{$Think.session.userinfo.last_login_time}</div>
                             </div>
-
                             <div class="profile-info-row">
-                                <div class="profile-info-name" style="width: 50%">到期时间: </div>
-                                <div class="profile-info-value">{if condition="$lv eq 'LV1'"}永不到期{else /}{$finndy.robotverdeadline|date='Y-m-d',###}{/if}</div>
+                                <div class="profile-info-name"> 注册时间: </div>
+                                <div class="profile-info-value"> {$Think.session.userinfo.create_time}</div>
                             </div>
                         </div>
 
@@ -129,8 +129,9 @@
                             <div class="profile-info-name" style="vertical-align:unset;"> 云采集引擎 </div>
                             <div class="widget-body">
                                 <div class="widget-main">
-                                    <div class="profile-info-value">
 
+                                    <div class="profile-info-value">
+                                        {if condition="$Think.session.userinfo.user_type eq 3"}
                                         <span class="label label-warning">{$lv}</span>
 
                                         &nbsp;
@@ -139,8 +140,9 @@
 
                                         &nbsp;
                                         <button onclick="alert('请登录发源地官方网站(http://www.finndy.com)升级账号')" class="btn btn-mini btn-white btn-info middle" type="button" style="padding:3px 6px;">续费/升级</button>
-
+                                        {/if}
                                     </div>
+
                                     <div class="col-xs-12 col-md-8">
                                         <div  class="border_bottom">
 
