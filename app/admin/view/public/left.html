@@ -23,8 +23,8 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li class="">
-                    <a href="{:url('Robot/Add')}">
+                <li class="{$currenAction =='robot/add'?'active' : ''}">
+                    <a href="{:url('robot/add')}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         创建数据源
                     </a>
@@ -32,8 +32,8 @@
                     <b class="arrow"></b>
                 </li>
 
-                <li class="">
-                    <a href="{:url('Robot/Robotlist')}">
+                <li class="{$currenAction =='robot/robotlist'?'active' : ''}">
+                    <a href="{:url('robot/robotlist')}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         数据源列表
                     </a>
@@ -53,15 +53,15 @@
             </a>
             <b class="arrow"></b>
             <ul class="submenu">
-                <li class="">
-                    <a href="{:url('User/Index')}">
+                <li class="{$currenAction =='user/profile'?'active' : ''}">
+                    <a href="{:url('user/profile')}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         我的面板
                     </a>
                     <b class="arrow"></b>
                 </li>
-                <li class="">
-                    <a href="{:url('User/Userlist')}">
+                <li class="{$currenAction =='user/index'?'active' : ''}">
+                    <a href="{:url('user/index')}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         用户列表
                     </a>
@@ -76,30 +76,30 @@
 
                 <i class="menu-icon fa fa-cog"></i>
                 <span class="menu-text">
-								系统设置
+								系统配置
 							</span>
                 <b class="arrow fa fa-angle-down"></b>
             </a>
             <b class="arrow"></b>
             <ul class="submenu">
-                <li class="hide">
-                    <a href="{:url('Sysconf/Index')}">
+                <li class="{$currenAction =='sysconf/sysset'?'active' : ''}">
+                    <a href="{:url('sysconf/sysset')}">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        站点设置
+                    </a>
+                    <b class="arrow"></b>
+                </li>
+                <li class="hide {$currenAction =='sysconf/index'?'active' : ''}">
+                    <a href="{:url('sysconf/index')}">
                         <i class="menu-icon fa fa-caret-right"></i>
                         权限设置
                     </a>
                     <b class="arrow"></b>
                 </li>
-                <li class="">
-                    <a href="{:url('Sysconf/SysSet')}">
+                <li class="hide {$currenAction =='sysconf/menuset'?'active' : ''}">
+                    <a href="{:url('sysconf/menuset')}">
                         <i class="menu-icon fa fa-caret-right"></i>
-                        系统设置
-                    </a>
-                    <b class="arrow"></b>
-                </li>
-                <li class="hide">
-                    <a href="{:url('Sysconf/MenuSet')}">
-                        <i class="menu-icon fa fa-caret-right"></i>
-                        后台菜单设置
+                        菜单设置
                     </a>
                     <b class="arrow"></b>
                 </li>

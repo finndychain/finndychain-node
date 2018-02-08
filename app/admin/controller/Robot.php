@@ -32,6 +32,7 @@ class Robot extends Base
 
         $catarr = getcategory();
 
+
         $title = '创建数据源';
         $tabbox  = 'style="display:none;"';
         $op = 'add';
@@ -327,8 +328,7 @@ class Robot extends Base
         $thevaluearr = $res['result'];
         $thevaluearr['status_desc'] = lang('cp_source_available_font_'.$thevaluearr['status']);
 
-        //数据存储方式 云端or本地
-        $save_method = $this->getSysConfValue('save_method');$save_method = 1;
+        $save_method = $this->getSysConfValue('save_method');
         if(empty($save_method)){
             //云端数据处理
             $datacount =$thevaluearr['datacount'];

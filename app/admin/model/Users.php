@@ -50,4 +50,20 @@ class Users extends  Model
         return $this->where($where)->select();
 
     }
+
+    public function getUserGroup($groupId=0){
+        switch ($groupId){
+            case 1:
+                $rs= '普通用户';
+                break;
+            case 2:
+                $rs= '管理员';
+                break;
+            case 3:
+                $rs= '超级管理员';
+                break;
+        }
+
+        return $rs;
+    }
 }

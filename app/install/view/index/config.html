@@ -4,16 +4,7 @@
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/localization/messages_zh.js"></script>
 <script type="text/javascript" src="__STATIC__/libs/layer/layer.js"></script>
-<script>
-  /*  $.validator.setDefaults({
-        submitHandler: function() {
-            alert("提交事件!");
-        }
-    });
-    $().ready(function() {
-        $("#form-1").validate();
-    });*/
-</script>
+
 <form method="post" action="{:url('index/config')}" target="_self" id="form-1" class="layui-form">
 	<div class="create-database">
 		<h2>
@@ -187,7 +178,6 @@
 	<div class="text-center">
 		<a class="btn btn-default" href="{:url('index/check')}">上一步</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<button class="btn btn-primary" id="submit" onclick="$('form').submit();return false;" type="button">下一步</button>
-	<!--	<button class="btn btn-primary" id="submit" type="button" >下一步</button>-->
 	</div>
 </div>
 

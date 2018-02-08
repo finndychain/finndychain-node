@@ -13,9 +13,7 @@ class SysConf extends  Model
      */
     public function getSysConf(){
 
-
         $sys_conf = Cache::get('sys_conf');
-
 
         if(empty($sys_conf)){
             $sys_conf = $this->column('value','name');

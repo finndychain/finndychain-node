@@ -1,14 +1,15 @@
 <?php
-// +----------------------------------------------------------------------
-// | Copyright (c) 2016-2017 http://www.eacoo123.com, All rights reserved.         
-// +----------------------------------------------------------------------
-// | [EacooPHP] 并不是自由软件,可免费使用,未经许可不能去掉EacooPHP相关版权。
-// | 禁止在EacooPHP整体或任何部分基础上发展任何派生、修改或第三方版本用于重新分发
-// +----------------------------------------------------------------------
-// | Author:  心云间、凝听 <981248356@qq.com>
-// +----------------------------------------------------------------------
-
+/*
+ +----------------------------------------------------------------------
+ | Copyright (c) 2017  All rights reserved.
+ +----------------------------------------------------------------------
+ | Author: Andy
+ +----------------------------------------------------------------------
+ | CreateDate:  18/01/15 下午1:42
+ +----------------------------------------------------------------------
+*/
 namespace app\install\controller;
+
 use think\Controller;
 
 class Index extends Controller {
@@ -16,22 +17,24 @@ class Index extends Controller {
 	protected $status;
 
 	public function _initialize() {
-		$this->status = [
-			'index'    => 'light',
-			'check'    => 'light',
-			'config'   => 'light',
-			'sql'      => 'light',
-			'complete' => 'light',
-		];
 
         //验证安装文件
-        if (is_file(ROOT_PATH . 'data/install.lock') && is_file(APP_PATH . 'database.php')) {
+        /*if (is_file(ROOT_PATH . 'data/install.lock') && is_file(APP_PATH . 'database.php')) {
             $this->redirect('/admin');
-        }
+        }*/
 
-		if ($this->request->action() != 'complete' && is_file(APP_PATH . 'database.php') && is_file(ROOT_PATH . 'data1/install.lock')) {
+		if ($this->request->action() != 'complete' && is_file(APP_PATH . 'database.php') && is_file(ROOT_PATH . 'data/install.lock')) {
 			return $this->redirect('/admin');
 		}
+
+        $this->status = [
+            'index'    => 'light',
+            'check'    => 'light',
+            'config'   => 'light',
+            'sql'      => 'light',
+            'complete' => 'light',
+        ];
+
 		$this->assign('product_name',config('product_name'));//产品名
 	}
 
@@ -96,20 +99,17 @@ class Index extends Controller {
 
             //检测数据库配置
 			$result = $this->validate($db,'InstallConfig.db_config');
-            //$result = $this->validate($db,$dbRule);
             if(true !== $result){
                 $this->error($result);
             }
 
             //检测网站配置信息
             $result = $this->validate($webconfig,'InstallConfig.web_config');
-            //$result = $this->validate($webconfig,$siteRule);
             if(true !== $result){
                 $this->error($result);
             }
 
             $result = $this->validate($admin,'InstallConfig.admin_info');
-            //$result = $this->validate($admin,$adminRule);
             if(true !== $result){
                 $this->error($result);
             }
