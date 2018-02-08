@@ -842,7 +842,7 @@
                             </div>
                             <div class="space-6"></div>
                             <div class="col-xs-12 align-center">
-                                <button data-loading-text="提交中..." class="btn btn-info $btn_save_disabled" style="min-width:200px;" type="submit" id="thevaluesubmit" name="thevaluesubmit"><i class="ace-icon fa fa-check bigger-110"></i> {$Think.lang.common_submit_release} </button>
+                                <button data-loading-text="提交中..." class="btn btn-info $btn_save_disabled" style="min-width:200px;" type="submit" id="thevaluesubmit" name="thevaluesubmit"   {if condition="$thevalue.inprogress ==1 "} disabled {else} '' {/if}  ><i class="ace-icon fa fa-check bigger-110"></i> {$Think.lang.common_submit_release} </button>
                             </div>
                             <div class="col-xs-12 align-center" style="margin-top:5px;">
                                 <input type="checkbox" name="accede" id="accede" value="1" checked>

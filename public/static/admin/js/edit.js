@@ -1,5 +1,5 @@
 var sRTE;
-var FacePath = siteUrl + "/images/edit/face/";
+//var FacePath = siteUrl + "/images/edit/face/";
 var docStyle = "";
 var oArea;
 function word(sNodeBox, sHTML, sMode, sPageBreak){

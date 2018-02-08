@@ -52,6 +52,8 @@ class Robot extends Base
     {
         if(request()->isPost()){
             $postdata = input();
+            $name = $postdata['name'];
+
             $validate = $this->validate($postdata,'Robot.edit');//使用validate验证
             if(true !== $validate){
                 // 验证失败 输出错误信息
@@ -59,7 +61,6 @@ class Robot extends Base
             }
             $params = $postdata;
             $params['op'] = 'valuesubmit';
-            $a = api_build_params($params);
             $res = api_request('POST' ,'api.php', api_build_params($params));
             if($res['error_code'] === 0){
                 $this->success('编辑数据源成功','robot/robotlist');
@@ -158,11 +159,12 @@ class Robot extends Base
         $params['op'] = 'stoprun';
         $res = api_request('get', api_build_url('api.php', $params));
         if ($res['error_code'] != 0) {
-            echo $res['reason'];
+            return $this->display($res['reason']);
 
         }else{
             //TODOLIST
-            echo $res;
+
+            return $this->display($res);
         }
     }
     //停止采集
@@ -173,11 +175,10 @@ class Robot extends Base
         $params['op'] = 'startrun';
         $res = api_request('get', api_build_url('api.php', $params));
         if ($res['error_code'] != 0) {
-            echo $res['reason'];
-
+            return $this->display($res['reason']);
         }else{
             //TODOLIST
-            echo $res;
+            return $this->display($res);
         }
     }
     //运行测试
@@ -185,9 +186,7 @@ class Robot extends Base
         $robotid = 264564;
         $params['robotid'] = $robotid;
         $params['op'] = 'debugrobot';
-
         $res = api_request_html('get', api_build_url('api.php', $params));
-
         $this->assign(
             'res',$res
         );
@@ -202,7 +201,7 @@ class Robot extends Base
         $params['op'] = 'progress';
         $res = api_request('POST','api.php', api_build_params( $params));
         if ($res['error_code'] != 0) {
-            echo $res['reason'];
+            return $this->display($res['reason']);
         }else{
             //TODOLIST
             return json($res['result']);
@@ -229,8 +228,7 @@ class Robot extends Base
         header('Content-Length: '.strlen($exporttext));
         header('Pragma: no-cache');
         header('Expires: 0');
-
-        echo $exporttext;
+        return $this->display($exporttext);
 
     }
 
@@ -278,9 +276,8 @@ class Robot extends Base
                 if($res['error_code'] === 0){
                     $this->success('创建数据源成功','robot/robotlist');
                 }else{
-                    $this->error('创建失败,请重新编辑');
+                    $this->error('创建失败,请重新编辑','robot/import');
                 }
-                return;
             }
             return;
         }
@@ -293,11 +290,17 @@ class Robot extends Base
         $title = '数据源列表';
         $tabbox  = 'style="display:none;"';
         $params['op'] = 'getrobotslist';
-
+        $params['page'] = input('get.page');
         $res = api_request('get' ,api_build_url('api.php',$params));
         $arr = check_api_result($res);
 
-        $listarr = $arr['data']?$arr['data']:array();
+        $listarr = $arr['data'] ? $arr['data'] : array();
+        $multipage = $arr['page'] ? $arr['page'] : array();
+        $listcount =  $multipage['listcount'];
+        $perpage = $multipage['perpage'];
+        $page = input('get.page');
+        $theurl = url('robot/robotlist');
+        $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
         foreach($listarr as &$item){
             $item['status_desc']=lang('cp_source_available_font_'.$item['status']);
         }
@@ -305,6 +308,7 @@ class Robot extends Base
             'title' => $title,
             'listarr'=>$listarr,
             'tabbox'=>$tabbox,
+            'multipage'=>$multipage,
         ]);
         return $this->fetch('robotlist');
     }
@@ -323,9 +327,10 @@ class Robot extends Base
         $thevaluearr = $res['result'];
         $thevaluearr['status_desc'] = lang('cp_source_available_font_'.$thevaluearr['status']);
 
-        $save_method = $this->getSysConfValue('save_method');
-        $save_method = 0;
+        //数据存储方式 云端or本地
+        $save_method = $this->getSysConfValue('save_method');$save_method = 1;
         if(empty($save_method)){
+            //云端数据处理
             $datacount =$thevaluearr['datacount'];
             $params['op'] = 'getrobotdata';
             $params['robotid'] = $robotid;
@@ -335,7 +340,6 @@ class Robot extends Base
             }else{
                 $this->error('参数有误');
             }
-            //获取导出csv和jsonurl
             $params['op'] = 'getrobotdataurl';
             $res = api_request('get' ,api_build_url('api.php',$params));
             if($res['error_code'] == 0){
@@ -343,31 +347,24 @@ class Robot extends Base
             }else{
                 $this->error('参数有误');
             }
-            //数据导出url
+            //将数据以csv格式导出的url
+            $params['op'] = 'downloaddata';
+            $publuc_exportcsv_url = config('api_url').api_build_url('api.php',$params);
+            //将数据以json格式导出
             $publuc_exportjson_url = $publuc_exporturl_arr['apiurl_json'];
-            $publuc_exportcsv_url = $publuc_exporturl_arr['export_csv_url'];
-            //清除数据url
-            $clear_data_all = $publuc_exporturl_arr['danger_all'];
-            $clear_data_one = $publuc_exporturl_arr['danger_one'];
-            $jsonpurl = $jsonpurl;
         }else{
-            //本地
+            //本地数据处理
             $data = new FinndyData();
             $datacount = $data->where('robotid',$robotid)->count();
-            $datacount      = intval($datacount);
-
+            $datacount = intval($datacount);
             $jsonpurl = url('robot/getjsonp' , array('robotid'=>$robotid));
             $publuc_exportcsv_url = url('robot/export_csv' , array('robotid'=>$robotid));
             $publuc_exportjson_url =url('robot/export_json' , array('robotid'=>$robotid,'pagesize'=>'20','pageindex'=>'0','sortby'=>'desc')) ;
-            $clear_data_all = url('robot/cleardata' , array('robotid'=>$robotid,'type'=>9999));
-            $clear_data_one = url('robot/cleardata' , array('robotid'=>$robotid,'type'=>1));
         }
         $this->assign([
             'publuc_exportjson_url' => $publuc_exportjson_url,
             'publuc_exportcsv_url' => $publuc_exportcsv_url,
             'jsonpurl' => $jsonpurl,
-            'clear_data_all' => $clear_data_all,
-            'clear_data_one' => $clear_data_one,
         ]);
         $this->assign([
             'title' => $title,
@@ -375,7 +372,6 @@ class Robot extends Base
             'tabbox' => $tabbox,
             'thevaluearr' => $thevaluearr,
             'datacount' => $datacount,
-            'jsonpurl' => $jsonpurl,
         ]);
         return $this->fetch('detail');
     }
@@ -429,6 +425,8 @@ class Robot extends Base
         }
         $tmp= json_encode($retarray);
         echo $callback . '(' . $tmp .')';
+        //return $this->display($callback . '(' . $tmp .')');
+      //  return jsonp($callback . '(' . $tmp .')');
     }
 
     //获取用户采集工具版本信息
@@ -578,32 +576,46 @@ class Robot extends Base
         $response->gen($retarray,$datatype);
 
     }
-
     //删除数据
     public function  cleardata(){
         $type = intval(input('type'));
-        if($type != 1 && $type != 9999){
+        if($type != 1 && $type != 99999){
             $this->error('参数有误');
         }
         $robotid = intval(input('robotid'));
         if(empty($robotid)){
             $this->error('参数有误');
         }
-        $data = new FinndyData();
-        $listcount = $data->where('robotid',$robotid)->count();
-        if(empty($listcount)){
-            $this->error('暂无数据');
+        $save_method = $this->getSysConfValue('save_method');
+        if($save_method){
+            $data = new FinndyData();
+            $listcount = $data->where('robotid',$robotid)->count();
+            if(empty($listcount)){
+                $this->error('暂无数据');
+            }else{
+                $res = $data->cleardata($robotid , $type);
+                if($res == 'succ'){
+                    $this->success('删除成功');
+                }else{
+                    $this->error('删除失败');
+                }
+            }
         }else{
-            $res = $data->cleardata($robotid , $type);
-            if($res == 'succ'){
+            $params['robotid'] = $robotid;
+            $params['type'] = $type;
+            $params['op'] = 'cleardata';
+            $res = api_request('get' ,api_build_url('api.php',$params));
+            if($res['error_code'] == 0){
                 $this->success('删除成功');
             }else{
                 $this->error('删除失败');
             }
         }
 
+
     }
 
+    //私有云服务条款
     public function policy(){
         return $this->fetch('policy');
     }

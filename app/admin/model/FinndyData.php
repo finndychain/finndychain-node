@@ -13,7 +13,7 @@ class FinndyData extends  Model
 
 
         $onedayago = time() - 24 * 3600;
-        if ($type == 9999) {//删除全部数据
+        if ($type == 99999) {//删除全部数据
             $res = $this->where(array('robotid' => $robotid))->delete();
             if ($res) {
                 return $msg = 'succ';
@@ -24,6 +24,7 @@ class FinndyData extends  Model
             $map['robotid'] = $robotid;
             $map['create_time'] = ['>', $onedayago];
             $res = $this->where($map)->delete();
+
             if ($res) {
                 return $msg = 'succ';
             } else {

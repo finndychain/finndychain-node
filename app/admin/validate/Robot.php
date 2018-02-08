@@ -3,8 +3,14 @@ namespace app\admin\validate;
 use think\Validate;
 class Robot extends Validate
 {
+    public function __construct(array $rules = [], array $message = [], array $field = [])
+    {
+        parent::__construct($rules, $message, $field);
+        mb_internal_encoding('utf-8');
+    }
+
     protected $rule = [
-        'name' => 'require|min:10|max:50',
+        'name' => 'require|min:10|max:24',
         'description' => 'require|min:3',
         'sourcesitename' => 'require',
         'import' => 'require',
@@ -13,9 +19,9 @@ class Robot extends Validate
 
     ];
     protected $message =[
-        'name.require'=>'数据源名称字数10个字以上并且50个字以下',
-        'name.min'=>'数据源名称字数10个字以上并且50个字以下',
-        'name.max'=>'数据源名称字数10个字以上并且50个字以下',
+        'name.require'=>'数据源名称字数10个字以上并且24个字以下',
+        'name.min'=>'数据源名称字数10个字以上并且24个字以下',
+        'name.max'=>'数据源名称字数10个字以上并且24个字以下',
         'description.require'=>'源描述长度不符合要求',
         'description.min'=>'源描述长度不符合要求',
         'sourcesitename.require'=>'来源网站不能为空',

@@ -66,5 +66,7 @@ return [
     'relation data not exists'  => '关联数据不存在',
     'relation not support'      => '关联不支持',
     'chunk not support order'   => 'Chunk不支持调用order方法',
+    'next_page' => '>',
+    'pre_page' => '<',
 
 ];

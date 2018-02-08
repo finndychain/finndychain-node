@@ -87,6 +87,9 @@
                                         <th>操作</th>
                                     </tr>
                                     <!--数据行-->
+                                    {if empty($userlist)}
+                                        <tr><td colspan="5" align="center" style="height:60px;color:#666;">暂无数据</td></tr>
+                                    {else/}
                                     {volist name='userlist' id='vo'}
                                     <tr>
                                         <td>{$vo.uid}</td>
@@ -132,9 +135,10 @@
                                         </td>
                                     </tr>
                                 {/volist}
+                                {/if}
                                 </tbody>
                             </table>
-
+                        {$multipage}
                     </div>
                 </div>
             </div><!-- /.page-content -->
