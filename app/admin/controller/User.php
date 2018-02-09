@@ -25,6 +25,9 @@ class User extends Base
 
         $listcount = $this->modelUsers->count();
         $userlist = $this->modelUsers->order('uid')->limit($start,$perpage)->select();
+        foreach($userlist as $k=>$v){
+            $userlist[$k]['user_type'] = $this->modelUsers->getUserGroup($v['user_type']);
+        }
         $theurl = url('user/index');
         $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
 
