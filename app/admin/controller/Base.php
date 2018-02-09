@@ -1,6 +1,5 @@
 <?php
 namespace app\admin\Controller;
-use function GuzzleHttp\Psr7\str;
 use think\Controller;
 use think\Session;
 use app\admin\model\SysConf as modelSysConf;
@@ -28,7 +27,7 @@ class Base extends  Controller
 
         $this->setPageSeo();
 
-        $this->assign('currenAction',strtolower($this->request->controller().'/'.$this->request->action()));
+        $this->assign('currentAction',strtolower($this->request->controller().'/'.$this->request->action()));
 
     }
 
