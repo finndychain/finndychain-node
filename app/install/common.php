@@ -58,9 +58,9 @@ function check_env(){
  */
 function check_dirfile(){
 	$items = [
-		['dir',  '可写', 'success', 'data/uploads/'],
-		['dir',  '可写', 'success', 'data/backup/'],
-
+        ['dir',  '可写', 'success', 'app/'],
+		['dir',  '可写', 'success', 'data/'],
+		['dir',  '可写', 'success', 'runtime/'],
 	];
 
 	foreach ($items as &$val) {
@@ -231,12 +231,13 @@ function register_administrator($db, $prefix, $admin){
 
 	$password = passwordencrypt($admin['password']);
 
-	$sql = "INSERT INTO `[PREFIX]users` (`uid`,`username`,`password`,`nickname`,`email`, `avatar`,`sex`,`birthday`,`score`,`allow_admin`,`reg_time`,`last_login_ip`,`last_login_time`,`status`,`user_type`) VALUES ".
-		   "('1', '[NAME]', '[PASS]', '创始人', '[EMAIL]','/img/default-avatar.svg', '0', '0', '0', '1', '[TIME]', '[IP]','[TIME]', '1', '3');";
+	$sql = "INSERT INTO `[PREFIX]users` (`uid`,`username`,`password`,`nickname`,`email`, `avatar`,`sex`,`birthday`,`score`,`allow_admin`,`reg_time`,`last_login_ip`,`last_login_time`,`status`,`user_type`,`create_time`) VALUES ".
+		   "('1', '[NAME]', '[PASS]', '创始人', '[EMAIL]','/img/default-avatar.svg', '0', '0', '0', '1', '[TIME]', '[IP]','[TIME]', '1', '3','[TIME]');";
 	$sql = str_replace(
 		['[PREFIX]', '[NAME]','[PASS]','[EMAIL]','[TIME]', '[IP]'],
 		[$prefix, $admin['username'],$password, $admin['email'], time(), get_client_ip(1)],
 		$sql);
+
 	$db->execute($sql);
 	show_msg('创始人帐号注册完成！');
 }

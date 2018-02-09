@@ -14,7 +14,6 @@ class Base extends  Controller
             $this->redirect('install/index/index');
         }
 
-
         if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
             $this->error('您尚未登录系统',url('login/dologin'));
         }
@@ -27,7 +26,7 @@ class Base extends  Controller
 
         $this->setPageSeo();
 
-        $this->assign('currenAction',strtolower($this->request->controller().'/'.$this->request->action()));
+        $this->assign('currentAction',strtolower($this->request->controller().'/'.$this->request->action()));
 
     }
 

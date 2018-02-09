@@ -95,6 +95,8 @@ class User extends Base
                 // 验证失败 输出错误信息
                 $this->error($validate);
             }
+            $this->checkUserType($data['user_type']);
+
             $data['password'] = passwordencrypt($data['password']);
             $user_info = $this->modelUsers->getUserinfo(array('username'=>$data['username']));
             if($user_info){
@@ -117,6 +119,7 @@ class User extends Base
             $uid = $data['uid'];
             unset($data['uid']);
             if(empty($uid)){$this->error('参数错误!');}
+
             $password = $data['password'];
             if(empty($password)){$data['password'] = 123456;} //默认填充密码，提交时不修改
 
@@ -130,6 +133,8 @@ class User extends Base
             }else{
                 $data['password'] = passwordencrypt($password);
             }
+
+            $this->checkUserType($data['user_type']);
 
             $inser_res = $this->modelUsers->setUserValues(array('uid'=>$uid),$data);
             if(!$inser_res){
@@ -159,6 +164,13 @@ class User extends Base
         }
         $this->success('修改成功','user/index');
 
+    }
+
+    protected function checkUserType($userTypeNew=''){
+        $userType = Session::get('usertype');
+        if(empty($userTypeNew)||($userType<2)||($userTypeNew>$userType)){
+            $this->error('没有权限操作！');
+        }
     }
 
 

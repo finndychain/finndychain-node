@@ -19,6 +19,7 @@ return [
     'dispatch_error_tmpl'    => APP_COMMON_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
     'robot_debug_url'    => 'http://www.finndy.com/finndyrobottest.php?op=debug',
     'api_url'    => 'http://www.finndy.test/api/robot/',
+
     //最大分页数
     'maxpages'    => 500,
     'pagesize'    => 20,
