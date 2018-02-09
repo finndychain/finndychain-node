@@ -23,6 +23,6 @@ return [
     //最大分页数
     'maxpages'    => 500,
     'pagesize'    => 20,
-    'api_url'    => 'http://www.finndy.test/api/robot/',
+
 
 ];

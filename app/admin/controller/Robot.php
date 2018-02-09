@@ -20,7 +20,7 @@ class Robot extends Base
         $listcount =  $multipage['listcount'];
         $perpage = $multipage['perpage'];
         $page = input('get.page');
-        $theurl = url('robot/robotlist');
+        $theurl = url('robot/index');
         $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
         foreach($listarr as &$item){
             $item['status_desc']=lang('cp_source_available_font_'.$item['status']);
@@ -49,7 +49,7 @@ class Robot extends Base
             $res = api_request('POST' ,'api.php', api_build_params($params));
 
             if($res['error_code'] === 0){
-                $this->success('创建数据源成功','robot/robotlist');
+                $this->success('创建数据源成功','robot/index');
             }else{
                 $this->error('创建失败');
             }
@@ -92,7 +92,7 @@ class Robot extends Base
             $params['op'] = 'valuesubmit';
             $res = api_request('POST' ,'api.php', api_build_params($params));
             if($res['error_code'] === 0){
-                $this->success('编辑数据源成功','robot/robotlist');
+                $this->success('编辑数据源成功','robot/index');
             }else{
                 $this->error($res['reason']);
             }
@@ -143,7 +143,7 @@ class Robot extends Base
             $params['op']='valuesubmit';
             $res = api_request('POST' ,'api.php', api_build_params($params));
             if($res['error_code'] === 0){
-                $this->success('创建数据源成功','robot/robotlist');
+                $this->success('创建数据源成功','robot/index');
             }else{
                 $url = url('robot/copy' , array('robotid'=>$copyrobotid));
                 $this->error($res['reason'],$url);
@@ -303,7 +303,7 @@ class Robot extends Base
                 $res = api_request('POST' ,'api.php', api_build_params($params));
 
                 if($res['error_code'] === 0){
-                    $this->success('创建数据源成功','robot/robotlist');
+                    $this->success('创建数据源成功','robot/index');
                 }else{
                     $this->error('创建失败,请重新编辑','robot/import');
                 }
