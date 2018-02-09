@@ -74,7 +74,7 @@
                                                             </div>
                                                         </div>
                                                         {$thevaluearr.status_desc}
-                                                        &nbsp;<a class="btn btn-minier btn-warning btn-white" href='$robotlogurl'"><i class="fa fa-file-text-o"></i> 日志 </a></td>
+                                                        &nbsp;<a class="btn btn-minier btn-warning btn-white hide" href='$robotlogurl'"><i class="fa fa-file-text-o"></i> 日志 </a></td>
                                                 </tr>
                                                 <tr>
                                                     <td width="90">数据简介：</td>
@@ -708,7 +708,7 @@
                                 "label" : "清空最近一天数据",
                                 "className" : "btn-sm btn-warning",
                                 "callback": function() {
-                                    window.location.href="{$clear_data_one}";
+                                    window.location.href="{:url('Robot/cleardata',array('robotid'=>$thevaluearr.robotid,'type'=>'1'))}";
                                 }
                             },
                         "danger_all" :
@@ -716,61 +716,13 @@
                                 "label" : "清空所有的数据！",
                                 "className" : "btn-sm btn-danger",
                                 "callback": function() {
-                                    window.location.href="{$clear_data_all}";
+                                    window.location.href="{:url('Robot/cleardata',array('robotid'=>$thevaluearr.robotid,'type'=>'99999'))}";
                                 }
                             }
 
                     }
             });
         });
-        $("#postcheck-confirm").on(ace.click_event, function() {
-            var hasdata = $hasdata;
-            var datacount = $datacount;
-            var uploadnum = $uploadnum;
-            var isimage = $isimage;
-            if(hasdata == 0){
-                bootbox.alert({
-                        message: "<BR>您未上传或采集任何数据，请重新上传或采集数据后提交验收<BR><BR>",
-                        buttons: {
-                            ok: {
-                                label: "确  认",
-                                className: "btn-primary btn-sm",
-                            }
-
-                        },
-                        callback: function() {
-
-                        }
-                    }
-                );
-                return false;
-            }
-            if(hasdata == 1 && datacount <1){
-                bootbox.alert({
-                        message: "<BR>您未进行云采集数据测试，请先测试<BR><BR>",
-                        buttons: {
-                            ok: {
-                                label: "确  认",
-                                className: "btn-primary btn-sm",
-                            }
-
-                        },
-                        callback: function() {
-
-                        }
-                    }
-                );
-                return false;
-            }
-
-
-
-
-
-
-
-        });
-
     });
 
 </script>

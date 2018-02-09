@@ -92,51 +92,56 @@
                             <!--</div>-->
 
                         <table cellspacing="0" cellpadding="0" width="100%" class="table table-striped table-bordered table-hover">
-                                <tbody>
-                                    <tr>
-                                        <th width="40xp"><input class="ace" type="checkbox" name="chkall" onclick="checkall(this.form, 'item')"><span class="lbl"></span></th>
-                                        <th>ID</th>
-                                        <th >  {$Think.lang.robot_robot_name}</th>
-                                        <th>{$Think.lang.robot_robot_status}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title=" {$Think.lang.robot_robot_status_help}"></i></th>
-                                        <th >{$Think.lang.robot_robot_dateline}</th>
-                                        <th>{$Think.lang.robot_robot_robot_time}</th>
-                                        <th>下次更新时间 <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_next_run_time_tip}"></i></th>
-                                        <th>{$Think.lang.robot_robot_op_select}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title=" {$Think.lang.robot_robot_op_select_help} "></i></th>
-                                        </tr>
-                                <!--数据行-->
-                                    {volist name='listarr' id='vo'}
-                                    <tr>
-                                        <td><label><input class="ace" type="checkbox" name="item[]" value="1" /><span class="lbl"> </span><label></td>
-                                        <td style="color:#454545;">{$vo.robotid}</td>
-                                        <td><a href="{:url('robot/detail',array('robotid' => $vo.robotid))}"><b>{$vo.name|msubstr=0,39}</b></a> </td>
-                                        <td id="progress{$vo.robotid}"><div style="display:inline-block; vertical-align: middle;"><div class="progress pos-rel tooltip-info" data-percent="0%" data-rel="tooltip" data-original-title=" Starting ... " style="display:none;margin-bottom:0px;width:60px;">
-                                            <div class="progress-bar" style="width:0%;"></div>
-                                        </div></div>{$vo.status_desc}
-                                        </td>
-                                        <td style="color:#454545;">{$vo.dateline|date="Y-m-d",###}</td>
-                                        <td style="color:#454545;">
-                                            {if condition="$vo.lasttime == 0"}--
-                                            {else /}{$vo.lasttime|date="Y-m-d",###}
-                                            {/if}
-                                        </td>
-                                        <td style="color:#454545;">
-                                            {if condition="$vo.next_run_time == 0"}--
-                                            {else /}{$vo.next_run_time|date="y-m-d",###}
-                                            {/if}
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-mini btn-success tooltip-success runstyle  " type="button" data-rel="tooltip" data-original-title="云采集" data-robot="{$vo.robotid}" data-run="{:url('robot/startrun',[robotid=>$vo.robotid])}" data-runstop="{:url('robot/stoprun',[robotid=>$vo.robotid])}" onclick="run(this);" data-click="false"><i class="ace-icon fa fa-play "></i></button>
-
-                                            <button class="btn btn-mini btn-warning tooltip-warning  " type="button" data-rel="tooltip" data-original-title="测试采集" onclick="window.location.href='{:url("robot/debugrobot",[robotid=>$vo.robotid])}'"><i class="ace-icon fa fa-bug bigger-110"></i></button>
-                                            <button class="btn btn-mini btn-success tooltip-success  " type="button" data-rel="tooltip" data-original-title="复制" onclick="window.location.href='{:url("Robot/Copy",array("robotid"=>$vo.robotid))}'"><i class="ace-icon fa fa-copy "></i></button>
-                                            <button class="btn btn-mini btn-warning tooltip-warning  " type="button" data-rel="tooltip" data-original-title="导出规则" onclick="window.location.href='{:url("Robot/export",array("robotid"=>$vo.robotid,'robotname'=>$vo.name))}'"><i class="ace-icon fa fa-save "></i></button>
-                                            <button class="btn btn-mini btn-info tooltip-info  " type="button" data-rel="tooltip" data-original-title="编辑"
-                                                    onclick="window.location.href='{:url("Robot/Edit",array("robotid"=>$vo.robotid))}'"><i class="ace-icon fa  fa-pencil  "></i></button>
-                                        </td>
+                            <tbody>
+                                <tr>
+                                    <th width="40xp"><input class="ace" type="checkbox" name="chkall" onclick="checkall(this.form, 'item')"><span class="lbl"></span></th>
+                                    <th>ID</th>
+                                    <th >  {$Think.lang.robot_robot_name}</th>
+                                    <th>{$Think.lang.robot_robot_status}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title=" {$Think.lang.robot_robot_status_help}"></i></th>
+                                    <th >{$Think.lang.robot_robot_dateline}</th>
+                                    <th>{$Think.lang.robot_robot_robot_time}</th>
+                                    <th>下次更新时间 <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_next_run_time_tip}"></i></th>
+                                    <th>{$Think.lang.robot_robot_op_select}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title=" {$Think.lang.robot_robot_op_select_help} "></i></th>
                                     </tr>
+                            <!--数据行-->
+                                {if empty($listarr)}
+                                <tr><td colspan="8" align="center" style="height:60px;color:#666;">暂无数据</td></tr>
+                                {else/}
+                                {volist name='listarr' id='vo' empty="暂时没有数据"}
+                                <tr>
+                                    <td><label><input class="ace" type="checkbox" name="item[]" value="1" /><span class="lbl"> </span><label></td>
+                                    <td style="color:#454545;">{$vo.robotid}</td>
+                                    <td><a href="{:url('robot/detail',array('robotid' => $vo.robotid))}"><b>{$vo.name|msubstr=0,39}</b></a> </td>
+                                    <td id="progress{$vo.robotid}"><div style="display:inline-block; vertical-align: middle;"><div class="progress pos-rel tooltip-info" data-percent="0%" data-rel="tooltip" data-original-title=" Starting ... " style="display:none;margin-bottom:0px;width:60px;">
+                                        <div class="progress-bar" style="width:0%;"></div>
+                                    </div></div>{$vo.status_desc}
+                                    </td>
+                                    <td style="color:#454545;">{$vo.dateline|date="Y-m-d",###}</td>
+                                    <td style="color:#454545;">
+                                        {if condition="$vo.lasttime == 0"}--
+                                        {else /}{$vo.lasttime|date="Y-m-d",###}
+                                        {/if}
+                                    </td>
+                                    <td style="color:#454545;">
+                                        {if condition="$vo.next_run_time == 0"}--
+                                        {else /}{$vo.next_run_time|date="y-m-d",###}
+                                        {/if}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-mini btn-success tooltip-success runstyle  " type="button" data-rel="tooltip" data-original-title="云采集" data-robot="{$vo.robotid}" data-run="{:url('robot/startrun',[robotid=>$vo.robotid])}" data-runstop="{:url('robot/stoprun',[robotid=>$vo.robotid])}" onclick="run(this);" data-click="false"><i class="ace-icon fa fa-play "></i></button>
+
+                                        <button class="btn btn-mini btn-warning tooltip-warning  " type="button" data-rel="tooltip" data-original-title="测试采集" onclick="window.location.href='{:url("robot/debugrobot",[robotid=>$vo.robotid])}'"><i class="ace-icon fa fa-bug bigger-110"></i></button>
+                                        <button class="btn btn-mini btn-success tooltip-success  " type="button" data-rel="tooltip" data-original-title="复制" onclick="window.location.href='{:url("Robot/Copy",array("robotid"=>$vo.robotid))}'"><i class="ace-icon fa fa-copy "></i></button>
+                                        <button class="btn btn-mini btn-warning tooltip-warning  " type="button" data-rel="tooltip" data-original-title="导出规则" onclick="window.location.href='{:url("Robot/export",array("robotid"=>$vo.robotid,'robotname'=>$vo.name))}'"><i class="ace-icon fa fa-save "></i></button>
+                                        <button class="btn btn-mini btn-info tooltip-info  " type="button" data-rel="tooltip" data-original-title="编辑"
+                                                onclick="window.location.href='{:url("Robot/Edit",array("robotid"=>$vo.robotid))}'"><i class="ace-icon fa  fa-pencil  "></i></button>
+                                    </td>
+                                </tr>
                                 {/volist}
-                                </tbody>
-                            </table>
+                                {/if}
+                            </tbody>
+                        </table>
+                        {$multipage}
                     </div><!-- /.col -->
                 </div><!-- /.row -->
             </div><!-- /.page-content -->
@@ -194,11 +199,11 @@
                         s_tr.children('font').hide();
                         s_tr.children('div').children('div').show();
                         v = eval('('+v+')');
-                        failvale = parseInt(v.crtcount) - parseInt(v.succount);
+                        failvale = parseInt(v.crtcount) - parseInt(v.succount) - parseInt(v.repcount);
                         v.mpage = parseInt(v.mpage);
                         v.lpage = parseInt(v.lpage);
                         //exvalue = v.crtcount+' / '+failvale+' / '+v.lpage+' / '+v.mpage;
-                        exvalue = '成功：'+v.succount+' | 失败：'+failvale;
+                        exvalue = '成功：'+v.succount+' | 重复：'+v.repcount+' | 失败：'+failvale;
                         value = v.percount;
                         width = v.percount;
                         s_tr.find('.pos-rel').attr('data-original-title',exvalue);
@@ -215,6 +220,7 @@
                         s_btn.attr('data-click','false');
 
                     }
+
                 });
             }
         },'json');

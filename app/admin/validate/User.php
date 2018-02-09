@@ -3,8 +3,14 @@ namespace app\admin\validate;
 use think\Validate;
 class User extends Validate
 {
+    public function __construct(array $rules = [], array $message = [], array $field = [])
+    {
+        parent::__construct($rules, $message, $field);
+        mb_internal_encoding('utf-8');
+    }
+
     protected $rule = [
-        'username' => 'require|max:20',
+        'username' => 'require|max:10',
         'password'=> 'require|max:16',
         'set_oldpass'=> 'require|max:16|min:6',
         'set_newpass'=> 'require|max:16|min:6',
@@ -13,7 +19,7 @@ class User extends Validate
     ];
     protected $message =[
         'username.require'=>'用户名不能为空',
-        'username.max'=>'用户名不能超过20位',
+        'username.max'=>'用户名不能超过10位',
         'password.require'=>'密码不能为空',
         'password.max'=>'密码长度不能查过16',
         'set_oldpass.require'=>'旧密码不能为空',

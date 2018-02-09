@@ -53,6 +53,8 @@ function api_sign_create($params=array()){
     $str='';
     //验证读取appSecret对应的信息
     $appSecret =api_get_appkey('app_secret');
+
+
     ksort($params);
     foreach ($params as $k => $v) {
         $str .= $k . $v ;
@@ -79,10 +81,12 @@ function api_build_params($params=array(),$appkey = ''){
     if(empty($appkey)){
         $appkey = api_get_appkey('app_key');
     }
+    //dump($params);
     $params = array_filter($params);
     $params['appkey']= $appkey;
     $params['time']=time();
     $params['sign'] = api_sign_create($params);
+
     return http_build_query($params);
 }
 
@@ -231,4 +235,85 @@ function msubstr($str, $start=0, $length, $charset="utf-8", $suffix=true)
     if(count($match[0]) - $start > $length)
         return $suffix ? $slice."..." : $slice;
     return $slice;
+}
+
+//生成分页URL地址集合
+//phpurl=0可以利用geturl转换（mpurl需为数组）
+function multi($num, $perpage, $curpage, $mpurl, $phpurl=1) {
+
+    global $_SHTML, $lang, $_SGLOBAL;
+    //echodebuglog($curpage.'--'.$perpage.'--'.$num);
+    if(($curpage-1)*$perpage >= $num) //如果只是”>“会出现num和perpage相等时第二页小异常
+       // showmsg('start_listcount_error');
+
+    $maxpages = config('maxpages');
+    $multipage = $a_name = '';
+    if($phpurl) {
+        //如果没有其他参数 ?后面直接 接page=
+        if(strlen(strchr($mpurl,'?')) == 1){
+            $mpurl .= '';
+        }else{
+            $mpurl .= strpos($mpurl, '?') ? '&' : '?';
+        }
+    } else {
+        $urlarr = $mpurl;
+        unset($urlarr['php']);
+        unset($urlarr['modified']);
+    }
+    if($num > $perpage) {
+        $page = 6;//UI中总显示页数(原来为10,调6避免UI过长)
+        $offset = 2;
+        $realpages = @ceil($num / $perpage);
+        $pages = $maxpages && $maxpages < $realpages ? $maxpages : $realpages;
+        if($page > $pages) {
+            $from = 1;
+            $to = $pages;
+        } else {
+            $from = $curpage - $offset;
+            $to = $curpage + $page - $offset - 1;
+            if($from < 1) {
+                $to = $curpage + 1 - $from;
+                $from = 1;
+                if(($to - $from) < $page && ($to - $from) < $pages) {
+                    $to = $page;
+                }
+            } elseif($to > $pages) {
+                $from = $curpage - $pages + $to;
+                $to = $pages;
+                if(($to - $from) < $page && ($to - $from) < $pages) {
+                    $from = $pages - $page + 1;
+                }
+            }
+        }
+        if($phpurl) {
+            $url = $mpurl.'page=1'.$a_name;
+            $url2 = $mpurl.'page='.($curpage - 1).$a_name;
+
+        } else {
+            $urlarr['page'] = 1;
+            $url = geturl(arraytostring($urlarr)).$a_name;
+            $urlarr['page'] = $curpage - 1;
+            $url2 = geturl(arraytostring($urlarr)).$a_name;
+        }
+
+        $multipage = '<div class="pages"><div>'.($curpage - $offset > 1 && $pages > $page ? '<a href="'.$url.'">1...</a>' : '').($curpage > 1 ? '<a class="prev" href="'.$url2.'">'.lang('pre_page').'</a>' : '');
+        for($i = $from; $i <= $to; $i++) {
+            if($phpurl) {
+                $url = $mpurl.'page='.$i.$a_name;
+            }
+            $multipage .= $i == $curpage ? '<strong>'.$i.'</strong>' : '<a href="'.$url.'">'.$i.'</a>';
+        }
+
+        if($phpurl) {
+            $url = $mpurl.'page='.($curpage + 1).$a_name;
+            $url2 = $mpurl.'page='.$pages.$a_name;
+        }
+
+        $multipage .= ($to < $pages && $curpage < $maxpages ? '<a href="'.$url2.'" target="_self">...'.$realpages.'</a>' : '').
+            ($curpage < $pages ? '<a class="next" href="'.$url.'">'.lang('next_page').'</a>' : '').
+            ($pages > $page ? '' : '');
+        $multipage .= '</div></div>';
+    }
+
+    return $multipage;
 }
