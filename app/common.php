@@ -12,7 +12,6 @@
 // 应用公共文件
 function api_request($method, $url, $fields=''){
     $url = config('api_url').$url;
-    //dump($url)
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -86,8 +85,8 @@ function api_build_params($params=array(),$appkey = ''){
     $params['appkey']= $appkey;
     $params['time']=time();
     $params['sign'] = api_sign_create($params);
-
     return http_build_query($params);
+
 }
 
 /** 从api获取数据 根据code判断状态
@@ -288,14 +287,7 @@ function multi($num, $perpage, $curpage, $mpurl, $phpurl=1) {
         if($phpurl) {
             $url = $mpurl.'page=1'.$a_name;
             $url2 = $mpurl.'page='.($curpage - 1).$a_name;
-
-        } else {
-            $urlarr['page'] = 1;
-            $url = geturl(arraytostring($urlarr)).$a_name;
-            $urlarr['page'] = $curpage - 1;
-            $url2 = geturl(arraytostring($urlarr)).$a_name;
         }
-
         $multipage = '<div class="pages"><div>'.($curpage - $offset > 1 && $pages > $page ? '<a href="'.$url.'">1...</a>' : '').($curpage > 1 ? '<a class="prev" href="'.$url2.'">'.lang('pre_page').'</a>' : '');
         for($i = $from; $i <= $to; $i++) {
             if($phpurl) {

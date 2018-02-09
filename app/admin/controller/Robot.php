@@ -49,12 +49,11 @@ class Robot extends Base
     }
 
     //编辑源
-    public function edit($robotid)
+    public function edit()
     {
         if(request()->isPost()){
             $postdata = input();
-            $name = $postdata['name'];
-
+           // dump(strlen($postdata[name]));die;
             $validate = $this->validate($postdata,'Robot.edit');//使用validate验证
             if(true !== $validate){
                 // 验证失败 输出错误信息
@@ -322,6 +321,7 @@ class Robot extends Base
         $params['op'] = 'getrobotextfield';
         $params['robotid'] = $robotid;
         $res = api_request('get' ,api_build_url('api.php',$params));
+
         if($res['error_code'] != 0){
             $this->error('参数有误');
         }

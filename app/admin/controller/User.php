@@ -17,13 +17,20 @@ class User extends Base
 
     public function index()
     {
-
         $title = '用户列表';
+        $perpage    = config('pagesize');
+        $page       = empty(input('get.page')) ? 1 : intval(input('get.page'));
+        $page       = ($page < 1) ?  1 : $page;
+        $start      = ($page - 1) * $perpage;
 
-        $userList = $this->modelUsers->getUsers();
+        $listcount = $this->modelUsers->count();
+        $userlist = $this->modelUsers->order('uid')->limit($start,$perpage)->select();
+        $theurl = url('user/index');
+        $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
+
         $this->assign('title',$title);
-        $this->assign('userlist',$userList);
-
+        $this->assign('userlist',$userlist);
+        $this->assign('multipage',$multipage);
         return $this->fetch('list');
 
     }
@@ -73,23 +80,7 @@ class User extends Base
     }
 
 
-    public function UserList()
-    {
-        $title = '用户列表';
-        $perpage    = 10;
-        $page       = empty(input('get.page')) ? 1 : intval(input('get.page'));
-        $page       = ($page < 1) ?  1 : $page;
-        $start      = ($page - 1) * $perpage;
-        $users_model = new Users_model();
-        $listcount = $users_model->count();
-        $userlist = $users_model->order('uid')->limit($start,$perpage)->select();
-        $theurl = url('user/userlist');
-        $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
-        $this->assign('title',$title);
-        $this->assign('userlist',$userlist);
-        $this->assign('multipage',$multipage);
-        return $this->fetch('list');
-    }
+
 
 
 

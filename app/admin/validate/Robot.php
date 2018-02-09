@@ -10,7 +10,7 @@ class Robot extends Validate
     }
 
     protected $rule = [
-        'name' => 'require|min:10|max:24',
+        'name' => 'require|min:10|max:50',
         'description' => 'require|min:3',
         'sourcesitename' => 'require',
         'import' => 'require',
@@ -19,9 +19,9 @@ class Robot extends Validate
 
     ];
     protected $message =[
-        'name.require'=>'数据源名称字数10个字以上并且24个字以下',
-        'name.min'=>'数据源名称字数10个字以上并且24个字以下',
-        'name.max'=>'数据源名称字数10个字以上并且24个字以下',
+        'name.require'=>'数据源名称字数10个字以上并且50个字以下',
+        'name.min'=>'数据源名称字数10个字以上并且50个字以下',
+        'name.max'=>'数据源名称字数10个字以上并且50个字以下',
         'description.require'=>'源描述长度不符合要求',
         'description.min'=>'源描述长度不符合要求',
         'sourcesitename.require'=>'来源网站不能为空',
@@ -32,7 +32,7 @@ class Robot extends Validate
         'add' => ['name','description','sourcesitename','import'],
         'edit' => ['name','description','sourcesitename','import'],
         'copy' => ['name','description','sourcesitename','import'],
-        'importcopy' => ['importtext'],
+        'importcopy' => ['name','description','sourcesitename','import','importtext'],
     ];
 }
 

@@ -228,10 +228,10 @@ function validate(theform) {
     //名称
     var name = document.getElementById("name");
     if(name) {
-        if (name.value.length < 10 || name.value.length > 20) {
+        if (name.value.length < 10 || name.value.length >50) {
 
             name.focus();
-            Msg("数据源名称字数10个字以上并且20个字以下");
+            Msg("数据源名称字数10个字以上并且50个字以下");
             if(btn) btn.disabled = false;
             return false;
         }
