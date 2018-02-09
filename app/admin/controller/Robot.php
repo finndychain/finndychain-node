@@ -5,6 +5,35 @@ use app\admin\model\FinndyData;
 
 class Robot extends Base
 {
+    //数据源列表
+    public function index()
+    {
+        $title = '数据源列表';
+        $tabbox  = 'style="display:none;"';
+        $params['op'] = 'getrobotslist';
+        $params['page'] = input('get.page');
+        $res = api_request('get' ,api_build_url('api.php',$params));
+        $arr = check_api_result($res);
+
+        $listarr = $arr['data'] ? $arr['data'] : array();
+        $multipage = $arr['page'] ? $arr['page'] : array();
+        $listcount =  $multipage['listcount'];
+        $perpage = $multipage['perpage'];
+        $page = input('get.page');
+        $theurl = url('robot/robotlist');
+        $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
+        foreach($listarr as &$item){
+            $item['status_desc']=lang('cp_source_available_font_'.$item['status']);
+        }
+        $this->assign([
+            'title' => $title,
+            'listarr'=>$listarr,
+            'tabbox'=>$tabbox,
+            'multipage'=>$multipage,
+        ]);
+        return $this->fetch();
+    }
+
     public function add()
     {
         if(request()->isPost()){
@@ -282,35 +311,6 @@ class Robot extends Base
             return;
         }
 
-    }
-
-    //数据源列表
-    public function robotlist()
-    {
-        $title = '数据源列表';
-        $tabbox  = 'style="display:none;"';
-        $params['op'] = 'getrobotslist';
-        $params['page'] = input('get.page');
-        $res = api_request('get' ,api_build_url('api.php',$params));
-        $arr = check_api_result($res);
-
-        $listarr = $arr['data'] ? $arr['data'] : array();
-        $multipage = $arr['page'] ? $arr['page'] : array();
-        $listcount =  $multipage['listcount'];
-        $perpage = $multipage['perpage'];
-        $page = input('get.page');
-        $theurl = url('robot/robotlist');
-        $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
-        foreach($listarr as &$item){
-            $item['status_desc']=lang('cp_source_available_font_'.$item['status']);
-        }
-        $this->assign([
-            'title' => $title,
-            'listarr'=>$listarr,
-            'tabbox'=>$tabbox,
-            'multipage'=>$multipage,
-        ]);
-        return $this->fetch('robotlist');
     }
     //数据源详情
     public function detail()

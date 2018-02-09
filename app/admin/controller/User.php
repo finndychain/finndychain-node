@@ -31,7 +31,7 @@ class User extends Base
         $this->assign('title',$title);
         $this->assign('userlist',$userlist);
         $this->assign('multipage',$multipage);
-        return $this->fetch('list');
+        return $this->fetch();
 
     }
 
