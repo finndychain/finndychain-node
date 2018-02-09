@@ -194,7 +194,6 @@ class Index extends Controller {
 	 * 完成
 	 * @return [type] [description]
 	 * @date   2017-09-07
-	 * @author 心云间、凝听 <981248356@qq.com>
 	 */
 	public function complete() {
 		$this->status['index']    = 'success';
@@ -206,4 +205,6 @@ class Index extends Controller {
 		$this->assign('status', $this->status);
 		return $this->fetch();
 	}
+
+
 }

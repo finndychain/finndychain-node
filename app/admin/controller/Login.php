@@ -41,6 +41,7 @@ class Login extends Controller
                 $res['last_login_time'] = date('Y-m-d H:i:s',$res['last_login_time']);
                 Session::set('uid',$res['uid']);
                 Session::set('username',$res['username']);
+                Session::set('usertype',$res['user_type']);
                 unset($res['password']);
                 Session::set('userinfo',$res);
                 $this->success('登录成功','index/index');

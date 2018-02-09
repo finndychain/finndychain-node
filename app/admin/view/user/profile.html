@@ -90,100 +90,71 @@
                                 <div class="profile-info-value"> {$Think.session.userinfo.create_time}</div>
                             </div>
                         </div>
-
                         <div class="space-6"></div>
-
                     </div>
                     {/if}
                     <!-- /section:pages/profile.contact -->
-
                 </div>
                 <div class="col-xs-12 col-sm-9">
                     <div class="profile-user-info profile-user-info-striped">
                         <div class="profile-info-row">
                             <div class="profile-info-name"> 用户名 </div>
-
                             <div class="profile-info-value">{$Think.session.username} &nbsp;</div>
                         </div>
                         <div class="profile-info-row">
                             <div class="profile-info-name"> 昵称 </div>
-
                             <div class="profile-info-value">{$Think.session.userinfo.nickname} &nbsp;</div>
                         </div>
 
                         <div class="profile-info-row">
                             <div class="profile-info-name"> 用户组 </div>
-
                             <div class="profile-info-value">{$Think.session.userinfo.user_type} &nbsp;</div>
                         </div>
                         <div class="profile-info-row">
                             <div class="profile-info-name"> 密码 </div>
-
-                            <div class="profile-info-value"><a href="{:url('User/Resetpwd')}">修改密码</a>&nbsp;</div>
+                            <div class="profile-info-value"><a href="{:url('user/resetpwd')}">修改密码</a>&nbsp;</div>
                         </div>
                         {if condition="$lv neq ''"}
                         <div class="profile-info-row" >
-                            <div class="profile-info-name" style="vertical-align:unset;"> 云采集引擎 </div>
+                            <div class="profile-info-name" > 云采集引擎 </div>
                             <div class="widget-body" >
                                 <div class="widget-main" >
-
+                                    {if condition="$Think.session.userinfo.user_type eq 3"}
                                     <div class="profile-info-value">
-                                        {if condition="$Think.session.userinfo.user_type eq 3"}
-                                        <span class="label label-warning">{$lv}</span>
-
-                                        &nbsp;
-
+                                        <span class="label label-warning">{$lv}</span>&nbsp;
                                         <span class="grey middle"><i class="fa fa-calendar"></i> {if condition="$lv eq 'LV1'"}永不到期{else /}{$finndy.robotverdeadline|date='Y-m-d',###}{/if}</span>
-
-                                        &nbsp;
                                         <button onclick="alert('请登录发源地官方网站(http://www.finndy.com)升级账号')" class="btn btn-mini btn-white btn-info middle" type="button" style="padding:3px 6px;">续费/升级</button>
-                                        {/if}
                                     </div>
-
+                                    {/if}
                                     <div class="col-xs-12 col-md-8">
                                         <div  class="border_bottom">
-
-                                                    <div style="float:left">并发采集线程数量</div>
-                                                    <div style="float:right">{$finndy._vpernum}个 &nbsp;&nbsp;
-                                                    </div>
-                                                    <div class="clearfix "></div>
-
+                                            <div style="float:left">并发采集线程数量</div>
+                                            <div style="float:right">{$finndy._vpernum}个 &nbsp;&nbsp;</div>
+                                            <div class="clearfix "></div>
                                         </div>
-
                                     </div>
                                     <div class="col-xs-12 col-md-8">
                                         <div class="border_bottom">
-
-                                                    <div style="float:left">单词采集数据条数</div>
-                                                    <div style="float:right">{$finndy._vallnum}万 &nbsp;&nbsp;
-                                                    </div>
-                                                    <div class="clearfix "></div>
-
-
-
+                                            <div style="float:left">单词采集数据条数</div>
+                                            <div style="float:right">{$finndy._vallnum}万 </div>
+                                            <div class="clearfix "></div>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-md-8">
                                         <div  class="border_bottom">
-                                                    <div style="float:left">全球高匿名分布节点</div>
-                                                    <div style="float:right">{$finndy._vallnode}个 &nbsp;&nbsp;
-                                                    </div>
-                                                    <div class="clearfix "></div>
-
-
+                                            <div style="float:left">全球高匿名分布节点</div>
+                                            <div style="float:right">{$finndy._vallnode}个 &nbsp;&nbsp;
+                                            </div>
+                                            <div class="clearfix "></div>
                                         </div>
-
                                     </div>
                                     <div class="col-xs-12 col-md-8">
-                                        <div  class="border_bottom" style="margin-bottom: 15px;">
-                                                    <div style="float:left">请求间隔频率</div>
-                                                    <div style="float:right">{$finndy._vintervals/1000}秒 </div>
+                                        <div  class="border_bottom" style="margin-bottom: 20px;">
+                                            <div style="float:left">请求间隔频率</div>
+                                            <div style="float:right">{$finndy._vintervals/1000}秒 </div>
                                             <div class="clearfix "></div>
-
                                         </div>
-
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -192,10 +163,6 @@
                     </div>
                     <div class="space-12"></div>
                 </div>
-
-
-
-
 
             </div><!-- /.page-content -->
 

@@ -33,7 +33,7 @@ class InstallConfig extends Validate
         'hostname'             => 'require',
         'database'             => 'require',
         'username'             => 'require',
-        'password'             => 'require',
+        'password'             => 'require|length:6,30',
         'hostport'             => 'require|number|gt:0',
         'prefix'               => 'require',
     ];
@@ -59,6 +59,7 @@ class InstallConfig extends Validate
         'database.require' => '请填写正确的数据库实例',
         'username.require' => '请填写正确的数据库用户',
         'password.require' => '请填写正确的数据库密码',
+        'password.length'    => '数据库密码长度为6-30位',
         'hostport.require' => '请填写正确的数据库端口',
         'prefix.require'   => '请填写正确的数据库表前缀',
 
@@ -67,6 +68,6 @@ class InstallConfig extends Validate
     protected $scene=[
         'admin_info' => ['admin_username','admin_password','admin_repassword','admin_email'],
         'web_config' => ['web_site_title','index_url','web_site_description','web_site_keyword'],
-        'db_config' => ['type','hostname','database','username','hostport','prefix'],
+        'db_config' => ['type','hostname','database','username','password','hostport','prefix'],
     ];
 }
