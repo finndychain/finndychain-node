@@ -136,8 +136,8 @@ class Index extends Controller {
 				return $this->error($db_obj->getError());
 			} else {
 				//$this->success();
-                //$this->success('开始安装。。。', url('index/sql'));
-			    $this->redirect('index/sql');
+                $this->success('开始安装...', url('index/sql'));
+			    //$this->redirect('index/sql');
 			}
 			
 		} else {
