@@ -83,11 +83,6 @@ class User extends Base
     }
 
 
-
-
-
-
-
     //增加用户
     public function add()
     {
