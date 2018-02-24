@@ -23,9 +23,9 @@ class Index extends Controller {
             $this->redirect('/admin');
         }*/
 
-		/*if ($this->request->action() != 'complete' && is_file(APP_PATH . 'database.php') && is_file(ROOT_PATH . 'data/install.lock')) {
+		if ($this->request->action() != 'complete' && is_file(APP_PATH . 'database.php') && is_file(ROOT_PATH . 'data/install.lock')) {
 			return $this->redirect('/admin');
-		}*/
+		}
 
         $this->status = [
             'index'    => 'light',
