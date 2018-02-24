@@ -183,7 +183,9 @@
 											</button>
 										</span>
                                                         </div>
-                                                        <div id="udiv" style="margin-top:20px;"></div>
+                                                        {if condition="$thevalue.listurl_manual neq '' "}
+                                                        <div id="udiv" style="margin-top:20px;">{$thevalue.listurl_manual}</div>
+                                                        {/if}
                                                     </div>
                                                 </td>
                                                 <td valign="top" class="width-50  ">

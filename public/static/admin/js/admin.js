@@ -1,8 +1,8 @@
 //推送任务关联源js
-function cronaddupdatefield(inputid, cronid) { 
+function cronaddupdatefield(inputid, cronid) {
 	var fieldstr = trim(document.getElementById(inputid).value);//trim
-	
-	var x = new Ajax('XML', 'ajaxwaitid'); 
+
+	var x = new Ajax('XML', 'ajaxwaitid');
 	x.get(siteUrl + '/batch.common.php?action=cronaddupdatefield&cronid=' + cronid + '&fieldstr=' + fieldstr, function(s) {
 		if (s == 'RET_INVALID') {
 			Msg('输入的字段或别名无效');
@@ -59,10 +59,10 @@ function contactShow(id,value) {
 		});
 }
 //推送任务：关联源js
-function cronaddrobot(inputid, cronid) { 
+function cronaddrobot(inputid, cronid) {
 	var robotid = trim(document.getElementById(inputid).value);//trim
-	
-	var x = new Ajax('XML', 'ajaxwaitid'); 
+
+	var x = new Ajax('XML', 'ajaxwaitid');
 	x.get(siteUrl + '/batch.common.php?action=cronaddrobot&cronid=' + cronid + '&rid=' + robotid, function(s) {
 		if (s == '') {
 			Msg('输入的源无效');
@@ -87,8 +87,8 @@ function cronaddrobot(inputid, cronid) {
 }
 
 function crondeleterobot(thebtn, robotid, cronid) {
-	if(confirm('确定删除？')) { 
-		var x = new Ajax('XML', 'ajaxwaitid'); 
+	if(confirm('确定删除？')) {
+		var x = new Ajax('XML', 'ajaxwaitid');
 		x.get(siteUrl + '/batch.common.php?action=crondeleterobot&cronid=' + cronid + '&rid=' + robotid, function(s) {
 			if (s == 'RET_OK') {
 				thebtn.parentNode.removeChild(thebtn);
@@ -96,15 +96,15 @@ function crondeleterobot(thebtn, robotid, cronid) {
 				Msg('删除失败');
 			}
 		});
-		
+
 	}
 }
 
 //专题页：源关联专题js
-function addrobot(inputid, htmlid) { 
+function addrobot(inputid, htmlid) {
 	var robotid = trim(document.getElementById(inputid).value);//trim
-	
-	var x = new Ajax('XML', 'ajaxwaitid'); 
+
+	var x = new Ajax('XML', 'ajaxwaitid');
 	x.get(siteUrl + '/batch.common.php?action=getrobotname&rid=' + robotid, function(s) {
 		if (s == '') {
 			Msg('输入的源无效');
@@ -117,18 +117,18 @@ function addrobot(inputid, htmlid) {
 }
 
 function deleterobot(thebtn) {
-	if(confirm('确定删除？')) { 
+	if(confirm('确定删除？')) {
 		var node = document.getElementById('post'+thebtn.id);
 		node.parentNode.removeChild(node);
 		thebtn.parentNode.removeChild(thebtn);
 	}
 }
- 
+
 //TAG页
 function addtag(inputid, htmlid) {
 	var tagtext = document.getElementById(htmlid).innerHTML;
 	var tag = document.getElementById(inputid).value;
-	
+
 	if(checktag(tag)) {
 		newtag = '<input type="button" name="tagnamebtn[]" value="'+tag+'" onclick="deletetag(this)"><input type="hidden" name="tagname[]" id="tagnameid'+tag+'" value="'+tag+'">';
 		document.getElementById(htmlid).innerHTML += newtag;

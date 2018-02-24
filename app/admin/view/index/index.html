@@ -8,15 +8,18 @@
     }
     .desc{
         position: absolute;
-        left:45px;
+        left:18px;
         top:5px;
         font-size:19px;
+        color:#fff;
+
     }
     .num{
         position: absolute;
         left:39%;
         top:38%;
-        font-size:30px
+        font-size:30px;
+        color:#fff;
     }
 </style>
 <script src="__ADMIN__/js/echarts.common.min.js"></script>
@@ -86,282 +89,118 @@
                             <!--</div>-->
                             <!--<div id="main" style="width:1700;height:400px;"></div>-->
                         <!--</div>-->
-                        <div class="widget-box transparent">
-                            <div class="widget-header widget-header-flat">
-                                <h4 class="widget-title lighter">
-                                    <i class="ace-icon fa fa-signal"></i>
-                                    采集数据总量
-                                </h4>
+                        <br>
+                        <!--<div class="widget-box transparent">-->
+                            <!--<div class="widget-header widget-header-flat">-->
+                                <!--<h4 class="widget-title lighter">-->
+                                    <!--<i class="ace-icon fa fa-signal"></i>-->
+                                    <!--采集数据总量-->
+                                <!--</h4>-->
 
-                                <div class="widget-toolbar">
-                                    <select name="" id="">
-                                    <option value="1">按天</option>
-                                    <option value="2">按时</option>
-                                    </select>
-                                </div>
+                                <!--<div class="widget-toolbar">-->
+                                    <!--<select name="" id="">-->
+                                    <!--<option value="1">按天</option>-->
+                                    <!--<option value="2">按时</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="widget-body" style="display: block;">-->
+                                <!--<div class="widget-main padding-4">-->
+                                    <!--<div id="main" style="width:1700;height:400px;"></div>-->
+                                <!--</div>&lt;!&ndash; /.widget-main &ndash;&gt;-->
+                            <!--</div>&lt;!&ndash; /.widget-body &ndash;&gt;-->
+                        <!--</div>-->
+
+                        <h5 class="row">
+                            <span class="col-sm-7">
+                                <span style="height: 28px;line-height: 28px;">采集数据总量</span>
+                            </span>
+                            <span class="col-sm-5">
+                            <label class="pull-right inline">
+                                <select name="" id="">
+                                <option value="1">按天</option>
+                                <option value="2">按时</option>
+                                </select>
+                            </label></span><!-- /.col -->
+                        </h5>
+
+                        <div class="widget-body" style="display: block;">
+                            <div class="widget-main padding-4">
+                                <div id="main" style="width:1700;height:360px;"></div>
+                            </div><!-- /.widget-main -->
+                        </div><!-- /.widget-body -->
+
+                        <div class="hr hr12 dotted"></div>
+                        <div class="clearfix">
+                            <div class="grid4 center">
+                                <span id="clkcount" class="bigger-175 blue">0</span>
+
+                                <br>
+                                当前数据源总数
                             </div>
-
-                            <div class="widget-body" style="display: block;">
-                                <div class="widget-main padding-4">
-                                    <div id="main" style="width:1700;height:400px;"></div>
-                                </div><!-- /.widget-main -->
-                            </div><!-- /.widget-body -->
+                            <div class="grid4 center">
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">0</span></span>
+                                <br>
+                                &nbsp;&nbsp; 今日新增数据源数
+                            </div>
+                            <div class="grid4 center">
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">0</span></span>
+                                <br>
+                                &nbsp;&nbsp; 总用户数
+                            </div>
+                            <div class="grid4 center">
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">0</span></span>
+                                <br>
+                                &nbsp;&nbsp; 新增用户数
+                            </div>
                         </div>
-                        <!--<div   style="margin-top:60px">-->
-                            <!--<div class="col-xs-12 clear">-->
-                                <!--<div class="col-md-3 outside" >-->
-                                   <!--<div>-->
-                                       <!--<img src="__ADMIN__/image/p1.jpg" alt="">-->
-                                   <!--</div>-->
-                                    <!--<div class="desc">-->
-                                        <!--当前数据源总数-->
-                                    <!--</div>-->
-                                    <!--<div class="num">-->
-                                        <!--1500-->
-                                    <!--</div>-->
+                        <div class="hr hr16 dotted"></div>
+                        <!--<div class="col-xs-6 col-sm-4 col-md-3">-->
+                            <!--<div class="thumbnail search-thumbnail">-->
+                                <!--<img class="media-object" data-src="holder.js/100px200?theme=gray" alt="100%x200" src="__ADMIN__/image/p1.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">-->
+                                <!--<div class="desc">-->
+                                <!--当前数据源总数-->
                                 <!--</div>-->
-                                <!--<div class="col-md-3 outside">-->
-                                    <!--<img src="__ADMIN__/image/p2.jpg" alt="">-->
-                                    <!--<div  class="desc">-->
-                                        <!--今日新增数据源数-->
-                                    <!--</div>-->
-                                    <!--<div class="num">-->
-                                        <!--1500-->
-                                    <!--</div>-->
+                                <!--<div class="num">-->
+                                <!--1500-->
                                 <!--</div>-->
-                                <!--<div class="col-md-3 outside">-->
-                                    <!--<img src="__ADMIN__/image/p3.jpg" alt="">-->
-                                    <!--<div class="desc">-->
-                                        <!--总用户数-->
-                                    <!--</div>-->
-                                    <!--<div class="num">-->
-                                        <!--1500-->
-                                    <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-6 col-sm-4 col-md-3">-->
+                            <!--<div class="thumbnail search-thumbnail">-->
+                                <!--<img class="media-object" data-src="holder.js/100px200?theme=gray" alt="100%x200" src="__ADMIN__/image/p2.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">-->
+                                <!--<div  class="desc">-->
+                                <!--今日新增数据源数-->
                                 <!--</div>-->
-                                <!--<div class="col-md-3 outside">-->
-                                    <!--<img src="__ADMIN__/image/p4.jpg" alt="">-->
-                                    <!--<div class="desc">-->
-                                        <!--新增用户数-->
-                                    <!--</div>-->
-                                    <!--<div class="num">-->
+                                <!--<div class="num">-->
+                                <!--1500-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-6 col-sm-4 col-md-3">-->
+                            <!--<div class="thumbnail search-thumbnail">-->
+                                <!--<img class="media-object" data-src="holder.js/100px200?theme=gray" alt="100%x200" src="__ADMIN__/image/p3.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">-->
+                                <!--<div  class="desc">-->
+                                    <!--总用户数-->
+                                <!--</div>-->
+                                <!--<div class="num">-->
                                     <!--1500-->
                                 <!--</div>-->
                             <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-xs-6 col-sm-4 col-md-3">-->
+                            <!--<div class="thumbnail search-thumbnail">-->
+                                <!--<img class="media-object" data-src="holder.js/100px200?theme=gray" alt="100%x200" src="__ADMIN__/image/p4.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">-->
+                                <!--<div  class="desc">-->
+                                    <!--新增用户数-->
+                                <!--</div>-->
+                                <!--<div class="num">-->
+                                    <!--1500-->
+                                <!--</div>-->
                             <!--</div>-->
                         <!--</div>-->
-                        <div class="col-xs-12">
-                            <!-- PAGE CONTENT BEGINS -->
-                            <div>
-                                <ul class="ace-thumbnails clearfix">
-                                    <li>
-                                        <a href="assets/images/gallery/image-1.jpg" title="Photo Title" data-rel="colorbox" class="cboxElement">
-                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-1.jpg">
-                                        </a>
 
-                                        <div class="tags">
-												<span class="label-holder">
-													<span class="label label-info">breakfast</span>
-												</span>
-
-                                            <span class="label-holder">
-													<span class="label label-danger">fruits</span>
-												</span>
-
-                                            <span class="label-holder">
-													<span class="label label-success">toast</span>
-												</span>
-
-                                            <span class="label-holder">
-													<span class="label label-warning arrowed-in">diet</span>
-												</span>
-                                        </div>
-
-                                        <div class="tools">
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-link"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-paperclip"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-pencil"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-times red"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <a href="assets/images/gallery/image-2.jpg" data-rel="colorbox" class="cboxElement">
-                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-2.jpg">
-                                            <div class="text">
-                                                <div class="inner">Sample Caption on Hover</div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="assets/images/gallery/image-3.jpg" data-rel="colorbox" class="cboxElement">
-                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-3.jpg">
-                                            <div class="text">
-                                                <div class="inner">Sample Caption on Hover</div>
-                                            </div>
-                                        </a>
-
-                                        <div class="tools tools-bottom">
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-link"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-paperclip"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-pencil"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-times red"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <a href="assets/images/gallery/image-4.jpg" data-rel="colorbox" class="cboxElement">
-                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-4.jpg">
-                                            <div class="tags">
-													<span class="label-holder">
-														<span class="label label-info arrowed">fountain</span>
-													</span>
-
-                                                <span class="label-holder">
-														<span class="label label-danger">recreation</span>
-													</span>
-                                            </div>
-                                        </a>
-
-                                        <div class="tools tools-top">
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-link"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-paperclip"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-pencil"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-times red"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <div>
-                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-5.jpg">
-                                            <div class="text">
-                                                <div class="inner">
-                                                    <span>Some Title!</span>
-
-                                                    <br>
-                                                    <a href="assets/images/gallery/image-5.jpg" data-rel="colorbox" class="cboxElement">
-                                                        <i class="ace-icon fa fa-search-plus"></i>
-                                                    </a>
-
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-user"></i>
-                                                    </a>
-
-                                                    <a href="#">
-                                                        <i class="ace-icon fa fa-share"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <a href="assets/images/gallery/image-6.jpg" data-rel="colorbox" class="cboxElement">
-                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-6.jpg">
-                                        </a>
-
-                                        <div class="tools tools-right">
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-link"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-paperclip"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-pencil"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-times red"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <a href="assets/images/gallery/image-1.jpg" data-rel="colorbox" class="cboxElement">
-                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-1.jpg">
-                                        </a>
-
-                                        <div class="tools">
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-link"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-paperclip"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-pencil"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-times red"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-
-                                    <li>
-                                        <a href="assets/images/gallery/image-2.jpg" data-rel="colorbox" class="cboxElement">
-                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-2.jpg">
-                                        </a>
-
-                                        <div class="tools tools-top in">
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-link"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-paperclip"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-pencil"></i>
-                                            </a>
-
-                                            <a href="#">
-                                                <i class="ace-icon fa fa-times red"></i>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div><!-- PAGE CONTENT ENDS -->
-                        </div>
                 </div><!-- /.page-content -->
             </div>
              </div><!-- /.main-content -->
@@ -380,8 +219,14 @@
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
-
+        window.onresize = myChart.resize;
         option = {
+            grid:{
+                x:40,
+                x2:0,
+                y:20,
+                height:250
+            },
             xAxis: {
                 type: 'category',
                 data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -391,7 +236,7 @@
             },
             series: [{
                 data: [820, 932, 901, 934, 1290, 1330, 1320],
-                type: 'line'
+                type: 'line',
             }]
         };
 

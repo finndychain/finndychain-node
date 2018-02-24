@@ -212,7 +212,7 @@ class Robot extends Base
     }
     //运行测试
     public function debugrobot(){
-        $robotid = 264564;
+        $robotid = input('robotid');
         $params['robotid'] = $robotid;
         $params['op'] = 'debugrobot';
         $res = api_request_html('get', api_build_url('api.php', $params));
