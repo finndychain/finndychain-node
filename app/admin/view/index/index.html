@@ -58,10 +58,8 @@
                     </h1>
                 </div><!-- /.page-header -->
 
-                <div class="row" style="padding:19px 100px 24px">
+                <div class="row" >
                     <div class="col-xs-12">
-                        <!-- PAGE CONTENT BEGINS -->
-
                         <div >
                             <form class="form-search" method="get" action="http://www.finndy.test/midycp.php">
 <span class="input-icon">
@@ -72,63 +70,297 @@
                                 <button class="btn btn-xs btn-info btn-round input-mini" type="submit">&nbsp;查看&nbsp;</button>
                             </form>
                         </div>
-                        <div >
-                            <div class="col-xs-12 " style="margin-top:20px">
-                                <div class="col-md-6" style="text-align:left">
-                                    <span style="font-size:19px">采集数据总量</span>
-                                </div>
-                                <div class="col-md-6" style="text-align:right">
+                        <!--<div >-->
+                            <!--<div class="col-xs-12 " style="margin-top:20px">-->
+                                <!--<div class="col-md-6" style="text-align:left">-->
+                                    <!--<span style="font-size:19px">采集数据总量</span>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-6" style="text-align:right">-->
 
-                                        <select name="" id="">
-                                            <option value="1">按天</option>
-                                            <option value="2">按时</option>
-                                        </select>
+                                        <!--<select name="" id="">-->
+                                            <!--<option value="1">按天</option>-->
+                                            <!--<option value="2">按时</option>-->
+                                        <!--</select>-->
 
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div id="main" style="width:1700;height:400px;"></div>-->
+                        <!--</div>-->
+                        <div class="widget-box transparent">
+                            <div class="widget-header widget-header-flat">
+                                <h4 class="widget-title lighter">
+                                    <i class="ace-icon fa fa-signal"></i>
+                                    采集数据总量
+                                </h4>
+
+                                <div class="widget-toolbar">
+                                    <select name="" id="">
+                                    <option value="1">按天</option>
+                                    <option value="2">按时</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div id="main" style="width:1700;height:400px;"></div>
+
+                            <div class="widget-body" style="display: block;">
+                                <div class="widget-main padding-4">
+                                    <div id="main" style="width:1700;height:400px;"></div>
+                                </div><!-- /.widget-main -->
+                            </div><!-- /.widget-body -->
                         </div>
-                        <div   style="margin-top:60px">
-                            <div class="col-xs-12 clear">
-                                <div class="col-md-3 outside" >
-                                   <div>
-                                       <img src="__ADMIN__/image/p1.jpg" alt="">
-                                   </div>
-                                    <div class="desc">
-                                        当前数据源总数
-                                    </div>
-                                    <div class="num">
-                                        1500
-                                    </div>
-                                </div>
-                                <div class="col-md-3 outside">
-                                    <img src="__ADMIN__/image/p2.jpg" alt="">
-                                    <div  class="desc">
-                                        今日新增数据源数
-                                    </div>
-                                    <div class="num">
-                                        1500
-                                    </div>
-                                </div>
-                                <div class="col-md-3 outside">
-                                    <img src="__ADMIN__/image/p3.jpg" alt="">
-                                    <div class="desc">
-                                        总用户数
-                                    </div>
-                                    <div class="num">
-                                        1500
-                                    </div>
-                                </div>
-                                <div class="col-md-3 outside">
-                                    <img src="__ADMIN__/image/p4.jpg" alt="">
-                                    <div class="desc">
-                                        新增用户数
-                                    </div>
-                                    <div class="num">
-                                    1500
-                                </div>
-                            </div>
-                            </div>
+                        <!--<div   style="margin-top:60px">-->
+                            <!--<div class="col-xs-12 clear">-->
+                                <!--<div class="col-md-3 outside" >-->
+                                   <!--<div>-->
+                                       <!--<img src="__ADMIN__/image/p1.jpg" alt="">-->
+                                   <!--</div>-->
+                                    <!--<div class="desc">-->
+                                        <!--当前数据源总数-->
+                                    <!--</div>-->
+                                    <!--<div class="num">-->
+                                        <!--1500-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-3 outside">-->
+                                    <!--<img src="__ADMIN__/image/p2.jpg" alt="">-->
+                                    <!--<div  class="desc">-->
+                                        <!--今日新增数据源数-->
+                                    <!--</div>-->
+                                    <!--<div class="num">-->
+                                        <!--1500-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-3 outside">-->
+                                    <!--<img src="__ADMIN__/image/p3.jpg" alt="">-->
+                                    <!--<div class="desc">-->
+                                        <!--总用户数-->
+                                    <!--</div>-->
+                                    <!--<div class="num">-->
+                                        <!--1500-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-3 outside">-->
+                                    <!--<img src="__ADMIN__/image/p4.jpg" alt="">-->
+                                    <!--<div class="desc">-->
+                                        <!--新增用户数-->
+                                    <!--</div>-->
+                                    <!--<div class="num">-->
+                                    <!--1500-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="col-xs-12">
+                            <!-- PAGE CONTENT BEGINS -->
+                            <div>
+                                <ul class="ace-thumbnails clearfix">
+                                    <li>
+                                        <a href="assets/images/gallery/image-1.jpg" title="Photo Title" data-rel="colorbox" class="cboxElement">
+                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-1.jpg">
+                                        </a>
+
+                                        <div class="tags">
+												<span class="label-holder">
+													<span class="label label-info">breakfast</span>
+												</span>
+
+                                            <span class="label-holder">
+													<span class="label label-danger">fruits</span>
+												</span>
+
+                                            <span class="label-holder">
+													<span class="label label-success">toast</span>
+												</span>
+
+                                            <span class="label-holder">
+													<span class="label label-warning arrowed-in">diet</span>
+												</span>
+                                        </div>
+
+                                        <div class="tools">
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-link"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-paperclip"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-pencil"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-times red"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a href="assets/images/gallery/image-2.jpg" data-rel="colorbox" class="cboxElement">
+                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-2.jpg">
+                                            <div class="text">
+                                                <div class="inner">Sample Caption on Hover</div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="assets/images/gallery/image-3.jpg" data-rel="colorbox" class="cboxElement">
+                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-3.jpg">
+                                            <div class="text">
+                                                <div class="inner">Sample Caption on Hover</div>
+                                            </div>
+                                        </a>
+
+                                        <div class="tools tools-bottom">
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-link"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-paperclip"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-pencil"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-times red"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a href="assets/images/gallery/image-4.jpg" data-rel="colorbox" class="cboxElement">
+                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-4.jpg">
+                                            <div class="tags">
+													<span class="label-holder">
+														<span class="label label-info arrowed">fountain</span>
+													</span>
+
+                                                <span class="label-holder">
+														<span class="label label-danger">recreation</span>
+													</span>
+                                            </div>
+                                        </a>
+
+                                        <div class="tools tools-top">
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-link"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-paperclip"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-pencil"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-times red"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <div>
+                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-5.jpg">
+                                            <div class="text">
+                                                <div class="inner">
+                                                    <span>Some Title!</span>
+
+                                                    <br>
+                                                    <a href="assets/images/gallery/image-5.jpg" data-rel="colorbox" class="cboxElement">
+                                                        <i class="ace-icon fa fa-search-plus"></i>
+                                                    </a>
+
+                                                    <a href="#">
+                                                        <i class="ace-icon fa fa-user"></i>
+                                                    </a>
+
+                                                    <a href="#">
+                                                        <i class="ace-icon fa fa-share"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a href="assets/images/gallery/image-6.jpg" data-rel="colorbox" class="cboxElement">
+                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-6.jpg">
+                                        </a>
+
+                                        <div class="tools tools-right">
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-link"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-paperclip"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-pencil"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-times red"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a href="assets/images/gallery/image-1.jpg" data-rel="colorbox" class="cboxElement">
+                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-1.jpg">
+                                        </a>
+
+                                        <div class="tools">
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-link"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-paperclip"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-pencil"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-times red"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <a href="assets/images/gallery/image-2.jpg" data-rel="colorbox" class="cboxElement">
+                                            <img width="150" height="150" alt="150x150" src="assets/images/gallery/thumb-2.jpg">
+                                        </a>
+
+                                        <div class="tools tools-top in">
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-link"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-paperclip"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-pencil"></i>
+                                            </a>
+
+                                            <a href="#">
+                                                <i class="ace-icon fa fa-times red"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div><!-- PAGE CONTENT ENDS -->
                         </div>
                 </div><!-- /.page-content -->
             </div>

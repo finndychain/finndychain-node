@@ -111,7 +111,7 @@
                                 <tr>
                                     <td><label><input class="ace" type="checkbox" name="item[]" value="1" /><span class="lbl"> </span><label></td>
                                     <td style="color:#454545;">{$vo.robotid}</td>
-                                    <td><a href="{:url('robot/detail',array('robotid' => $vo.robotid))}"><b>{$vo.name|msubstr=0,39}</b></a> </td>
+                                    <td><a href="{:url('robot/detail',array('robotid' => $vo.robotid))}"><b>{$vo.name|msubstr=0,25}</b></a> </td>
                                     <td id="progress{$vo.robotid}"><div style="display:inline-block; vertical-align: middle;"><div class="progress pos-rel tooltip-info" data-percent="0%" data-rel="tooltip" data-original-title=" Starting ... " style="display:none;margin-bottom:0px;width:60px;">
                                         <div class="progress-bar" style="width:0%;"></div>
                                     </div></div>{$vo.status_desc}
