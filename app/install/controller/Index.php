@@ -132,12 +132,13 @@ class Index extends Controller {
 			unset($db['database']);
 			$db_obj  = \think\Db::connect($db);
 			$sql = "CREATE DATABASE IF NOT EXISTS `{$dbname}` DEFAULT CHARACTER SET utf8";
-			if (!$db_obj->execute($sql)) {
-				return $this->error($db_obj->getError());
+
+			if (false === $db_obj->execute($sql)) {
+                return $this->error($db_obj->getError());
 			} else {
 				//$this->success();
-                //$this->success('开始安装。。。', url('index/sql'));
-			    $this->redirect('index/sql');
+                $this->success('开始安装...', url('index/sql'));
+			    //$this->redirect('index/sql');
 			}
 			
 		} else {
