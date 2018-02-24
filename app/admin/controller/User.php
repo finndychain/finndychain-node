@@ -170,7 +170,8 @@ class User extends Base
     }
 
     protected function checkUserType($userTypeNew=''){
-        $userType = Session::get('usertype');
+        $userInfo = Session::get('userinfo');
+        $userType = $userInfo['user_type'];
         if(empty($userTypeNew)||($userType<2)||($userTypeNew>$userType)){
             $this->error('没有权限操作！');
         }
