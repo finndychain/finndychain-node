@@ -23,9 +23,9 @@ class Index extends Controller {
             $this->redirect('/admin');
         }*/
 
-		if ($this->request->action() != 'complete' && is_file(APP_PATH . 'database.php') && is_file(ROOT_PATH . 'data/install.lock')) {
+		/*if ($this->request->action() != 'complete' && is_file(APP_PATH . 'database.php') && is_file(ROOT_PATH . 'data/install.lock')) {
 			return $this->redirect('/admin');
-		}
+		}*/
 
         $this->status = [
             'index'    => 'light',
@@ -132,11 +132,12 @@ class Index extends Controller {
 			unset($db['database']);
 			$db_obj  = \think\Db::connect($db);
 			$sql = "CREATE DATABASE IF NOT EXISTS `{$dbname}` DEFAULT CHARACTER SET utf8";
-			if (!$db_obj->execute($sql)) {
-				return $this->error($db_obj->getError());
+
+			if (false === $db_obj->execute($sql)) {
+                return $this->error($db_obj->getError());
 			} else {
 				//$this->success();
-                $this->success('开始安装...', url('index/sql'));
+                $this->success('开始安装...', url('index/sq11l'));
 			    //$this->redirect('index/sql');
 			}
 			
