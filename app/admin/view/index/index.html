@@ -45,7 +45,6 @@
                     </li>
                 </ul><!-- /.breadcrumb -->
                 <!-- #section:basics/content.searchbox -->
-
                 <!-- /section:basics/content.searchbox -->
             </div>
             <!-- /section:basics/content.breadcrumbs -->
@@ -62,17 +61,18 @@
                 </div><!-- /.page-header -->
 
                 <div class="row" >
-                    <div class="col-xs-12">
-                        <div >
-                            <form class="form-search" method="get" action="http://www.finndy.test/midycp.php">
-<span class="input-icon">
-<input name="cnameandid" type="text" placeholder="搜索数据源ID或名称" class="nav-search-input" id="nav-search-input" autocomplete="off">
-<i class="ace-icon fa fa-search nav-search-icon"></i>
-</span>
-                                <input type="hidden" name="action" value="robots">&nbsp;&nbsp;&nbsp;
-                                <button class="btn btn-xs btn-info btn-round input-mini" type="submit">&nbsp;查看&nbsp;</button>
-                            </form>
-                        </div>
+                    <div class="col-xs-12" >
+                        <!--<div   style="float:right" >-->
+                            <!--<form class="form-search" method="get" action="http://www.finndy.test/midycp.php">-->
+<!--<span class="input-icon">-->
+<!--<input name="cnameandid" type="text" placeholder="搜索数据源ID或名称" class="nav-search-input" id="nav-search-input" autocomplete="off">-->
+<!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
+<!--</span>-->
+                                <!--<input type="hidden" name="action" value="robots">&nbsp;&nbsp;&nbsp;-->
+                                <!--<button class="btn btn-xs btn-info btn-round input-mini" type="submit">&nbsp;查看&nbsp;</button>-->
+                            <!--</form>-->
+                        <!--</div>-->
+                        <div class="clearfix"></div>
                         <!--<div >-->
                             <!--<div class="col-xs-12 " style="margin-top:20px">-->
                                 <!--<div class="col-md-6" style="text-align:left">-->
@@ -112,25 +112,12 @@
                             <!--</div>&lt;!&ndash; /.widget-body &ndash;&gt;-->
                         <!--</div>-->
 
-                        <h5 class="row">
+                        <h5 class="row ">
                             <span class="col-sm-7">
-                                <span style="height: 28px;line-height: 28px;">采集数据总量</span>
+                                <span style="height: 28px;line-height: 28px;"><i class="grey ace-icon fa fa-tachometer bigger-110"></i>
+                                <span style="height: 28px;line-height: 28px;">数据统计</span>
                             </span>
-                            <span class="col-sm-5">
-                            <label class="pull-right inline">
-                                <select name="" id="">
-                                <option value="1">按天</option>
-                                <option value="2">按时</option>
-                                </select>
-                            </label></span><!-- /.col -->
                         </h5>
-
-                        <div class="widget-body" style="display: block;">
-                            <div class="widget-main padding-4">
-                                <div id="main" style="width:1700;height:360px;"></div>
-                            </div><!-- /.widget-main -->
-                        </div><!-- /.widget-body -->
-
                         <div class="hr hr12 dotted"></div>
                         <div class="clearfix">
                             <div class="grid4 center">
@@ -156,6 +143,31 @@
                             </div>
                         </div>
                         <div class="hr hr16 dotted"></div>
+                        <br>
+                        <h5 class="row" style="margin-bottom:0px;">
+                            <span class="col-sm-7">
+                                <span style="height: 28px;line-height: 28px;"><i class="grey ace-icon fa fa-bar-chart bigger-110"></i>
+                                    <span style="height: 28px;line-height: 28px;">采集数据总量</span>
+                                </span>
+                            </span>
+                            <span class="col-sm-5">
+                                <label class="pull-right inline">
+                                    <select name="" id="">
+                                    <option value="1">按天</option>
+                                    <option value="2">按时</option>
+                                    </select>
+                                </label>
+                            </span><!-- /.col -->
+                        </h5>
+                        <div class="widget-body" style="display: block;">
+                            <div class="widget-main padding-4">
+                                <div id="main" style="width:1700;height:360px;"></div>
+                            </div><!-- /.widget-main -->
+                        </div><!-- /.widget-body -->
+
+
+
+
                         <!--<div class="col-xs-6 col-sm-4 col-md-3">-->
                             <!--<div class="thumbnail search-thumbnail">-->
                                 <!--<img class="media-object" data-src="holder.js/100px200?theme=gray" alt="100%x200" src="__ADMIN__/image/p1.jpg" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">-->
