@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-3 center">
+                <div class="col-xs-12 col-sm-4 center">
                     <div>
                         <!-- #section:pages/profile.picture -->
                         <span class="profile-picture">
@@ -96,24 +96,25 @@
                     {/if}
                     <!-- /section:pages/profile.contact -->
                 </div>
-                <div class="col-xs-12 col-sm-9">
+                <div class="col-xs-12 col-sm-8">
                     <div class="profile-user-info profile-user-info-striped">
                         <div class="profile-info-row">
                             <div class="profile-info-name"> 用户名 </div>
-                            <div class="profile-info-value">{$Think.session.username} &nbsp;</div>
+                            <div class="profile-info-value">&nbsp;&nbsp;{$Think.session.username} &nbsp;</div>
                         </div>
                         <div class="profile-info-row">
                             <div class="profile-info-name"> 昵称 </div>
-                            <div class="profile-info-value">{$Think.session.userinfo.nickname} &nbsp;</div>
+                            <div class="profile-info-value">&nbsp;&nbsp;{$Think.session.userinfo.nickname} &nbsp;</div>
                         </div>
 
                         <div class="profile-info-row">
                             <div class="profile-info-name"> 用户组 </div>
-                            <div class="profile-info-value">{$Think.session.userinfo.usertype} &nbsp;</div>
+                            <div class="profile-info-value">&nbsp;&nbsp;{$Think.session.userinfo.usertype} &nbsp;</div>
+
                         </div>
                         <div class="profile-info-row">
                             <div class="profile-info-name"> 密码 </div>
-                            <div class="profile-info-value"><a href="{:url('user/resetpwd')}">修改密码</a>&nbsp;</div>
+                            <div class="profile-info-value">&nbsp;&nbsp;<a href="{:url('user/resetpwd')}">修改密码</a>&nbsp;</div>
                         </div>
                         {if condition="$lv neq ''"}
                         <div class="profile-info-row" >

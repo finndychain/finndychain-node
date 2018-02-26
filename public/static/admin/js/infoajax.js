@@ -10,10 +10,10 @@ function setitem(){
     for(var i=0;i<arr.length;i++){
         if(arr[i] != ''){
 
-			if(checkid == ''|| !checkid || checkid == 0 || checkid == '0'){
-				//添加入口源链接重复检测
-				hostsimilaritycheck(arr[i]);
-			}
+			// if(checkid == ''|| !checkid || checkid == 0 || checkid == '0'){
+			// 	//添加入口源链接重复检测
+			// 	hostsimilaritycheck(arr[i]);
+			// }
 
 			urln = document.createElement('div');
             urln.id = 'url_' + num_item;

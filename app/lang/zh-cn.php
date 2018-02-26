@@ -68,5 +68,6 @@ return [
     'chunk not support order'   => 'Chunk不支持调用order方法',
     'next_page' => '>',
     'pre_page' => '<',
+    'robot_estimatedsourcedata_tips' => '必选，填写该数据源的数据总量',
 
 ];
