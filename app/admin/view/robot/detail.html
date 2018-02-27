@@ -221,7 +221,7 @@
                         v.mpage = parseInt(v.mpage);
                         v.lpage = parseInt(v.lpage);
                         //exvalue = v.crtcount+' / '+failvale+' / '+v.lpage+' / '+v.mpage;
-                        exvalue = '成功：'+v.succount+' | 失败：'+failvale;
+                        exvalue = '成功：'+v.succount+' | 重复：'+v.repcount+' | 失败：'+failvale;
                         value = v.percount;
                         width = v.percount;
                         s_tr.find('.pos-rel').attr('data-original-title',exvalue);

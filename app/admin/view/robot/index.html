@@ -114,7 +114,7 @@
                                     <td><a href="{:url('robot/detail',array('robotid' => $vo.robotid))}">
                                         <b>{$vo.name|msubstr=0,25}
                                             {if condition="$vo.cloud_resource eq 0 "}
-                                        &nbsp;<span class="label label-success label-white middle recommendtag tooltip-success" data-rel="tooltip" data-original-title="来自官网">官</span>
+                                        &nbsp;<span class="label label-success label-white middle recommendtag tooltip-success" data-rel="tooltip" data-original-title="来自云端">云</span>
                                             {/if}
                                     </b></a> </td>
                                     <td id="progress{$vo.robotid}"><div style="display:inline-block; vertical-align: middle;"><div class="progress pos-rel tooltip-info" data-percent="0%" data-rel="tooltip" data-original-title=" Starting ... " style="display:none;margin-bottom:0px;width:60px;">

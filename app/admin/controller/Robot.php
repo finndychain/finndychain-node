@@ -136,7 +136,6 @@ class Robot extends Base
         $params['op'] = 'getrobotrule';
         $params['robotid'] = $robotid;
         $res = api_request('get' ,api_build_url('api.php',$params));
-
         if($res['error_code'] != 0){
             $this->error('参数有误');
         }else{
@@ -243,9 +242,7 @@ class Robot extends Base
         $robotid = input('robotid');
         $params['robotid'] = $robotid;
         $params['op'] = 'debugrobot';
-        dump($params);
         $res = api_request_html('get', api_build_url('api.php', $params));
-        dump($res);die;
         $this->assign(
             'res',$res
         );

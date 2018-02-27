@@ -159,3 +159,25 @@ CREATE TABLE `cloud_finndy_data` (
   PRIMARY KEY (`itemid`),
   KEY `robotid` (`robotid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `cloud_stat_robot`;
+CREATE TABLE `cloud_stat_robot` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uid` int(10) NOT NULL COMMENT '用户id',
+  `count` int(10) NOT NULL DEFAULT '0' COMMENT '创建次数',
+  `dateline` int(10) NOT NULL COMMENT '日期',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='数据源统计表';
+
+DROP TABLE IF EXISTS `cloud_user_robot`;
+CREATE TABLE `cloud_user_robot` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uid` int(10) NOT NULL COMMENT '用户id',
+  `robotid` int(10) NOT NULL DEFAULT '0' COMMENT '数据源id',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='数据源用户关联表';

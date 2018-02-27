@@ -51,7 +51,7 @@
                         首页
                         <small>
                             <i class="ace-icon fa fa-angle-double-right"></i>
-                            首页
+                            开源云采集引擎
                         </small>
                     </h1>
                 </div><!-- /.page-header -->
@@ -111,12 +111,12 @@
                             <div class="grid4 center">
                                 <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.today}</span></span>
                                 <br>
-                                &nbsp;&nbsp; 本日新增用户数
+                                &nbsp;&nbsp; 本日新增数据源数
                             </div>
                             {/if}
 
                         </div>
-                        <div class="hr hr16 dotted"></div>
+                        <div class="hr hr12 dotted"></div>
                         <br>
                         <h5 class="row" style="margin-bottom:0px;">
                             <span class="col-sm-7">
@@ -144,6 +144,7 @@
         var myChart = echarts.init(document.getElementById('main'));
         window.onresize = myChart.resize;
         option = {
+
             grid:{
                 x:40,
                 x2:0,
@@ -152,14 +153,17 @@
             },
             xAxis: {
                 type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+                data: {$date}
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
+
             },
             series: [{
-                data: [820, 932, 901, 934, 1290, 1330, 1320],
+                data:{$data},
                 type: 'line',
+
             }]
         };
 

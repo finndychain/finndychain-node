@@ -37,15 +37,37 @@ class StatRobot extends  Model
         $thismonth = $data['thismonth'];
         if(Session::get('usertype') == '超级管理员'){
             $robotstatistics['all'] = $this->sum('count');
-            $robotstatistics['today'] = $this->where('dateline','=',$today)->sum('count');
+            $robotstatistics['today'] = $this->where('dateline',$today)->sum('count');
         }else{
             $robotstatistics['all'] = $this->where('uid',$uid)->sum('count');
-            $robotstatistics['today'] = $this->where('uid',$uid)->where('dateline','=',$today)->sum('count');
+            $robotstatistics['today'] = $this->where('uid',$uid)->where('dateline',$today)->value('count');
             $robotstatistics['thisweek'] = $this->where('uid',$uid)->where('dateline','>=',$thisweek)->sum('count');
             $robotstatistics['thismonth'] = $this->where('uid',$uid)->where('dateline','>=',$thismonth)->sum('count');
         }
         return $robotstatistics;
+    }
 
+    /**按照日期查询每天新增的数据数量
+     * @param $data 日期
+     * @return array
+     */
+    public function getStatByDate($data){
+        $uid = Session::get('uid');
+        if(Session::get('usertype') == '超级管理员'){
+            foreach($data as $v){
+                $data = $this->where('dateline',$v)->sum('count') ;
+                empty($data) ? $data = 0 :$data;
+                $everydaystat[] = $data;
+            }
+        }else{
+            foreach($data as $v){
+                $data = $this->where('uid',$uid)->where('dateline',$v)->value('count') ;
+                empty($data) ? $data = 0 :$data;
+                $everydaystat[] = $data;
+            }
+        }
+
+        return $everydaystat;
     }
 }
 
