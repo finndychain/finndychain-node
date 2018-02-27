@@ -52,8 +52,8 @@ class Base extends  Controller
 
     /**系统SEO配置信息*/
     protected function setPageSeo(){
-        $seoInfo['title']=$this->getSysConfValue('web_site_title');;
-        $seoInfo['kw']=$this->getSysConfValue('web_site_keyword');;
+        $seoInfo['title']=$this->getSysConfValue('web_site_title');
+        $seoInfo['kw']=$this->getSysConfValue('web_site_keyword');
         $seoInfo['desc']=$this->getSysConfValue('web_site_description');
         $this->assign('seoInfo',$seoInfo);
     }
@@ -64,6 +64,15 @@ class Base extends  Controller
         if(empty($userTypeNew)||($userType<2)||($userTypeNew>$userType)){
             $this->error('没有权限操作！');
         }
+    }
+
+    protected function getUserInfo($key=''){
+
+        $userInfo = Session::get('userinfo');
+        if(!empty($key)){
+            return $userInfo[$key];
+        }
+        return $userInfo;
     }
 
 

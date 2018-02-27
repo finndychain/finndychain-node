@@ -35,7 +35,7 @@ class StatRobot extends  Model
         $today = $data['today'];
         $thisweek = $data['thisweek'];
         $thismonth = $data['thismonth'];
-        if(Session::get('usertype') == '超级管理员'){
+        if(empty($uid)){
             $robotstatistics['all'] = $this->sum('count');
             $robotstatistics['today'] = $this->where('dateline',$today)->sum('count');
         }else{
@@ -51,9 +51,9 @@ class StatRobot extends  Model
      * @param $data 日期
      * @return array
      */
-    public function getStatByDate($data){
-        $uid = Session::get('uid');
-        if(Session::get('usertype') == '超级管理员'){
+    public function getStatByDate($data,$key=''){
+
+        if(empty($key)){
             foreach($data as $v){
                 $data = $this->where('dateline',$v)->sum('count') ;
                 empty($data) ? $data = 0 :$data;
@@ -61,12 +61,12 @@ class StatRobot extends  Model
             }
         }else{
             foreach($data as $v){
-                $data = $this->where('uid',$uid)->where('dateline',$v)->value('count') ;
+                $data = $this->where('uid',$key)->where('dateline',$v)->value('count') ;
                 empty($data) ? $data = 0 :$data;
                 $everydaystat[] = $data;
             }
-        }
 
+        }
         return $everydaystat;
     }
 }

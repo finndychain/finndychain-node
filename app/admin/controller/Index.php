@@ -31,12 +31,18 @@ class Index extends Base
         //本月起始日期
         $thismonth = date('Ymd' , mktime(0, 0, 0, date('m'), 1, date('Y')));
         $wherearr = array(
-            'uid'=>$uid,
             'today'=>$today,
             'thisweek'=>$thisweek,
             'thismonth'=>$thismonth,
         );
-        $robotstatistics = $statrobot->getRobotStat($wherearr);
+
+        $usertype = $this->getUserInfo('user_type');
+        if($usertype == 3){
+            $robotstatistics = $statrobot->getRobotStat($wherearr);
+        }else{
+            $wherearr['uid'] = $uid;
+            $robotstatistics = $statrobot->getRobotStat($wherearr);
+        }
 
         //用户数统计
         $users = new Users();
@@ -46,12 +52,15 @@ class Index extends Base
         $datearr = array();
         for($i=0;$i<=6;++$i){
             $datearr[] = date('Ymd' ,time()-$i*24*60*60);
-
         }
         $datearr = array_reverse($datearr);
         $date = json_encode($datearr);
         //每日数据源数量
-        $res = $statrobot->getStatByDate($datearr);
+        if($usertype == 3){
+            $res = $statrobot->getStatByDate($datearr);
+        }else{
+            $res = $statrobot->getStatByDate($datearr ,$uid);
+        }
         $data = json_encode($res);
         $title = '云采集';
         $this->assign([
