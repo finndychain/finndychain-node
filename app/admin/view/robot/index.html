@@ -100,7 +100,7 @@
                                     <th>{$Think.lang.robot_robot_status}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title=" {$Think.lang.robot_robot_status_help}"></i></th>
                                     <th >{$Think.lang.robot_robot_dateline}</th>
                                     <th>{$Think.lang.robot_robot_robot_time}</th>
-                                    <th>下次更新时间 <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_next_run_time_tip}"></i></th>
+                                    <th>下次更新时间<i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_next_run_time_tip}"></i></th>
                                     <th>{$Think.lang.robot_robot_op_select}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title=" {$Think.lang.robot_robot_op_select_help} "></i></th>
                                     </tr>
                             <!--数据行-->
@@ -111,20 +111,25 @@
                                 <tr>
                                     <td><label><input class="ace" type="checkbox" name="item[]" value="1" /><span class="lbl"> </span><label></td>
                                     <td style="color:#454545;">{$vo.robotid}</td>
-                                    <td><a href="{:url('robot/detail',array('robotid' => $vo.robotid))}"><b>{$vo.name|msubstr=0,25}</b></a> </td>
+                                    <td><a href="{:url('robot/detail',array('robotid' => $vo.robotid))}">
+                                        <b>{$vo.name|msubstr=0,25}
+                                            {if condition="$vo.cloud_resource eq 0 "}
+                                        &nbsp;<span class="label label-success label-white middle recommendtag tooltip-success" data-rel="tooltip" data-original-title="来自官网">官</span>
+                                            {/if}
+                                    </b></a> </td>
                                     <td id="progress{$vo.robotid}"><div style="display:inline-block; vertical-align: middle;"><div class="progress pos-rel tooltip-info" data-percent="0%" data-rel="tooltip" data-original-title=" Starting ... " style="display:none;margin-bottom:0px;width:60px;">
                                         <div class="progress-bar" style="width:0%;"></div>
                                     </div></div>{$vo.status_desc}
                                     </td>
                                     <td style="color:#454545;">{$vo.dateline|date="Y-m-d",###}</td>
                                     <td style="color:#454545;">
-                                        {if condition="$vo.lasttime == 0"}--
+                                        {if condition="$vo.lasttime eq 0"}--
                                         {else /}{$vo.lasttime|date="Y-m-d",###}
                                         {/if}
                                     </td>
                                     <td style="color:#454545;">
-                                        {if condition="$vo.next_run_time == 0"}--
-                                        {else /}{$vo.next_run_time|date="y-m-d",###}
+                                        {if condition="$vo.next_run_time eq 0"}--
+                                        {else /}{$vo.next_run_time}
                                         {/if}
                                     </td>
                                     <td>

@@ -66,4 +66,14 @@ class Users extends  Model
 
         return $rs;
     }
+
+    /** 获取用户数
+     * @param $where
+     */
+    public function getUsersCounts($data){
+        $userscounts['all'] = $this->count();
+        $userscounts['today'] = $this->where('create_time','>',$data)->count();
+        return $userscounts;
+
+    }
 }

@@ -40,6 +40,7 @@ class Sysconf extends Base
     {
         if(request()->isPost()) {
             $data = input();
+            $this->checkUserType(3);
             if(empty($data['index_url'])){
                 $this->error('网站网址不能为空！');
             }
@@ -55,6 +56,7 @@ class Sysconf extends Base
                     $this->error('授权appKey或appSecret不正确！');
                 }
             }
+
             $modelSysConf = new modelSysConf();
             $modelSysConf->updateSysConf($data);
             $this->success('修改成功','sysconf/sysset');

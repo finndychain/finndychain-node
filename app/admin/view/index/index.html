@@ -67,51 +67,62 @@
                                 <!--<button class="btn btn-xs btn-info btn-round input-mini" type="submit">&nbsp;查看&nbsp;</button>-->
                             <!--</form>-->
                         <!--</div>-->
-                        <h5 class="row ">
-                            <span class="col-sm-7">
-                                <span style="height: 28px;line-height: 28px;"><i class="grey ace-icon fa fa-tachometer bigger-110"></i>
-                                <span style="height: 28px;line-height: 28px;">数据统计</span>
-                            </span>
-                        </h5>
                         <div class="hr hr12 dotted"></div>
                         <div class="clearfix">
+                            {if condition='$Think.session.usertype eq "超级管理员" '}
                             <div class="grid4 center">
-                                <span id="clkcount" class="bigger-175 blue">0</span>
+                                <span id="clkcount" class="bigger-175 blue">{$robotstatistics.all}</span>
 
                                 <br>
-                                当前数据源总数
+                                数据源总数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">0</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.today}</span></span>
                                 <br>
                                 &nbsp;&nbsp; 今日新增数据源数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">0</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$userscounts.all}</span></span>
                                 <br>
                                 &nbsp;&nbsp; 总用户数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">0</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$userscounts.today}</span></span>
                                 <br>
-                                &nbsp;&nbsp; 新增用户数
+                                &nbsp;&nbsp; 本周新增用户数
                             </div>
+                            {else /}
+                            <div class="grid4 center">
+                                <span id="clkcount" class="bigger-175 blue">{$robotstatistics.all}</span>
+
+                                <br>
+                                数据源总数
+                            </div>
+                            <div class="grid4 center">
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.thismonth}</span></span>
+                                <br>
+                                &nbsp;&nbsp; 本月新增数据源数
+                            </div>
+                            <div class="grid4 center">
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.thisweek}</span></span>
+                                <br>
+                                &nbsp;&nbsp; 本周新增数据源数
+                            </div>
+                            <div class="grid4 center">
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.today}</span></span>
+                                <br>
+                                &nbsp;&nbsp; 本日新增用户数
+                            </div>
+                            {/if}
+
                         </div>
                         <div class="hr hr16 dotted"></div>
                         <br>
                         <h5 class="row" style="margin-bottom:0px;">
                             <span class="col-sm-7">
-                                <span style="height: 28px;line-height: 28px;"><i class="grey ace-icon fa fa-bar-chart bigger-110"></i>
-                                    <span style="height: 28px;line-height: 28px;">采集数据总量</span>
+                                <span style="height: 28px;line-height: 28px;">
+                                    <span style="height: 28px;line-height: 28px;">数据源趋势图</span>
                                 </span>
-                            </span>
-                            <span class="col-sm-5">
-                                <label class="pull-right inline">
-                                    <select name="" id="">
-                                    <option value="1">按天</option>
-                                    <option value="2">按时</option>
-                                    </select>
-                                </label>
                             </span>
                         </h5>
                         <div class="widget-body" style="display: block;">

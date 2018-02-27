@@ -11,7 +11,7 @@ class User extends Validate
 
     protected $rule = [
         'username' => 'require|max:10',
-        'password'=> 'require|max:16',
+        'password'=> 'require|min:6|max:16',
         'set_oldpass'=> 'require|max:16|min:6',
         'set_newpass'=> 'require|max:16|min:6',
         'set_okpass'=> 'require|max:16|min:6',
@@ -22,6 +22,7 @@ class User extends Validate
         'username.max'=>'用户名不能超过10位',
         'password.require'=>'密码不能为空',
         'password.max'=>'密码长度不能查过16',
+        'password.min'=>'密码长度不能少于6位',
         'set_oldpass.require'=>'旧密码不能为空',
         'set_oldpass.max'=>'密码长度不能查过16',
         'set_oldpass.min'=>'密码长度不能少于6位',

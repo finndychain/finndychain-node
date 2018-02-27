@@ -58,6 +58,14 @@ class Base extends  Controller
         $this->assign('seoInfo',$seoInfo);
     }
 
+    protected function checkUserType($userTypeNew=''){
+        $userInfo = Session::get('userinfo');
+        $userType = $userInfo['user_type'];
+        if(empty($userTypeNew)||($userType<2)||($userTypeNew>$userType)){
+            $this->error('没有权限操作！');
+        }
+    }
+
 
 
 }

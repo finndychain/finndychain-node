@@ -82,7 +82,6 @@ class User extends Base
         return $this->fetch('resetpwd',['title'=>$title]);
     }
 
-
     //增加用户
     public function add()
     {
@@ -94,13 +93,11 @@ class User extends Base
                 $this->error($validate);
             }
             $this->checkUserType($data['user_type']);
-
             $data['password'] = passwordencrypt($data['password']);
             $user_info = $this->modelUsers->getUserinfo(array('username'=>$data['username']));
             if($user_info){
                 $this->error('用户名已存在!');
             }
-
             $inser_res = $this->modelUsers->insertUserinfo($data);
             if(!$inser_res){
                 $this->error('操作失败,稍后再试!');
@@ -108,7 +105,6 @@ class User extends Base
             $this->success('添加成功','user/index');
         }
     }
-
     //修改用户信息
     public function edit()
     {
@@ -164,13 +160,7 @@ class User extends Base
 
     }
 
-    protected function checkUserType($userTypeNew=''){
-        $userInfo = Session::get('userinfo');
-        $userType = $userInfo['user_type'];
-        if(empty($userTypeNew)||($userType<2)||($userTypeNew>$userType)){
-            $this->error('没有权限操作！');
-        }
-    }
+
 
 
 }

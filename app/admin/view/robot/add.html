@@ -550,11 +550,12 @@
                                             <tr>
                                                 <td colspan=2>{$Think.lang.robot_extfield_settingtips}
                                                     {for start="1" end="49"  step="1" name="tmpid" }
-
-
-                                                        <input id="inputext{$tmpid}" type="button" class="dbtn" value="extfield{$tmpid}" onclick="javascript:showextfield(this,{$tmpid});" style="background-color:#ffffff;{$extColorArr['extfieldreg$tmpid']}"> {if condition="($tmpid%10) == 0 "} <br>{/if}
+                                                    {empty name='$thevalue["extfieldreg$tmpid"]'}
+                                                    <input id="inputext{$tmpid}" type="button" class="dbtn" value="extfield{$tmpid}" onclick="javascript:showextfield(this,{$tmpid});" style="background-color:#ffffff;color:#aaaaaa "> {if condition="($tmpid%10) == 0 "} <br>{/if}
+                                                    {else /}
+                                                    <input id="inputext{$tmpid}" type="button" class="dbtn" value="extfield{$tmpid}" onclick="javascript:showextfield(this,{$tmpid});" style="background-color:#ffffff;color:#000 "> {if condition="($tmpid%10) == 0 "} <br>{/if}
+                                                    {/empty}
                                                     {/for}
-
                                                 </td>
                                             </tr>
 

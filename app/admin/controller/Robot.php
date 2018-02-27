@@ -1,6 +1,9 @@
 <?php
 namespace app\admin\controller;
 use app\admin\model\FinndyData;
+use app\admin\model\UserRobot;
+use app\admin\model\StatRobot;
+use think\Session;
 
 
 class Robot extends Base
@@ -8,12 +11,28 @@ class Robot extends Base
     //数据源列表
     public function index()
     {
+
         $title = '数据源列表';
+
         $tabbox  = 'style="display:none;"';
-        $params['op'] = 'getrobotslist';
         $params['page'] = input('get.page');
-        $res = api_request('get' ,api_build_url('api.php',$params));
-        $arr = check_api_result($res);
+        if(Session::get('usertype') == '超级管理员'){
+            $params['op'] = 'getrobotslist';
+            $res = api_request('get' ,api_build_url('api.php',$params));
+            $arr = check_api_result($res);
+        }else{//非超级管理员
+            $robotid = array();
+            $uid = Session::get('uid');
+            $where = array('uid'=>$uid);
+            $userrobot = new UserRobot();
+            $robotid = $userrobot->getRobotid($where);
+            $robotstr = implode(',' , $robotid);
+            $params['op'] = 'getlistbyrobots';
+            $params['robots'] = $robotstr;
+            $res = api_request('get' ,api_build_url('api.php',$params));
+            $arr = check_api_result($res);
+        }
+
 
         $listarr = $arr['data'] ? $arr['data'] : array();
         $multipage = $arr['page'] ? $arr['page'] : array();
@@ -38,7 +57,6 @@ class Robot extends Base
     {
         if(request()->isPost()){
             $postdata = input();
-
             $validate = $this->validate($postdata,'Robot.add');//使用validate验证
             if(true !== $validate){
                 // 验证失败 输出错误信息
@@ -47,8 +65,18 @@ class Robot extends Base
             $params = $postdata;
             $params['op'] = 'valuesubmit';
             $res = api_request('POST' ,'api.php', api_build_params($params));
-
             if($res['error_code'] === 0){
+                $robotid = $res[result];
+                $uid = Session::get('uid');
+                //插入到user_robot 表中
+                $userrobot = new UserRobot();
+                $insertarr = array('uid'=> $uid , 'robotid' => $robotid);
+                $userrobot->insertUserRobot($insertarr);
+                //统计数据源数
+                $statrobot = new StatRobot();
+                $dateline = date('Y-m-d' , time());
+                $insertarr = array('uid'=> $uid , 'dateline'=> $dateline);
+                $statrobot->insertStatRobot($insertarr);
                 $this->success('创建数据源成功','robot/index');
             }else{
                 $this->error('创建失败');
@@ -215,7 +243,9 @@ class Robot extends Base
         $robotid = input('robotid');
         $params['robotid'] = $robotid;
         $params['op'] = 'debugrobot';
+        dump($params);
         $res = api_request_html('get', api_build_url('api.php', $params));
+        dump($res);die;
         $this->assign(
             'res',$res
         );
