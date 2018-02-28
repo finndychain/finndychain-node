@@ -45,11 +45,13 @@ class Robot extends Base
         foreach($listarr as &$item){
             $item['status_desc']=lang('cp_source_available_font_'.$item['status']);
         }
+
         $this->assign([
             'title' => $title,
             'listarr'=>$listarr,
             'tabbox'=>$tabbox,
             'multipage'=>$multipage,
+
         ]);
         return $this->fetch();
     }
@@ -252,6 +254,8 @@ class Robot extends Base
         $robotid = input('robotid');
         $params['robotid'] = $robotid;
         $params['op'] = 'debugrobot';
+        $referer = $this->request->server('HTTP_REFERER');
+        $params['referer'] = $referer;
         $res = api_request_html('get', api_build_url('api.php', $params));
         $this->assign(
             'res',$res
