@@ -16,7 +16,8 @@ class Robot extends Base
 
         $tabbox  = 'style="display:none;"';
         $params['page'] = input('get.page');
-        if(Session::get('usertype') == '超级管理员'){
+        $usertype = $this->getUserInfo('user_type');
+        if($usertype == 3){
             $params['op'] = 'getrobotslist';
             $res = api_request('get' ,api_build_url('api.php',$params));
             $arr = check_api_result($res);
@@ -68,15 +69,13 @@ class Robot extends Base
             if($res['error_code'] === 0){
                 $robotid = $res[result];
                 $uid = Session::get('uid');
-                //插入到user_robot 表中
-                $userrobot = new UserRobot();
                 $insertarr = array('uid'=> $uid , 'robotid' => $robotid);
-                $userrobot->insertUserRobot($insertarr);
-                //统计数据源数
-                $statrobot = new StatRobot();
-                $dateline = date('Y-m-d' , time());
+                //插入到user_robot 表中
+                $this->insertintouserrobot($insertarr);
+                //插入数据源统计表
+                $dateline = date('Ymd' , time());
                 $insertarr = array('uid'=> $uid , 'dateline'=> $dateline);
-                $statrobot->insertStatRobot($insertarr);
+                $this->insertintostatrobot($insertarr);
                 $this->success('创建数据源成功','robot/index');
             }else{
                 $this->error('创建失败');
@@ -170,6 +169,17 @@ class Robot extends Base
             $params['op']='valuesubmit';
             $res = api_request('POST' ,'api.php', api_build_params($params));
             if($res['error_code'] === 0){
+                $robotid = $res[result];
+
+                $uid = Session::get('uid');
+
+                $insertarr = array('uid'=> $uid , 'robotid' => $robotid);
+                //插入到user_robot 表中
+                $this->insertintouserrobot($insertarr);
+                //插入数据源统计表
+                $dateline = date('Ymd' , time());
+                $insertarr = array('uid'=> $uid , 'dateline'=> $dateline);
+                $this->insertintostatrobot($insertarr);
                 $this->success('创建数据源成功','robot/index');
             }else{
                 $url = url('robot/copy' , array('robotid'=>$copyrobotid));
@@ -330,6 +340,15 @@ class Robot extends Base
                 $res = api_request('POST' ,'api.php', api_build_params($params));
 
                 if($res['error_code'] === 0){
+                    $robotid = $res[result];
+                    $uid = Session::get('uid');
+                    $insertarr = array('uid'=> $uid , 'robotid' => $robotid);
+                    //插入到user_robot 表中
+                    $this->insertintouserrobot($insertarr);
+                    //插入数据源统计表
+                    $dateline = date('Ymd' , time());
+                    $insertarr = array('uid'=> $uid , 'dateline'=> $dateline);
+                    $this->insertintostatrobot($insertarr);
                     $this->success('创建数据源成功','robot/index');
                 }else{
                     $this->error('创建失败,请重新编辑','robot/import');
@@ -645,6 +664,21 @@ class Robot extends Base
     //私有云服务条款
     public function policy(){
         return $this->fetch('policy');
+    }
+
+    /**发布数据源成功之后 插入到user_robot表中
+     * @param array $data
+     */
+    public function insertintouserrobot(array $data){
+        $userrobot = new UserRobot();
+        $userrobot->insertUserRobot($data);
+    }
+    /**发布数据源成功之后 插入到stat_robot表中
+     * @param array $data
+     */
+    public function insertintostatrobot(array $data){
+        $statrobot = new StatRobot();
+        $statrobot->insertStatRobot($data);
     }
 
 

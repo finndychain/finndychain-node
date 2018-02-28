@@ -1,7 +1,6 @@
 <?php
 namespace app\admin\model;
 use think\Model;
-use think\Session;
 
 class StatRobot extends  Model
 {
@@ -29,20 +28,20 @@ class StatRobot extends  Model
      * @param array $data
      * @return array
      */
-    public function getRobotStat(array $data){
+    public function getRobotStat(array $data ,$key=''){
         $robotstatistics = array();
-        $uid = $data['uid'];
         $today = $data['today'];
         $thisweek = $data['thisweek'];
         $thismonth = $data['thismonth'];
-        if(empty($uid)){
+        if(empty($key)){//管理员
             $robotstatistics['all'] = $this->sum('count');
             $robotstatistics['today'] = $this->where('dateline',$today)->sum('count');
-        }else{
-            $robotstatistics['all'] = $this->where('uid',$uid)->sum('count');
-            $robotstatistics['today'] = $this->where('uid',$uid)->where('dateline',$today)->value('count');
-            $robotstatistics['thisweek'] = $this->where('uid',$uid)->where('dateline','>=',$thisweek)->sum('count');
-            $robotstatistics['thismonth'] = $this->where('uid',$uid)->where('dateline','>=',$thismonth)->sum('count');
+        }else{//非管理员 按照指定uid查询
+
+            $robotstatistics['all'] = $this->where('uid',$key)->sum('count');
+            $robotstatistics['today'] = $this->where('uid',$key)->where('dateline',$today)->value('count');
+            $robotstatistics['thisweek'] = $this->where('uid',$key)->where('dateline','>=',$thisweek)->sum('count');
+            $robotstatistics['thismonth'] = $this->where('uid',$key)->where('dateline','>=',$thismonth)->sum('count');
         }
         return $robotstatistics;
     }
@@ -56,13 +55,13 @@ class StatRobot extends  Model
         if(empty($key)){
             foreach($data as $v){
                 $data = $this->where('dateline',$v)->sum('count') ;
-                empty($data) ? $data = 0 :$data;
+                empty($data) ? $data = 0 : $data;
                 $everydaystat[] = $data;
             }
         }else{
             foreach($data as $v){
                 $data = $this->where('uid',$key)->where('dateline',$v)->value('count') ;
-                empty($data) ? $data = 0 :$data;
+                empty($data) ? $data = 0 : $data;
                 $everydaystat[] = $data;
             }
 

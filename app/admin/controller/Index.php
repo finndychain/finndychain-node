@@ -40,8 +40,7 @@ class Index extends Base
         if($usertype == 3){
             $robotstatistics = $statrobot->getRobotStat($wherearr);
         }else{
-            $wherearr['uid'] = $uid;
-            $robotstatistics = $statrobot->getRobotStat($wherearr);
+            $robotstatistics = $statrobot->getRobotStat($wherearr,$uid);
         }
 
         //用户数统计
@@ -55,6 +54,7 @@ class Index extends Base
         }
         $datearr = array_reverse($datearr);
         $date = json_encode($datearr);
+
         //每日数据源数量
         if($usertype == 3){
             $res = $statrobot->getStatByDate($datearr);
@@ -69,6 +69,7 @@ class Index extends Base
             'userscounts' => $userscounts,
             'date' => $date,
             'data' => $data,
+            'usertype' => $usertype,
         ]);
         return $this->fetch();
     }

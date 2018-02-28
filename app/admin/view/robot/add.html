@@ -646,7 +646,7 @@
                                         <p class="tabhelp"><i class="ace-icon fa fa-bullhorn"></i> {$Think.lang.robot_help_tab31}</p>
                                         <table cellspacing="0" cellpadding="0" width="100%"  class="table no-border">
                                             <tr>
-                                                <th class="width-25">{$Think.lang.robot_needpost}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_needpost_tips}"></i></th>
+                                                <th class="width-25">{$Think.lang.robot_needpost} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_needpost_tips}"></i></th>
                                                 <td>
                                                     <label><input class="ace" name="needpost" type="radio" value="0" {$thevalue[needpost] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_needpost_0}&nbsp;&nbsp;</span> </label>
                                                     <label><input class="ace" name="needpost" type="radio" value="1" {$thevalue[needpost] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_needpost_1}&nbsp;&nbsp;</span> </label>
@@ -670,12 +670,12 @@
                                                 <td><input id="phost" name="phost" type="text" placeholder="{$Think.lang.robot_phost_phd}" size="60" maxlength="255" value="{$thepostvalue[phost]}" /></td>
                                             </tr>
                                             <tr>
-                                                <th>{$Think.lang.robot_ptoken}<i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_ptoken_tips}"></i></th>
+                                                <th>{$Think.lang.robot_ptoken} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_ptoken_tips}"></i></th>
                                                 <td><input id="ptoken" name="ptoken" type="text" placeholder="{$Think.lang.robot_ptoken_phd}" size="60" maxlength="32" value="{$thepostvalue[ptoken]}" /></td>
                                             </tr>
                                             <tr>
                                                 <th>{$Think.lang.robot_pfid} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_pfid_tips}"></i></th>
-                                                <td><select id="pfid" name="pfid" class="form-control inline" style="width:275px;">$thepostvalue[pfidoption]</select>
+                                                <td><select id="pfid" name="pfid" class="form-control inline" style="width:275px;">$thepostvalue[pfidoption]<option value="0">请先加载目标分类</option></select>
                                                     <input id="pfidoption" name="pfidoption" type="hidden" value='$thepostvalue[pfidoption_old]' />
                                                     &nbsp;&nbsp; <button id="loadingbtn" style="width:154px;" data-loading-text="loading ..." type="button" class="btn btn-white btn-info">验证并加载分类</button>
                                                 </td>

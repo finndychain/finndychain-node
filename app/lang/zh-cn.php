@@ -69,5 +69,7 @@ return [
     'next_page' => '>',
     'pre_page' => '<',
     'robot_estimatedsourcedata_tips' => '必选，填写该数据源的数据总量',
+    'robot_subjectallowrepeat' => '数据链接是否去重 <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="默认进行数据链接去重处理，避免每次采集相同的数据重复入库。如需单个数据源不去重，可通过上面链接补充后缀添加#源ID及5位随机字符串（如#123abcde）来实现"></i><p></p>',
+    'robot_subjecturllinkpre' => '数据链接URL补充前缀 <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="数据链接补充前缀可将上文解析处理后的URL均加上字符串前缀。支持使用 [entryurl] 通配入口URL。数据链接首个#后作为下文使用的通配符 [poundstr] ，可在后续各字段识别规则（包括自定义脚本规则）中使用，用于实现单页循环或表格类数据采集"></i><p>(<a href="javascript:insertAtCursor(\'subjecturllinkpre\',\'[entryurl]\');">[entryurl]</a>)</p>',
 
 ];
