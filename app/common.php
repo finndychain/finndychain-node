@@ -29,6 +29,7 @@ function api_request($method, $url, $fields=''){
 }
 function api_request_html($method, $url, $fields=''){
     $url = config('api_url').$url;
+
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_HEADER, 0);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

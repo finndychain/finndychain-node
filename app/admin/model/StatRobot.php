@@ -37,7 +37,6 @@ class StatRobot extends  Model
             $robotstatistics['all'] = $this->sum('count');
             $robotstatistics['today'] = $this->where('dateline',$today)->sum('count');
         }else{//非管理员 按照指定uid查询
-
             $robotstatistics['all'] = $this->where('uid',$key)->sum('count');
             $robotstatistics['today'] = $this->where('uid',$key)->where('dateline',$today)->value('count');
             $robotstatistics['thisweek'] = $this->where('uid',$key)->where('dateline','>=',$thisweek)->sum('count');

@@ -67,7 +67,6 @@ class Base extends  Controller
     }
 
     protected function getUserInfo($key=''){
-
         $userInfo = Session::get('userinfo');
         if(!empty($key)){
             return $userInfo[$key];
