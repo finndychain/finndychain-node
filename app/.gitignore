@@ -1,5 +1,3 @@
 .idea
-composer.lock
 *.log
 database.php
-config.php
