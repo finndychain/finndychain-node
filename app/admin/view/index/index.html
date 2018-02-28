@@ -71,45 +71,45 @@
                         <div class="clearfix">
                             {if condition='$usertype eq 3 '}
                             <div class="grid4 center">
-                                <span id="clkcount" class="bigger-175 blue">{$robotstatistics.all}</span>
+                                <span id="clkcount" class="bigger-175 blue">{$robotstatistics.all|default= 0}</span>
 
                                 <br>
                                 数据源总数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.today}</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.today|default= 0}</span></span>
                                 <br>
                                 &nbsp;&nbsp; 今日新增数据源数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$userscounts.all}</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$userscounts.all|default= 0}</span></span>
                                 <br>
                                 &nbsp;&nbsp; 总用户数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$userscounts.today}</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$userscounts.today|default= 0}</span></span>
                                 <br>
                                 &nbsp;&nbsp; 本周新增用户数
                             </div>
                             {else /}
                             <div class="grid4 center">
-                                <span id="clkcount" class="bigger-175 blue">{$robotstatistics.all}</span>
+                                <span id="clkcount" class="bigger-175 blue">{$robotstatistics.all|default= 0}</span>
 
                                 <br>
                                 数据源总数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.thismonth}</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.thismonth|default= 0}</span></span>
                                 <br>
                                 &nbsp;&nbsp; 本月新增数据源数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.thisweek}</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.thisweek|default= 0}</span></span>
                                 <br>
                                 &nbsp;&nbsp; 本周新增数据源数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.today}</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.today|default= 0 }</span></span>
                                 <br>
                                 &nbsp;&nbsp; 本日新增数据源数
                             </div>

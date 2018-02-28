@@ -4,6 +4,7 @@ use app\admin\model\FinndyData;
 use app\admin\model\UserRobot;
 use app\admin\model\StatRobot;
 use think\Session;
+use think\Request;
 
 
 class Robot extends Base
@@ -87,7 +88,7 @@ class Robot extends Base
 
 
         $theuser = $this->getuserrobotver();
-
+        //dump($theuser);die;
         $catarr = getcategory();
 
 
@@ -111,6 +112,7 @@ class Robot extends Base
     {
         if(request()->isPost()){
             $postdata = input();
+            //dump($thevalue);die;
            // dump(strlen($postdata[name]));die;
             $validate = $this->validate($postdata,'Robot.edit');//使用validate验证
             if(true !== $validate){
@@ -137,10 +139,12 @@ class Robot extends Base
         $params['op'] = 'getrobotrule';
         $params['robotid'] = $robotid;
         $res = api_request('get' ,api_build_url('api.php',$params));
+
         if($res['error_code'] != 0){
             $this->error('参数有误');
         }else{
             $thevalue= check_api_result($res);
+           // dump($thevalue);die;
             $title = '编辑源';
             $tabbox  = 'style="display:none;"';
             $this->assign([
@@ -251,10 +255,14 @@ class Robot extends Base
     }
     //运行测试
     public function debugrobot(){
+        $request = Request::instance();
         $robotid = input('robotid');
         $params['robotid'] = $robotid;
         $params['op'] = 'debugrobot';
         $referer = $this->request->server('HTTP_REFERER');
+        if(empty($referer)){
+            $referer = $referer = $request->domain().url('robot/detail',array('robotid'=>$robotid));
+        }
         $params['referer'] = $referer;
         $res = api_request_html('get', api_build_url('api.php', $params));
         $this->assign(
@@ -685,6 +693,13 @@ class Robot extends Base
         $statrobot->insertStatRobot($data);
     }
 
+    //发布数据
+    public function loadingpostcat(){
+        $postdata = input();
+        $params = $postdata;
+        $params['op'] = 'loadingpostcat';
+        $res = api_request_html('POST' ,'api.php', api_build_params($params));
 
-
+        echo $res; exit();
+    }
 }

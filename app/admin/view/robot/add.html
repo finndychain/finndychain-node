@@ -655,27 +655,33 @@
                                             <tr>
                                                 <th class="width-25">{$Think.lang.robot_ptype}</th>
                                                 <td>
-                                                    <label style="display:none;"><input class="ace" name="ptype" type="radio" value="0" {$thevalue[ptype] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_0}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="ptype" type="radio" value="1" {$thevalue[ptype] ==1?checked:''}/><span class="lbl">&nbsp;{$Think.lang.robot_ptype_1}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="ptype" type="radio" value="2" {$thevalue[ptype] ==2?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_2}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="ptype" type="radio" value="3" {$thevalue[ptype] ==3?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_3}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="ptype" type="radio" value="4" {$thevalue[ptype] ==4?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_4}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="ptype" type="radio" value="5" {$thevalue[ptype] ==5?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_5}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="ptype" type="radio" value="6" {$thevalue[ptype] ==6?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_6}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="ptype" type="radio" value="7" {$thevalue[ptype] ==7?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_7}&nbsp;&nbsp;</span> </label>
+                                                    <label style="display:none;"><input class="ace" name="ptype" type="radio" value="0" {$thevalue.thepostvalue.ptype ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="1" {$thevalue.thepostvalue.ptype ==1?checked:''}/><span class="lbl">&nbsp;{$Think.lang.robot_ptype_1}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="2" {$thevalue.thepostvalue.ptype ==2?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_2}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="3" {$thevalue.thepostvalue.ptype ==3?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_3}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="4" {$thevalue.thepostvalue.ptype ==4?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_4}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="5" {$thevalue.thepostvalue.ptype ==5?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_5}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="6" {$thevalue.thepostvalue.ptype ==6?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_6}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="ptype" type="radio" value="7" {$thevalue.thepostvalue.ptype ==7?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_ptype_7}&nbsp;&nbsp;</span> </label>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>{$Think.lang.robot_phost} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_phost_tips}"></i></th>
-                                                <td><input id="phost" name="phost" type="text" placeholder="{$Think.lang.robot_phost_phd}" size="60" maxlength="255" value="{$thepostvalue[phost]}" /></td>
+                                                <td><input id="phost" name="phost" type="text" placeholder="{$Think.lang.robot_phost_phd}" size="60" maxlength="255" value="{$thevalue.thepostvalue.phost}" /></td>
                                             </tr>
                                             <tr>
                                                 <th>{$Think.lang.robot_ptoken} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_ptoken_tips}"></i></th>
-                                                <td><input id="ptoken" name="ptoken" type="text" placeholder="{$Think.lang.robot_ptoken_phd}" size="60" maxlength="32" value="{$thepostvalue[ptoken]}" /></td>
+                                                <td><input id="ptoken" name="ptoken" type="text" placeholder="{$Think.lang.robot_ptoken_phd}" size="60" maxlength="32" value="{$thevalue.thepostvalue.ptoken}" /></td>
                                             </tr>
                                             <tr>
                                                 <th>{$Think.lang.robot_pfid} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_pfid_tips}"></i></th>
-                                                <td><select id="pfid" name="pfid" class="form-control inline" style="width:275px;">$thepostvalue[pfidoption]<option value="0">请先加载目标分类</option></select>
+                                                <td><select id="pfid" name="pfid" class="form-control inline" style="width:275px;">
+                                                    {if condition="$thevalue.thepostvalue.pfidoption eq '' "}
+                                                    <option value="0">请先加载目标分类</option>
+                                                    {else /}
+                                                    {$thevalue.thepostvalue.pfidoption}
+                                                    {/if}
+                                                </select>
                                                     <input id="pfidoption" name="pfidoption" type="hidden" value='$thepostvalue[pfidoption_old]' />
                                                     &nbsp;&nbsp; <button id="loadingbtn" style="width:154px;" data-loading-text="loading ..." type="button" class="btn btn-white btn-info">验证并加载分类</button>
                                                 </td>
@@ -688,7 +694,7 @@
                                                         <option value="subject">标题(核心字段)</option>
                                                         <option value="message">内容(核心字段)</option>
                                                         {for start='1' end='49' }
-                                                        <option value="extfield{$i}">扩展字段 {$i}</option>
+                                                        <option value="extfield{$i}" {if condition='$thevalue.thepostvalue.ptitle eq "extfield$i" '} selected = "selected" {/if}  >扩展字段 {$i}</option>
                                                         {/for}
                                                     </select>
                                                 </td>
@@ -701,7 +707,7 @@
                                                         <option value="subject">标题(核心字段)</option>
                                                         <option value="message">内容(核心字段)</option>
                                                         {for start='1' end='49' }
-                                                        <option value="extfield{$i}">扩展字段 {$i}</option>
+                                                        <option value="extfield{$i}" {if condition='$thevalue.thepostvalue.pcontent eq "extfield$i" '} selected = "selected" {/if} >扩展字段 {$i}</option>
                                                         {/for}
                                                     </select>
                                                 </td>
@@ -714,7 +720,7 @@
                                                         <option value="subject">标题(核心字段)</option>
                                                         <option value="message">内容(核心字段)</option>
                                                         {for start='1' end='49' }
-                                                        <option value="extfield{$i}">扩展字段 {$i}</option>
+                                                        <option value="extfield{$i}" {if condition='$thevalue.thepostvalue.pauthor eq "extfield$i" '} selected = "selected" {/if}>扩展字段 {$i}</option>
                                                         {/for}
                                                     </select>
                                                 </td>
@@ -727,15 +733,15 @@
                                                         <option value="subject">标题(核心字段)</option>
                                                         <option value="message">内容(核心字段)</option>
                                                         {for start='1' end='49' }
-                                                        <option value="extfield{$i}">扩展字段 {$i}</option>
+                                                        <option value="extfield{$i}" {if condition='$thevalue.thepostvalue.pdateline eq "extfield$i" '} selected = "selected" {/if}>扩展字段 {$i}</option>
                                                         {/for}
                                                     </select>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th class="width-25">{$Think.lang.robot_pneedcheck} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_pneedcheck_tips}"></i></th>
-                                                <td><label><input class="ace" name="pneedcheck" type="radio" value="0" {$thevalue[pneedcheck] ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_pneedcheck_0}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="pneedcheck" type="radio" value="1" {$thevalue[pneedcheck] ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_pneedcheck_1}&nbsp;&nbsp;</span> </label></td>
+                                                <td><label><input class="ace" name="pneedcheck" type="radio" value="0" {$thevalue.thepostvalue.pneedcheck ==0?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_pneedcheck_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="pneedcheck" type="radio" value="1" {$thevalue.thepostvalue.pneedcheck ==1?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_pneedcheck_1}&nbsp;&nbsp;</span> </label></td>
                                             </tr>
 
                                         </table>
@@ -941,7 +947,10 @@
 //        $('#sourcepayment-spinner').ace_spinner('$sourcepaymentdisabled_str');
 
         $('#sourcefrequency-spinner').ace_spinner({value:99999, min:{$theuser['_vfrequency']}, max:99999, step:1, btn_up_class:'btn-info btn-mini', btn_down_class:'btn-info btn-mini'});
-       $('#sourcefrequency-spinner').ace_spinner('disable');
+        if('{$theuser.robotversion}' == 'verf' ){
+            $('#sourcefrequency-spinner').ace_spinner('disable');
+        }
+
 
 
 
@@ -968,9 +977,10 @@
             setTimeout(function () {
                 tbtn.button('reset')
             }, 3000);
-            var purl = '$s_url/batch.common.php?action=loadingpostcat';
+            var purl = '{:url("robot/loadingpostcat")}';
             var pdat = "ptype=" + $('input:radio[name=ptype]:checked').val() + '&phost=' + $('#phost').val() + '&ptoken=' + $('#ptoken').val() + '&robotid=' + $('#robotid').val();
             $.post(purl,pdat,function(res){
+                console.log(res);
                 //res = {"status":1,"msg":"","data":[{"id":1,"name":"\u9ed8\u8ba4"},{"id":2,"name":"\u6d4b\u8bd5"}]}
                 //alert(JSON.stringify(res));
                 if (res) {

@@ -63,6 +63,7 @@ class Index extends Base
         }
         $data = json_encode($res);
         $title = '云采集';
+
         $this->assign([
             'title' => $title,
             'robotstatistics' => $robotstatistics,
