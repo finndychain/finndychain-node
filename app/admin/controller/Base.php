@@ -19,7 +19,7 @@ class Base extends  Controller
         }
 
         if(empty($this->getSysConfValue('app_key'))||empty($this->getSysConfValue('app_secret'))){
-           if($this->request->controller() != 'Sysconf'){
+           if(in_array($this->request->controller(),array('Robot'))){
                $this->error('请先配置云账号信息','Sysconf/SysSet');
            }
         }
