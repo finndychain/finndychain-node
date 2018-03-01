@@ -1,7 +1,7 @@
 <?php
 return [
     //产品配置
-    'product_name'   => 'Finndy云采集系统', //产品名称
+    'product_name'   => '蓝蜘蛛开源云采集工具', //产品名称
     'company_website_domain' => 'http://www.finndy.com', //官方网址
     'website_domain' => 'http://cloud.finndy.com', //产品网址
     'company_name'   => 'XXX有限公司', //公司名称
