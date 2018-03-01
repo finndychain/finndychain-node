@@ -87,9 +87,9 @@
                                 &nbsp;&nbsp; 总用户数
                             </div>
                             <div class="grid4 center">
-                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$userscounts.today|default= 0}</span></span>
+                                <span class="bigger-175 blue">&nbsp; <span id="regcount">{$userscounts.week|default= 0}</span></span>
                                 <br>
-                                &nbsp;&nbsp; 本周新增用户数
+                                &nbsp;&nbsp; 最近7天新增用户数
                             </div>
                             {else /}
                             <div class="grid4 center">
@@ -101,12 +101,12 @@
                             <div class="grid4 center">
                                 <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.thismonth|default= 0}</span></span>
                                 <br>
-                                &nbsp;&nbsp; 本月新增数据源数
+                                &nbsp;&nbsp; 最近30天新增数据源数
                             </div>
                             <div class="grid4 center">
                                 <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.thisweek|default= 0}</span></span>
                                 <br>
-                                &nbsp;&nbsp; 本周新增数据源数
+                                &nbsp;&nbsp; 最近7天新增数据源数
                             </div>
                             <div class="grid4 center">
                                 <span class="bigger-175 blue">&nbsp; <span id="regcount">{$robotstatistics.today|default= 0 }</span></span>

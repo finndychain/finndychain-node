@@ -21,15 +21,16 @@ class Index extends Base
 //        }
 
 
-        //本地获取数据
+        //本地获取数据源数
         $uid = Session::get('uid');
         $statrobot = new StatRobot();
         $today = date('Ymd' ,time());
-        $todaytime=strtotime('today');
-        //本周起始日期
-        $thisweek = date('Ymd', strtotime("this week Monday", time()));
-        //本月起始日期
-        $thismonth = date('Ymd' , mktime(0, 0, 0, date('m'), 1, date('Y')));
+        $weektime=strtotime('-6 day');
+
+        //最近7天日期
+        $thisweek = date('Ymd', strtotime("-6 day"));
+        //最近30天起始日期
+        $thismonth = date('Ymd' , strtotime("-29 day"));
         $wherearr = array(
             'today'=>$today,
             'thisweek'=>$thisweek,
@@ -45,7 +46,7 @@ class Index extends Base
 
         //用户数统计
         $users = new Users();
-        $userscounts = $users->getUsersCounts($todaytime);
+        $userscounts = $users->getUsersCounts($weektime);
 
         //折线图x坐标 日期
         $datearr = array();

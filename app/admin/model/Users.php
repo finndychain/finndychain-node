@@ -72,7 +72,7 @@ class Users extends  Model
      */
     public function getUsersCounts($data){
         $userscounts['all'] = $this->count();
-        $userscounts['today'] = $this->where('create_time','>',$data)->count();
+        $userscounts['week'] = $this->where('create_time','>',$data)->count();
         return $userscounts;
 
     }

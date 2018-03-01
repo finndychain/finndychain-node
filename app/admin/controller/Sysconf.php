@@ -10,30 +10,6 @@ class Sysconf extends Base
         return view('index',['title'=>$title]);
     }
 
-    //增加角色
-    public function AddRole()
-    {
-        $title = '新增角色';
-        return view('addrole', ['title' => $title]);
-    }
-    //修改角色
-    public function EditRole($rid)
-    {
-        dump($rid);
-        $title = '编辑角色';
-        $list = array(
-            'description' => '角色描述22222',
-            'rolename' => '角色名称1111',
-        );
-        return view('addrole', ['title' => $title,'list'=>$list]);
-    }
-
-    //禁用角色
-    public function BanRole()
-    {
-        dump(input());
-    }
-
 
     //系统设置
     public function SysSet()
