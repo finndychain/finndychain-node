@@ -25,10 +25,10 @@
                 <!-- #section:basics/content.searchbox -->
                 <!--<div class="nav-search" id="nav-search">-->
                     <!--<form class="form-search">-->
-								<!--<span class="input-icon">-->
-									<!--<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />-->
-									<!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
-								<!--</span>-->
+                                <!--<span class="input-icon">-->
+                                    <!--<input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />-->
+                                    <!--<i class="ace-icon fa fa-search nav-search-icon"></i>-->
+                                <!--</span>-->
                     <!--</form>-->
                 <!--</div>&lt;!&ndash; /.nav-search &ndash;&gt;-->
                 <!-- /section:basics/content.searchbox -->
@@ -51,7 +51,7 @@
                             </h1>
                         </div>
                         <div class="col-md-6">
-				        <span class="pull-right inline">
+                        <span class="pull-right inline">
 
                             <span class="btn-toolbar inline middle no-margin">
                                 <span class="btn-group no-margin">
@@ -61,7 +61,7 @@
 
                                 </span>
                             </span>
-				        </span>
+                        </span>
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                                     <li class="active">
                                         <a href="#tb_11" data-toggle="tab" aria-expanded="false">{$Think.lang.robot_list}</a>
                                     </li>
-                                    <li class="" style="display:none" id="li_tb_12">
+                                    <li class="" {if condition='$thevalue.usesecondlist eq "" '} style="display:none"{/if}  id="li_tb_12">
                                         <a href="#tb_12" data-toggle="tab" aria-expanded="false">{$Think.lang.robot_secondlist}</a>
                                     </li>
                                     <li class="">
@@ -177,11 +177,11 @@
                                                         <div class="input-group">
                                                             <textarea type="text" id="url" name="url" size="40" placeholder="http://www.xxx.com/list.html" class="form-control" style="height:58px;"></textarea>
                                                             <span class="input-group-btn">
-											<button type="button" onclick="insertitem();" class="btn btn-sm btn-default" style="height:58px;">
-												<i class="ace-icon glyphicon glyphicon-plus bigger-110"></i>
-												{$Think.lang.space_add_tag}
-											</button>
-										</span>
+                                            <button type="button" onclick="insertitem();" class="btn btn-sm btn-default" style="height:58px;">
+                                                <i class="ace-icon glyphicon glyphicon-plus bigger-110"></i>
+                                                {$Think.lang.space_add_tag}
+                                            </button>
+                                        </span>
                                                         </div>
                                                         {if condition="$thevalue.listurl_manual neq '' "}
                                                         <div id="udiv" style="margin-top:20px;">{$thevalue.listurl_manual}</div>
@@ -202,7 +202,7 @@
                                             </tr>
                                             <tr id="tr_robot_debug">
                                                 <td align="left" class="col-sm-4">
-                                                    <a id="usesecondlist-ctrl" href="#entry-ctrl" class="btn btn-white btn-warning" style="">{$Think.lang.robot_usesecondlist_show}</a>
+                                                    <a id="usesecondlist-ctrl" href="#entry-ctrl" class="btn btn-white btn-warning" {if condition='$thevalue.usesecondlist neq "" '} style="display:none" {else /} ''  {/if} >{$Think.lang.robot_usesecondlist_show}</a>
                                                 </td>
                                                 <td align="right" class="col-sm-8">
                                                     <input type="button" class="btn btn-white btn-info" value="{$Think.lang.robot_debug_showlisturl}" onclick="debugsubmit(this, 'tr_robot_debug', 'showlisturl');">
@@ -218,8 +218,8 @@
                                             <tr>
                                                 <th class="width-25">{$Think.lang.robot_usesecondlist} <i class="fa fa-question-circle" data-rel="tooltip" data-original-title="{$Think.lang.robot_usesecondlist_tips}"></i></th>
                                                 <td>
-                                                    <label><input class="ace" name="usesecondlist" type="radio" value="0" checked="checked"  /><span class="lbl">&nbsp;{$Think.lang.robot_usesecondlist_0}&nbsp;&nbsp;</span> </label>
-                                                    <label><input class="ace" name="usesecondlist" type="radio" value="1"  /><span class="lbl">&nbsp;{$Think.lang.robot_usesecondlist_1}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="usesecondlist" type="radio" value="0" {$thevalue[usesecondlist] == 0 ?checked:'' } /><span class="lbl">&nbsp;{$Think.lang.robot_usesecondlist_0}&nbsp;&nbsp;</span> </label>
+                                                    <label><input class="ace" name="usesecondlist" type="radio" value="1" {$thevalue[usesecondlist] == 1 ?checked:''} /><span class="lbl">&nbsp;{$Think.lang.robot_usesecondlist_1}&nbsp;&nbsp;</span> </label>
                                                 </td>
                                             </tr>
                                             <tr id="tr_subjecturlrule0">
@@ -560,10 +560,10 @@
                                             </tr>
 
                                             {for start="1" end="49"  step="1" name="tmpid" }
-                                            <!--{$tmprule	= 'extfieldrule'.$tmpid}-->
-                                            <!--{$tmpalias	= 'extfieldalias'.$tmpid}-->
-                                            <!--{$tmpfilter	= 'extfieldfilter'.$tmpid}-->
-                                            <!--{$tmpcustom	= 'extfieldcustom'.$tmpid}-->
+                                            <!--{$tmprule   = 'extfieldrule'.$tmpid}-->
+                                            <!--{$tmpalias  = 'extfieldalias'.$tmpid}-->
+                                            <!--{$tmpfilter = 'extfieldfilter'.$tmpid}-->
+                                            <!--{$tmpcustom = 'extfieldcustom'.$tmpid}-->
                                             <!--{if condition="$tmpid == 1 "} {$dspcss = 'display:;'}-->
                                             <!--{else /}{$dspcss = "display:none;"}-->
                                             <!--{/if}-->
