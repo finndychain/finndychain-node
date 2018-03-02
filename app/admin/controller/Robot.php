@@ -144,7 +144,6 @@ class Robot extends Base
             $this->error('参数有误');
         }else{
             $thevalue= check_api_result($res);
-           // dump($thevalue);die;
             $title = '编辑源';
             $tabbox  = 'style="display:none;"';
             $this->assign([
@@ -440,11 +439,11 @@ class Robot extends Base
         $errorcode = 0;
         $robotid = intval(input('robotid'));
 
-        $pageindex	= empty($_GET['page'])? 1 :abs(intval($_GET['page']));	    //当前查询页码
-        $pagesize	= empty($_GET['rows'])? 0 :abs(intval($_GET['rows']));	    //每页数量
+        $pageindex  = empty($_GET['page'])? 1 :abs(intval($_GET['page']));      //当前查询页码
+        $pagesize   = empty($_GET['rows'])? 0 :abs(intval($_GET['rows']));      //每页数量
         $callback   = isset($_GET['callback']) ? trim($_GET['callback']) : '';  //jsonp回调参数
         $retarray   = array();
-        $start		= ($pageindex-1) * $pagesize;
+        $start      = ($pageindex-1) * $pagesize;
 
         $params['op'] = 'getrobotextfield';
         $params['robotid'] = $robotid;
@@ -507,6 +506,10 @@ class Robot extends Base
         $used_extfield_arr = $resarr['used_extfield_arr'];
         $arrcount = count($used_extfield_arr);
 
+        //获取扩展字段信息
+        $params['op'] = 'getrobotrule';
+        $res = api_request('get' ,api_build_url('api.php',$params));
+        $theexportvalue = check_api_result($res);
         for($i=-3; $i<$arrcount+1; $i++) {
             $fid = $used_extfield_arr[$i];
             if ($i == -3) {
@@ -527,9 +530,10 @@ class Robot extends Base
                 if ($theexportvalue[$tmpvarstr] == "") {
                     $elablestr = '扩展字段' . $fid;
                 } else {
-                    $theexportvalue[$tmpvarstr] = unserialize($theexportvalue[$tmpvarstr]);
+                    //api获取的$theexportvalue[$tmpvarstr]值已经为数组 不需要再反序列化
+                  //$theexportvalue[$tmpvarstr] = unserialize($theexportvalue[$tmpvarstr]);
                     if ($theexportvalue[$tmpvarstr]['extfieldalias']) {
-                        $elablestr = sstripslashes(base64_decode($theexportvalue[$tmpvarstr]['extfieldalias']));
+                        $elablestr = stripslashes(base64_decode($theexportvalue[$tmpvarstr]['extfieldalias']));
                     } else {
                         $elablestr = '扩展字段' . $fid;
                     }
@@ -580,16 +584,16 @@ class Robot extends Base
 
         $errorcode = 0;
         $robotid = intval($data['robotid']);
-        $pageindex = empty($data['pageindex'])? 0 :intval($data['pageindex']);	    //查询页码
-        $pagesize	= empty($data['pagesize'])? 20 :intval($data['pagesize']);	//每页数量固定20最大30
-        $sortby	= ($data['sortby'] == 'desc')? 'DESC' : 'ASC'; //排序
+        $pageindex = empty($data['pageindex'])? 0 :intval($data['pageindex']);      //查询页码
+        $pagesize   = empty($data['pagesize'])? 20 :intval($data['pagesize']);  //每页数量固定20最大30
+        $sortby = ($data['sortby'] == 'desc')? 'DESC' : 'ASC'; //排序
         $datatype = 'json';
         if($pagesize>30){
-            $pagesize	= 30;
+            $pagesize   = 30;
         }
         //参数处理
-        $pageindex	= ($pageindex < 0) ? 0 : $pageindex;
-        $start		= $pageindex * $pagesize;
+        $pageindex  = ($pageindex < 0) ? 0 : $pageindex;
+        $start      = $pageindex * $pagesize;
         $listcount  = 0;
         $dataarray  = array();
 
