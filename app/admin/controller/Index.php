@@ -63,7 +63,7 @@ class Index extends Base
             $res = $statrobot->getStatByDate($datearr ,$uid);
         }
         $data = json_encode($res);
-        $title = '云采集';
+        $title = '控制台首页';
 
         $this->assign([
             'title' => $title,

@@ -70,7 +70,7 @@ $.extend($.jgrid,{
 		searchtext: "",
 		searchtitle: "Find records",
 		refreshtext: "",
-		refreshtitle: "Reload Grid",
+		refreshtitle: "刷新",
 		alertcap: "Warning",
 		alerttext: "Please, select row",
 		viewtext: "",
