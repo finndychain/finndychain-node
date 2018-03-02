@@ -32,7 +32,6 @@
                 <!-- /section:basics/content.searchbox -->
             </div>
 
-
             <!-- /section:basics/content.breadcrumbs -->
             <div class="page-content">
                 <div class="page-header">
@@ -205,7 +204,8 @@
         // console.log(robotid);return;
         //请求服务器
         $.post("{:url('robot/progress')}",{'robotid':robotid},function(res){
-           // console.log("{:url('robot/progress')}");
+            //console.log("{:url('robot/progress')}");
+
             if (res) {
 
                 //返回json格式的数据,URL对应的进度数
