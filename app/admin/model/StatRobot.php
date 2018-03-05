@@ -6,7 +6,7 @@ class StatRobot extends  Model
 {
 
     protected $name = 'stat_robot';
-    
+
     /**插入数据源统计表
      * @param array $data
      * @return int|string|true
