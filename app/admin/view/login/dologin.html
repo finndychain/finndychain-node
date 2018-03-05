@@ -21,18 +21,17 @@
     <!--[if lte IE 9]>
     <link rel="stylesheet" href="../assets/css/ace-part2.css" />
     <![endif]-->
+
     <!--[if lte IE 9]>
     <link rel="stylesheet" href="../assets/css/ace-ie.css" />
     <![endif]-->
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
     <!--[if lt IE 9]>
     <script src="../assets/js/html5shiv.js"></script>
     <script src="../assets/js/respond.js"></script>
     <![endif]-->
     <style>
-
         .box_top{
             margin:30px auto;
             width:88%;
@@ -89,8 +88,7 @@
 <span class="block input-icon input-icon-right">
 <input name="seccode" type="text" title="" placeholder="验证码" class="col-xs-4">
 </span>
-
-                                                &nbsp; <img  style="" id="verify_img" src="{:captcha_src()}" alt="captcha" onclick="refreshVerify()">
+                    <img  style="" id="verify_img" src="{:captcha_src()}" alt="captcha" onclick="refreshVerify()">
                                                 <p></p>
 
                                             </label>
@@ -157,9 +155,6 @@
 
 <!-- <![endif]-->
 
-<!--[if IE]>
-
-<![endif]-->
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     function refreshVerify() {
