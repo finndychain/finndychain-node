@@ -386,7 +386,7 @@ class Robot extends Base
         $thevaluearr['status_desc'] = lang('cp_source_available_font_'.$thevaluearr['status']);
 
         $save_method = $this->getSysConfValue('save_method');
-        if(false){
+        if(empty($save_method)){
             //云端数据处理
             $datacount =$thevaluearr['datacount'];
             $params['op'] = 'getrobotdata';
