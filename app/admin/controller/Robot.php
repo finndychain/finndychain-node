@@ -386,7 +386,7 @@ class Robot extends Base
         $thevaluearr['status_desc'] = lang('cp_source_available_font_'.$thevaluearr['status']);
 
         $save_method = $this->getSysConfValue('save_method');
-        if(empty($save_method)){
+        if(false){
             //云端数据处理
             $datacount =$thevaluearr['datacount'];
             $params['op'] = 'getrobotdata';
@@ -468,7 +468,8 @@ class Robot extends Base
                 foreach($used_extfield_arr as $v){
                     $tmparr["extfield".$v] = ''.stripslashes($retarr['extfield'.$v]);
                 }
-                $tmparr["dateline"] = ''.date('Y-m-d H:i:s',$retarr['create_time'] );
+                //dump($retarr['create_time']);die;
+                $tmparr["dateline"] = ''.$retarr['create_time'];
                 //组合数据二维数组
                 $retarray["rows"][] = $tmparr;
             }
@@ -617,7 +618,7 @@ class Robot extends Base
                 foreach($used_extfield_arr as $v){
                     $tmparr["extfield".$v] = ''.stripslashes($retarr['extfield'.$v]);
                 }
-                //$tmparr["dateline"] = ''.date($retarr['dateline'], 'Y-m-d H:i:s');
+                $tmparr["create_time"] = ''.$retarr['create_time'];
                 //组合数据二维数组
                 $dataarray[]  = $tmparr;
             }

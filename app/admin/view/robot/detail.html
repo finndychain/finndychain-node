@@ -217,7 +217,7 @@
                         s_tr.children('font').hide();
                         s_tr.children('div').children('div').show();
                         v = eval('('+v+')');
-                        failvale = parseInt(v.crtcount) - parseInt(v.succount);
+                        failvale = parseInt(v.crtcount) - parseInt(v.succount) - parseInt(v.repcount);
                         v.mpage = parseInt(v.mpage);
                         v.lpage = parseInt(v.lpage);
                         //exvalue = v.crtcount+' / '+failvale+' / '+v.lpage+' / '+v.mpage;
