@@ -10,9 +10,9 @@ return [
     ],
 
     'view_replace_str'  =>  [
-        '__PUBLIC__'=>'/public/',
-        '__ROOT__' => '/',
-        '__ADMIN__' => '/static/admin',
+        '__PUBLIC__'=>PUBLIC_PATH,
+        '__ROOT__' => PUBLIC_PATH,
+        '__ADMIN__' => PUBLIC_PATH.'/static/admin',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => APP_COMMON_PATH . 'tpl' . DS . 'dispatch_jump.tpl',

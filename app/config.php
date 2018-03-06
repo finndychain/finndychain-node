@@ -144,11 +144,11 @@ return [
 
     // 视图输出字符串内容替换
     'view_replace_str'       => [
-        '__ROOT__'=>'/',
-        '__STATIC__'=>'/static',
-        '__CSS__'=>'/static/css',
-        '__JS__'=>'/static/js',
-        '__IMG__'=>'/static/img',
+        '__ROOT__'=>PUBLIC_PATH,
+        '__STATIC__'=> PUBLIC_PATH.'/static',
+        '__CSS__'=> PUBLIC_PATH.'/static/css',
+        '__JS__'=> PUBLIC_PATH.'/static/js',
+        '__IMG__'=> PUBLIC_PATH.'/static/img',
         '__CDN__'=>'',
     ],
     // 默认跳转页面对应的模板文件
