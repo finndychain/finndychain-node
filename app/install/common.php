@@ -17,10 +17,11 @@ define('IS_WRITE', true);
 function check_env(){
 	$items = [
 		'os'      => ['操作系统', '不限制', '类Unix', PHP_OS, 'success'],
-		'php'     => ['PHP版本', '5.4.0', '5.3+', PHP_VERSION, 'success'],
+		'php'     => ['PHP版本', '5.4.0', '5.4+', PHP_VERSION, 'success'],
 		'upload'  => ['附件上传', '不限制', '2M+', '未知', 'success'],
 		'gd'      => ['GD库', '2.0', '2.0+', '未知', 'success'],
-		'disk'    => ['磁盘空间', '5M', '不限制', '未知', 'success'],
+        'curl'      => ['CURL库', '7.1', '7.1+', '未知', 'success'],
+		'disk'    => ['磁盘空间', '100M', '不限制', '未知', 'success'],
 	];
 
 	//PHP环境检测
@@ -43,6 +44,17 @@ function check_env(){
 		$items['gd'][3] = $tmp['GD Version'];
 	}
 	unset($tmp);
+
+    //curl库检测
+    $tmp = function_exists('curl_version') ? curl_version() : array();
+    if(empty($tmp['version'])){
+        $items['curl'][3] = '未安装';
+        $items['curl'][4] = 'danger';
+        session('error', true);
+    } else {
+        $items['curl'][3] = $tmp['version'];
+    }
+    unset($tmp);
 
 	//磁盘空间检测
 	if(function_exists('disk_free_space')) {
@@ -110,6 +122,7 @@ function check_func(){
 		array('pdo_mysql','支持','success','模块'),
 		array('file_get_contents', '支持', 'success','函数'),
 		array('mb_strlen',		   '支持', 'success','函数'),
+        array('curl_init',		   '支持', 'success','函数'),
 	);
 
 	foreach ($items as &$val) {
