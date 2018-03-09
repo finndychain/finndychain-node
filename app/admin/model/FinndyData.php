@@ -33,4 +33,12 @@ class FinndyData extends  Model
         }
     }
 
+    /**写入本地数据库
+     * @param $data
+     * @return mixed
+     */
+    public function insertdata($data){
+        return $this->insert($data);
+    }
+
 }

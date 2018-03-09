@@ -32,6 +32,26 @@ class Sysconf extends Base
                     $this->error('授权appKey或appSecret不正确！');
                 }
             }
+            //获取个人信息
+            $params['op'] = 'getuserinfo';
+            $res = api_request('get' , api_build_url('api.php',$params));
+            $theuser = check_api_result($res);
+
+            //开启本地存储
+            if($data['save_method'] == 1){
+                if($theuser['cloud_url'] == '' ){
+                    $this->error('请去官网设置siteURl');
+                }
+                if($theuser['cloud_status'] == 0){
+                    $params['op'] = 'changeappstatus';
+                    $res = api_request('get' , api_build_url('api.php',$params));
+                }
+            }else{
+                if($theuser['cloud_status'] == 1){
+                    $params['op'] = 'changeappstatus';
+                    $res = api_request('get' , api_build_url('api.php',$params));
+                }
+            }
 
             $modelSysConf = new modelSysConf();
             $modelSysConf->updateSysConf($data);
