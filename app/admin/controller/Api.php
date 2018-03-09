@@ -31,10 +31,13 @@ class Api extends Controller
             $data['message'] = $postdata['message'];
             for($i=1;$i<49;$i++){
                 $extfield_num = 'extfield'.$i;
-                $data[$extfield_num] = $postdata[$extfield_num];
-            }
+                if(array_key_exists($extfield_num,$postdata)){
+                    $data[$extfield_num] = $postdata[$extfield_num];
+                }
 
-            if(empty($data)){
+            }
+            file_put_contents('test.txt',json_encode($data).PHP_EOL,FILE_APPEND);
+            if(!empty($data)){
                 $data['create_time'] = time();
                 $finndydata = new FinndyData();
                 return $finndydata->insertdata($data);

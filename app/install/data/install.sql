@@ -103,7 +103,7 @@ CREATE TABLE `cloud_users` (
 -- ----------------------------
 DROP TABLE IF EXISTS `cloud_finndy_data`;
 CREATE TABLE `cloud_finndy_data` (
-  `itemid` int(10) unsigned NOT NULL,
+  `itemid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `robotid` int(11) DEFAULT NULL,
   `subject` mediumtext,
   `message` mediumtext,
