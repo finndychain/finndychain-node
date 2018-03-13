@@ -1,18 +1,15 @@
 <?php
 namespace app\admin\Controller;
-use think\Controller;
+
 use think\Session;
+use app\common\controller\Bbase;
 use app\admin\model\SysConf as modelSysConf;
 
-class Base extends  Controller
+class Base extends  Bbase
 {
     protected function _initialize()
     {
-
-        //验证安装文件
-        if (!is_file(ROOT_PATH . 'data/install.lock') || !is_file(APP_PATH . 'database.php')) {
-            $this->redirect('install/index/index');
-        }
+        parent::_initialize();
 
         if(!Session::get('uid') || !Session::get('userinfo') || !Session::get('username')){
             $this->error('您尚未登录系统',url('login/dologin'));
@@ -20,7 +17,7 @@ class Base extends  Controller
 
         if(empty($this->getSysConfValue('app_key'))||empty($this->getSysConfValue('app_secret'))){
            if(in_array($this->request->controller(),array('Robot'))){
-               $this->error('请先配置云账号信息','Sysconf/SysSet');
+               $this->error('请先配置云账号信息',url('Sysconf/SysSet'));
            }
         }
 

@@ -20,7 +20,7 @@ class Index extends Base
 //            $robotstatistics = $res[result];
 //        }
 
-
+       //
         //本地获取数据源数
         $uid = Session::get('uid');
         $statrobot = new StatRobot();
@@ -75,4 +75,6 @@ class Index extends Base
         ]);
         return $this->fetch();
     }
+
+
 }

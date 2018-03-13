@@ -112,31 +112,7 @@ function api_get_appkey($name='app_key'){
     return $sys_conf[$name];
 }
 
-/**将规则导出 csv格式
- * @param $array    导出的规则
- * @param $filename 生成csv文件名
- */
-function exportfile($array, $filename) {
 
-
-    $time = date('Y-m-d H:i:s');
-    $array['version'] = strip_tags('3.0');
-    $exporttext = "# -------------------------------------------------\r\n".
-        "# 私有云采集引擎规则\r\n".
-        "# Time: $time\r\n".
-        "# -------------------------------------------------\r\n\r\n\r\n".
-        wordwrap(random(3).base64_encode(serialize($array)), 80, "\r\n", 1);
-
-    ob_clean();
-    header('Content-Encoding: none');
-    header('Content-Type: '.(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') ? 'application/octetstream' : 'application/octet-stream'));
-    header('Content-Disposition: attachment; filename="'.$filename.'.txt"');
-    header('Content-Length: '.strlen($exporttext));
-    header('Pragma: no-cache');
-    header('Expires: 0');
-
-    echo $exporttext;
-}
 function random($length, $numeric = 0) {
     PHP_VERSION < '4.2.0' ? mt_srand((double)microtime() * 1000000) : mt_srand();
     $seed = base_convert(md5(print_r($_SERVER, 1).microtime()), 16, $numeric ? 10 : 35);

@@ -1,11 +1,18 @@
 <?php
 namespace app\admin\controller;
-use think\Controller;
+
+use app\common\controller\Bbase;
 use think\Session;
 use app\admin\model\Users;
 
-class Login extends Controller
+class Login extends Bbase
 {
+
+    protected function _initialize()
+    {
+        parent::_initialize();
+    }
+
     //登录
     public function doLogin()
     {
@@ -69,4 +76,5 @@ class Login extends Controller
     public function register(){
         return $this->fetch('login/register');
     }
+
 }

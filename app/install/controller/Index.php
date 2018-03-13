@@ -10,21 +10,25 @@
 */
 namespace app\install\controller;
 
-use think\Controller;
+use  think\Controller;
+use think\Url;
+
 
 class Index extends Controller {
 
 	protected $status;
 
-	public function _initialize() {
+	protected function _initialize() {
+
+        $var_pathinfo_on = config("var_pathinfo_on");
+        if(true === $var_pathinfo_on) {
+            $var_pathinfo = config("var_pathinfo");
+            Url::root("/index.php?{$var_pathinfo}=");
+        }
 
         //验证安装文件
-        /*if (is_file(ROOT_PATH . 'data/install.lock') && is_file(APP_PATH . 'database.php')) {
-            $this->redirect('/admin');
-        }*/
-
 		if ($this->request->action() != 'complete' && is_file(APP_PATH . 'database.php') && is_file(ROOT_PATH . 'data/install.lock')) {
-			return $this->redirect('/admin');
+			return $this->redirect('admin/Index/Index');
 		}
 
         $this->status = [

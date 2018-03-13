@@ -11,20 +11,15 @@
 */
 namespace app\home\controller;
 
-use think\Controller;
+use app\common\controller\Bbase;
 
-class Base extends  Controller
+class Base extends  Bbase
 {
-    protected function _initialize(){
 
-        //验证安装文件
-        if (!is_file(ROOT_PATH . 'data/install.lock') || !is_file(APP_PATH . 'database.php')) {
-            $this->redirect('install/index/index');
-        }
-
+    protected function _initialize()
+    {
+        parent::_initialize();
     }
-
-
 
 
 }

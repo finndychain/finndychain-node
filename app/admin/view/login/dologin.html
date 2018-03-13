@@ -11,26 +11,11 @@
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="__ADMIN__/css/bootstrap.css" />
     <link rel="stylesheet" href="__ADMIN__/css/font-awesome.css" />
-
     <!-- text fonts -->
     <link rel="stylesheet" href="__ADMIN__/css/ace-fonts.css" />
-
     <!-- ace styles -->
     <link rel="stylesheet" href="__ADMIN__/css/ace.css" />
 
-    <!--[if lte IE 9]>
-    <link rel="stylesheet" href="../assets/css/ace-part2.css" />
-    <![endif]-->
-
-    <!--[if lte IE 9]>
-    <link rel="stylesheet" href="../assets/css/ace-ie.css" />
-    <![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="../assets/js/html5shiv.js"></script>
-    <script src="../assets/js/respond.js"></script>
-    <![endif]-->
     <style>
         .box_top{
             margin:30px auto;
@@ -88,9 +73,7 @@
 <span class="block input-icon input-icon-right">
 <input name="seccode" type="text" title="" placeholder="验证码" class="col-xs-4">
 </span>
-                    <img  style="" id="verify_img" src="{:captcha_src()}" alt="captcha" onclick="refreshVerify()">
-                                                <p></p>
-
+                   &nbsp;&nbsp; <img  style="" id="verify_img" src="{:captcha_src()}" alt="captcha" onclick="refreshVerify()">
                                             </label>
 
                                             <div class="space"></div>
@@ -125,10 +108,6 @@
                             </div><!-- /.widget-body -->
                         </div><!-- /.login-box -->
 
-                        <!--<p style="margin: 0.5em 0; text-align: center; font-size: 10px;">-->
-                        <!--发源地 @ <a href="http://www.finndy.test" target="_self">Finndy.com</a>-->
-                        <!--</p>-->
-
                     </div><!-- /.position-relative -->
 
                     <div class="navbar-fixed-top align-right" style="display: none;">
@@ -160,7 +139,8 @@
     function refreshVerify() {
         var ts = Date.parse(new Date())/1000;
         var img = document.getElementById('verify_img');
-        img.src = "/captcha?id="+ts;
+        //img.src = "/captcha.html?id="+ts;
+        img.src = "{:url('/captcha')}";
     }
 
 </script>
