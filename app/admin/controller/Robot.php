@@ -378,15 +378,21 @@ class Robot extends Base
         $params['op'] = 'getrobotextfield';
         $params['robotid'] = $robotid;
         $res = api_request('get' ,api_build_url('api.php',$params));
-
         if($res['error_code'] != 0){
             $this->error('参数有误');
         }
         $thevaluearr = $res['result'];
         $thevaluearr['status_desc'] = lang('cp_source_available_font_'.$thevaluearr['status']);
-
         $save_method = $this->getSysConfValue('save_method');
-        if(empty($save_method)){
+        if($save_method && $thevaluearr['cloud_resource'] == 1){//如果本地存储开启且是私有云创建的规则
+            //本地数据处理
+            $data = new FinndyData();
+            $datacount = $data->where('robotid',$robotid)->count();
+            $datacount = intval($datacount);
+            $jsonpurl = url('robot/getjsonp' , array('robotid'=>$robotid));
+            $publuc_exportcsv_url = url('robot/export_csv' , array('robotid'=>$robotid));
+            $publuc_exportjson_url =url('robot/export_json' , array('robotid'=>$robotid,'pagesize'=>'20','pageindex'=>'0','sortby'=>'desc')) ;
+        }else{
             //云端数据处理
             $datacount =$thevaluearr['datacount'];
             $params['op'] = 'getrobotdata';
@@ -409,14 +415,6 @@ class Robot extends Base
             $publuc_exportcsv_url = config('api_url').api_build_url('api.php',$params);
             //将数据以json格式导出
             $publuc_exportjson_url = $publuc_exporturl_arr['apiurl_json'];
-        }else{
-            //本地数据处理
-            $data = new FinndyData();
-            $datacount = $data->where('robotid',$robotid)->count();
-            $datacount = intval($datacount);
-            $jsonpurl = url('robot/getjsonp' , array('robotid'=>$robotid));
-            $publuc_exportcsv_url = url('robot/export_csv' , array('robotid'=>$robotid));
-            $publuc_exportjson_url =url('robot/export_json' , array('robotid'=>$robotid,'pagesize'=>'20','pageindex'=>'0','sortby'=>'desc')) ;
         }
         $this->assign([
             'publuc_exportjson_url' => $publuc_exportjson_url,
