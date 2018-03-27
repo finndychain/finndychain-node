@@ -183,8 +183,55 @@ CREATE TABLE `cloud_user_robot` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='数据源用户关联表';
 
 
+DROP TABLE IF EXISTS `cloud_auth_group`;
+CREATE TABLE `cloud_auth_group` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `title` char(100) NOT NULL DEFAULT '',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `rules` varchar(500) NOT NULL,
+  `remark` varchar(100) NOT NULL COMMENT '描述',
+  `create_time` int(10) unsigned NOT NULL COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `cloud_auth_group_access`;
+CREATE TABLE `cloud_auth_group_access` (
+  `uid` mediumint(8) unsigned NOT NULL,
+  `group_id` mediumint(8) unsigned NOT NULL,
+  `create_time` int(10) unsigned NOT NULL COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
+  KEY `uid` (`uid`),
+  KEY `group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+
 INSERT INTO `cloud_auth_group` VALUES ('7', '普通用户', '1', '115,116,159,140,141,142,157,153,154,155,158,139,138,127,125,126,137,135,136,100,101,151', '', '1520931383', '2018-03-27 18:28:46');
 INSERT INTO `cloud_auth_group` VALUES ('1', '超级管理员', '1', '115,116,159,140,141,142,157,153,154,155,158,139,138,127,125,126,137,135,136,100,143,145,101,151,102,119,104,156,105,148,149,132,106,146,133', '拥有网站最高管理员权限！', '1520931383', '2018-03-27 18:28:46');
+
+
+DROP TABLE IF EXISTS `cloud_auth_rule`;
+CREATE TABLE `cloud_auth_rule` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `name` char(80) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `title` char(20) NOT NULL DEFAULT '',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '如果type为1， condition字段就可以定义规则表达式',
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `condition` char(100) NOT NULL DEFAULT '',
+  `pid` int(10) NOT NULL DEFAULT '0',
+  `icon` char(20) NOT NULL COMMENT '导航菜单图标',
+  `is_display` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否在导航菜单显示,1:显示 0:不显示',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `level` int(10) NOT NULL DEFAULT '0',
+  `create_time` int(10) NOT NULL,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `cloud_auth_rule` VALUES ('100', 'user/shownav', '用户管理', '1', '1', '', '0', 'user', '1', '3', '0', '1520851347', '2018-03-15 11:32:51');
 INSERT INTO `cloud_auth_rule` VALUES ('101', 'user/profile', '我的面板', '1', '1', '', '100', '', '1', '0', '1', '1520851354', '2018-03-15 12:18:37');
