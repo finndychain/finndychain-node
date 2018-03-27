@@ -38,7 +38,8 @@
                         <div class="page-header">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button type="button" class="btn  btn-info btn-sm btn-round" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">新增会员</button>
+                                    <!--<button type="button" class="btn  btn-info btn-sm btn-round" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">新增会员</button>-->
+                                    <button type="button" class="btn  btn-info btn-sm btn-round" onclick="javascript:window.location.href= '{:url('user/add')}' ">新增用户</button>
 
 
                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
@@ -57,8 +58,9 @@
                                                         <div class="form-group">
                                                             <label  class="control-label ml35 ">用户组:</label>
                                                             <select name="user_type" id="user_type" class="form-control inputstyle" >
-                                                                <option value="1">普通会员</option>
-                                                                <option value="2">管理员</option>
+                                                                {volist name="authgroupres" id="authgroup"}
+                                                                <option value="{$authgroup.id}"  >{$authgroup.title}</option>
+                                                                {/volist}
                                                             </select>
                                                         </div>
                                                         <div class="modal-footer" style="background-color: #fff;text-align: center">
@@ -92,43 +94,14 @@
                                     <tr>
                                         <td>{$vo.uid}</td>
                                         <td>{$vo.username}</td>
-                                        <td>{$vo.user_type}</td>
+                                        <td>{$vo.groupname}</td>
                                         <td>{$vo.create_time}</td>
                                         <td>
                                             <div>
-                                            <button type="button" class="btn btn-mini  btn-info btn-round" data-toggle="modal" data-target="#exampleModal{$vo.uid}" data-whatever="@mdo"><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
-                                            <div class="modal fade" id="exampleModal{$vo.uid}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content" style="width:350px;margin:180px auto" >
-                                                        <div class="modal-body">
-                                                                <form action="{:url('user/edit')}" method="post" id="editsubmit" onsubmit="return edit_validate(this)">
-                                                                <div class="form-group">
-                                                                    <label  class="control-label ml35">用户名:</label>
-                                                                    <input type="text" class="form-control inputstyle" id="editusername" name="username" value="{$vo.username}" >
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label  class="control-label ml35">密码:</label>
-                                                                    <input type="text" class="form-control inputstyle"  name="password" value="" >
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label  class="control-label ml35">用户组:</label>
-                                                                    <select name="user_type" id="edit_user_type" class="form-control inputstyle" >
-                                                                        <option value="1" {if condition="$vo.user_type eq 1"} selected{/if} >普通会员</option>
-                                                                        <option value="2" {if condition="$vo.user_type eq 2"} selected{/if} >管理员</option>
-                                                                        {if condition="$vo.user_type eq 3"}<option value="3"  selected>超级管理员</option> {/if}
-                                                                    </select>
-                                                                </div>
-                                                                    <input type="hidden" name="uid" value="{$vo.uid}">
-                                                                <div class="modal-footer" style="background-color: #fff;text-align: center">
-                                                                    <button type="button" class="btn btn-default  btn-default btn-round" data-dismiss="modal">关闭</button>&nbsp;&nbsp;&nbsp;
-                                                                    <button type="submit" class="btn btn-default  btn-info btn-round">提交</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
 
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                <button type="button"  class="btn btn-mini  btn-info btn-round" onclick="javascript:window.location.href= '{:url('user/edit',array('uid'=>$vo.uid))}' "><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
+                                                <button type="button" {if condition="$vo.uid eq 1 "} disabled {/if}  class="btn btn-mini  btn-danger btn-round"   onclick="redirect('{:url('user/del',array('uid'=>$vo.uid))}')" ><i class="ace-icon fa fa-times-circle "></i>删除</button>
+
                                         </td>
                                     </tr>
                                 {/volist}
@@ -173,5 +146,13 @@
         return true;
     }
 
+    function redirect(url){
+        var i = window.confirm("确定要删除？");
+        if(i==true){
+            window.location= url;
+        }else{
+            return false;
+        }
+    }
 
 </script>

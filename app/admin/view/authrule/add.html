@@ -1,0 +1,193 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">权限设置</a></li>
+                    <li class="active">新增权限</li>
+                </ul>
+                <!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                新增权限
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    增加权限
+                                </small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="widget-box">
+                            <!--<div class="widget-header">-->
+                                <!--<h5 class="widget-title" style="color: #2679b5; font-size: 16px;">新增用户组</h5>-->
+                            <!--</div>-->
+
+                            <div class="widget-body">
+                                <div class="widget-main padding-16">
+                                    <div class="row">
+                                        <form action="{:url('authrule/add')}" method="POST" id="addsubmit" onsubmit="return validate(this)">
+                                            <div class="form-group clearfix">
+                                                <label class="col-sm-1 label_control no-padding-right" > 上级权限 </label>
+                                                <div class="col-sm-10">
+                                                    <select name="pid"  class="col-xs-10 col-sm-3" >
+                                                        <option value="0">顶级权限</option>
+                                                        {volist name="authruleres" id="authrule"}
+                                                        {if condition="$authrule.level lt 2"}
+                                                        <option value="{$authrule.id}">
+                                                            <?php if($authrule['level']!=0){echo '|';} echo str_repeat('—', $authrule['level']*1)?>{$authrule.title}</option> {/if}
+                                                        {/volist}
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group clearfix">
+                                                <label class="col-sm-1 label_control no-padding-right" > 权限名称 </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text"  name="title"  class="col-xs-10 col-sm-3" value="" >
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-sm-1 label_control no-padding-right" > 权限内容 </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text"  name="name"  class="col-xs-10 col-sm-3"  >
+                                                    <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                    <span class="middle">控制器/方法 例如:index/index</span>
+                                                                </span>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-sm-1 label_control no-padding-right" > 显示菜单 </label>
+                                                <div class="col-sm-10 pt">
+                                                    <label >
+                                                        <input  type="radio"  checked class="ace" name="is_display" value="0">
+                                                        <span class="lbl">否</span>
+                                                    </label>
+                                                    <label style="margin-left: 50px;">
+                                                        <input  type="radio"  class="ace" name="is_display" value="1">
+                                                        <span class="lbl">是</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group clearfix">
+                                                <label class="col-sm-1 label_control no-padding-right" > 图标 </label>
+                                                <div class="col-sm-10">
+                                                    <input type="text"  name="icon"  class="col-xs-10 col-sm-3"  >
+                                                    <span class="help-inline col-xs-12 col-sm-7 pt">
+                                                                    <span class="middle">font-awesome图标 输入fa fa- 后边的即可, 可以不填</span>
+                                                                </span>
+                                                </div>
+                                            </div>
+
+
+                                            <br>
+                                            <div class="col-xs-6 align-center">
+                                                <input type="submit"  value="提交保存" class="btn btn-info input-small btn-round">
+
+                                            </div>
+                                        </form>
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<script>
+
+    function validate (theform){
+        var addusername = $('#addusername').val();
+        var adduserpwd = $('#adduserpwd').val();
+        if(addusername == '' ){
+            Msg('用户名不能为空');
+            return false;
+        }
+        if(adduserpwd == '' ){
+            Msg('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+    function edit_validate (theform){
+        var editusername = $('#editusername').val();
+        var editpwd = $('#editpwd').val();
+
+        if(editusername == '' ){
+            Msg('用户名不能为空');
+            return false;
+        }
+        if(editpwd == '' ){
+            Msg('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+
+    $(function () {
+        //动态选择框，上下级选中状态变化
+        $('input.checkbox-parent').on('change', function () {
+            var dataid = $(this).attr("dataid");
+            $('input[dataid^=' + dataid + ']').prop('checked', $(this).is(':checked'));
+        });
+        $('input.checkbox-child').on('change', function () {
+            var dataid = $(this).attr("dataid");
+            dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+            var parent = $('input[dataid=' + dataid + ']');
+            if ($(this).is(':checked')) {
+                parent.prop('checked', true);
+                //循环到顶级
+                while (dataid.lastIndexOf("-") != 2) {
+                    dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                    parent = $('input[dataid=' + dataid + ']');
+                    parent.prop('checked', true);
+                }
+            } else {
+                //父级
+                if ($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                    parent.prop('checked', false);
+                    //循环到顶级
+                    while (dataid.lastIndexOf("-") != 2) {
+                        dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                        parent = $('input[dataid=' + dataid + ']');
+                        if ($('input[dataid^=' + dataid + '-]:checked').length == 0) {
+                            parent.prop('checked', false);
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+
+</script>

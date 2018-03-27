@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: luofei614 <weibo.com/luofei614>　
 // +----------------------------------------------------------------------
-namespace app\admin\controller;
+namespace org;
 use think\Config;
 use think\Session;
 use think\Db;
@@ -78,7 +78,7 @@ class Auth {
         'auth_group'        => 'auth_group',        // 用户组数据表名
         'auth_group_access' => 'auth_group_access', // 用户-用户组关系表
         'auth_rule'         => 'auth_rule',         // 权限规则表
-        'auth_user'         => 'auth_member'         // 用户信息表
+        'auth_user'         => 'users'             // 用户信息表
     );
     
     public function __construct() {
@@ -98,7 +98,10 @@ class Auth {
         if (!$this->config['auth_on']) {
             return true;
         }
+        //dump($name);
+
         $authList = $this->getAuthList($uid, $type); //获取用户需要验证的所有有效规则列表
+       // dump($authList);die;
         if (is_string($name)) {
             $name = strtolower($name);
 //            if (strpos($name, ',') !== false) {
@@ -112,6 +115,7 @@ class Auth {
         if ($mode == 'url') {
             $REQUEST = unserialize(strtolower(serialize($_REQUEST)));
         }
+
         foreach ($authList as $auth) {
             $query = preg_replace('/^.+\?/U', '', $auth);
             if ($mode == 'url' && $query != $auth) {
@@ -122,13 +126,16 @@ class Auth {
                     $list[] = $auth;
                 }
             } else if (in_array($auth, $name)) {
+
                 $list[] = $auth;
+
             }
         }
         if ($relation == 'or' and ! empty($list)) {
             return true;
         }
         $diff = array_diff($name, $list);
+
         if ($relation == 'and' and empty($diff)) {
             return true;
         }
@@ -149,7 +156,10 @@ class Auth {
         $user_groups = Db::view($this->config['auth_group_access'], 'uid,group_id')->view($this->config['auth_group'], 'title,rules', "{$this->config['auth_group_access']}.group_id={$this->config['auth_group']}.id")
                         ->where(['uid' => $uid, 'status' => 1])->select();
         $groups[$uid] = $user_groups ? $user_groups : [];
+
+        //dump($groups[$uid]);
         return $groups[$uid];
+
     }
     /**
      * 获得权限列表
@@ -183,6 +193,7 @@ class Auth {
         ];
         //读取用户组所有权限规则
         $rules = Db::name($this->config['auth_rule'])->where($map)->field('condition,name')->select();
+        //dump($rules);die;
         //循环规则，判断结果。
         $authList = [];   //
         foreach ($rules as $rule) {

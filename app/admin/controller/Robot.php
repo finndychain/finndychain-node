@@ -4,7 +4,7 @@ use app\admin\model\FinndyData;
 use app\admin\model\UserRobot;
 use app\admin\model\StatRobot;
 use think\Session;
-use think\Request;
+
 
 
 class Robot extends Base
@@ -20,11 +20,13 @@ class Robot extends Base
         $usertype = $this->getUserInfo('user_type');
         if($usertype == 3){
             $params['op'] = 'getrobotslist';
+           
             $res = api_request('get' ,api_build_url('api.php',$params));
+         
             $arr = check_api_result($res);
         }else{//非超级管理员
             $robotid = array();
-            $uid = Session::get('uid');
+            $uid = $this->uid;
             $where = array('uid'=>$uid);
             $userrobot = new UserRobot();
             $robotid = $userrobot->getRobotid($where);
@@ -71,7 +73,7 @@ class Robot extends Base
             $res = api_request('POST' ,'api.php', api_build_params($params));
             if($res['error_code'] === 0){
                 $robotid = $res[result];
-                $uid = Session::get('uid');
+                $uid = $this->uid;
                 $insertarr = array('uid'=> $uid , 'robotid' => $robotid);
                 //插入到user_robot 表中
                 $this->insertintouserrobot($insertarr);
@@ -112,8 +114,6 @@ class Robot extends Base
     {
         if(request()->isPost()){
             $postdata = input();
-            //dump($thevalue);die;
-           // dump(strlen($postdata[name]));die;
             $validate = $this->validate($postdata,'Robot.edit');//使用validate验证
             if(true !== $validate){
                 // 验证失败 输出错误信息
@@ -122,6 +122,7 @@ class Robot extends Base
             $params = $postdata;
             $params['op'] = 'valuesubmit';
             $res = api_request('POST' ,'api.php', api_build_params($params));
+
             if($res['error_code'] === 0){
                 $this->success('编辑数据源成功','robot/index');
             }else{
@@ -222,7 +223,7 @@ class Robot extends Base
 
     }
 
-    //开始采集
+    //停止采集
     public function stoprun()
     {
         $robotid = input('robotid');
@@ -238,7 +239,7 @@ class Robot extends Base
             return $this->display($res);
         }
     }
-    //停止采集
+    //开始采集
     public function startrun()
     {
         $robotid = input('robotid');
@@ -254,13 +255,13 @@ class Robot extends Base
     }
     //运行测试
     public function debugrobot(){
-        $request = Request::instance();
+      
         $robotid = input('robotid');
         $params['robotid'] = $robotid;
         $params['op'] = 'debugrobot';
         $referer = $this->request->server('HTTP_REFERER');
         if(empty($referer)){
-            $referer = $referer = $request->domain().url('robot/detail',array('robotid'=>$robotid));
+            $referer = $referer = $this->request->domain().url('robot/detail',array('robotid'=>$robotid));
         }
         $params['referer'] = $referer;
         $res = api_request_html('get', api_build_url('api.php', $params));
@@ -648,7 +649,7 @@ class Robot extends Base
             $this->error('参数有误');
         }
         $save_method = $this->getSysConfValue('save_method');
-        if($save_method){
+        if($save_method && $thevaluearr['cloud_resource'] == 1){
             $data = new FinndyData();
             $listcount = $data->where('robotid',$robotid)->count();
             if(empty($listcount)){

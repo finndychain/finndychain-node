@@ -3,6 +3,7 @@ namespace app\admin\controller;
 use think\Session;
 
 use app\admin\model\Users as modelUsers;
+use app\admin\model\AuthGroupAccess;
 
 
 class User extends Base
@@ -25,9 +26,16 @@ class User extends Base
 
         $listcount = $this->modelUsers->count();
         $userlist = $this->modelUsers->order('uid')->limit($start,$perpage)->select();
+
+        //获取用户所属组的名称
         foreach($userlist as $k=>$v){
-            $userlist[$k]['user_type'] = $this->modelUsers->getUserGroup($v['user_type']);
+            $groupnamearr = $this->modelUsers->getGroupInfo($v['uid'] , 'title');
+
+            $groupnamestr= implode('、',$groupnamearr );
+          
+            $v[groupname] = $groupnamestr;
         }
+
         $theurl = url('user/index');
         $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
 
@@ -92,26 +100,49 @@ class User extends Base
                 // 验证失败 输出错误信息
                 $this->error($validate);
             }
-            $this->checkUserType($data['user_type']);
             $data['password'] = passwordencrypt($data['password']);
             $user_info = $this->modelUsers->getUserinfo(array('username'=>$data['username']));
             if($user_info){
                 $this->error('用户名已存在!');
             }
-            $inser_res = $this->modelUsers->insertUserinfo($data);
-            if(!$inser_res){
+            //自增id
+            $insert_id = $this->modelUsers->insertUserinfo($data);
+            if(!$insert_id){
                 $this->error('操作失败,稍后再试!');
+            }
+//            //插入到auth_group_access 表中
+            if (!empty($data['group_ids'])) {
+                foreach ($data['group_ids'] as $k => $v) {
+                    $group=array(
+                        'uid'=>$insert_id,
+                        'group_id'=>$v,
+                        'create_time'=> time(),
+                    );
+                    $authgroupaccess = new AuthGroupAccess();
+                    $authgroupaccess->insert($group);
+                }
             }
             $this->success('添加成功','user/index');
         }
+        //获取用户组
+        $authgroup = new \app\admin\model\AuthGroup();
+        $authgroupres = $authgroup->select();
+        $this->assign('authgroupres',$authgroupres);
+        return $this->fetch();
     }
     //修改用户信息
     public function edit()
     {
         if(request()->isPost()) {
             $data = input();
+            // dump($data);die;
             $uid = $data['uid'];
+            $groupidarr = $data['group_ids'];
+            if(empty($groupidarr)){
+                $this->error('请选择用户组');
+            }
             unset($data['uid']);
+            unset($data['group_ids']);
             if(empty($uid)){$this->error('参数错误!');}
 
             $password = $data['password'];
@@ -128,14 +159,65 @@ class User extends Base
                 $data['password'] = passwordencrypt($password);
             }
 
-            $this->checkUserType($data['user_type']);
 
             $inser_res = $this->modelUsers->setUserValues(array('uid'=>$uid),$data);
-            if(!$inser_res){
+            if($inser_res === ''){
                 $this->error('操作失败,稍后再试!');
+            }
+
+            //同时 更新 group_access 表 先删除后添加
+            $authgroupaccess = new AuthGroupAccess();
+            $res = $authgroupaccess->where(array('uid'=>$uid))->delete();
+            if (!empty($groupidarr)) {
+                foreach ($groupidarr as $k => $v) {
+                    $group=array(
+                        'uid'=>$uid,
+                        'group_id'=>$v,
+                        'create_time'=>time(),
+                    );
+                    $authgroupaccess = new AuthGroupAccess();
+                    $authgroupaccess->insert($group);
+                }
             }
             $this->success('修改成功','user/index');
         }
+
+        $uid = intval(input('param.uid'));
+        if(empty($uid)){
+            $this->error('参数有误!');
+        }
+        //获取用户组
+        $authgroup = new \app\admin\model\AuthGroup();
+        $authgroupres = $authgroup->select();
+
+
+        //获取该用户信息
+        $userinfo = $this->modelUsers->getUserinfo(array('uid' => $uid));
+        //获取用户所属组的id
+        $groupIdArr = $this->modelUsers->getGroupInfo($uid );
+
+        $userinfo[group_id] = $groupIdArr;
+        $this->assign('userinfo',$userinfo);
+        $this->assign('authgroupres',$authgroupres);
+        return $this->fetch();
+    }
+    //删除用户
+    public function del()
+    {
+        $data = input();
+        $uid = intval($data['uid']);
+        if(empty($uid)){
+            $this->error('参数错误!');
+        }
+        if($uid == 1){
+            $this->error('超级管理员不能删除!');
+        }
+        $res = $this->modelUsers->delUser(array('uid'=>$uid));
+        if(!$res){
+            $this->error('操作失败,稍后再试!');
+        }
+        $this->success('删除成功','user/index');
+
     }
 
     //禁用用户

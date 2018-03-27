@@ -112,7 +112,31 @@ function api_get_appkey($name='app_key'){
     return $sys_conf[$name];
 }
 
+/**将规则导出 csv格式
+ * @param $array    导出的规则
+ * @param $filename 生成csv文件名
+ */
+function exportfile($array, $filename) {
 
+
+    $time = date('Y-m-d H:i:s');
+    $array['version'] = strip_tags('3.0');
+    $exporttext = "# -------------------------------------------------\r\n".
+        "# 私有云采集引擎规则\r\n".
+        "# Time: $time\r\n".
+        "# -------------------------------------------------\r\n\r\n\r\n".
+        wordwrap(random(3).base64_encode(serialize($array)), 80, "\r\n", 1);
+
+    ob_clean();
+    header('Content-Encoding: none');
+    header('Content-Type: '.(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') ? 'application/octetstream' : 'application/octet-stream'));
+    header('Content-Disposition: attachment; filename="'.$filename.'.txt"');
+    header('Content-Length: '.strlen($exporttext));
+    header('Pragma: no-cache');
+    header('Expires: 0');
+
+    echo $exporttext;
+}
 function random($length, $numeric = 0) {
     PHP_VERSION < '4.2.0' ? mt_srand((double)microtime() * 1000000) : mt_srand();
     $seed = base_convert(md5(print_r($_SERVER, 1).microtime()), 16, $numeric ? 10 : 35);
@@ -177,7 +201,6 @@ function passwordencrypt($data) {
 //获得分类
 function getcategory(){
     $params['op'] = 'getcategory';
-    //dump(api_build_url('api.php',$params));
     $res = api_request('get' ,api_build_url('api.php',$params));
     $catarr = check_api_result($res);
     return $catarr;
@@ -285,4 +308,37 @@ function multi($num, $perpage, $curpage, $mpurl, $phpurl=1) {
     }
 
     return $multipage;
+}
+
+/**权限判断
+ * @param $name 当前控制器/方法
+ * @param $uid 用户id
+ * @return bool
+ */
+function authCheck($name ,$uid){
+    if (empty($uid)) {
+        return false;
+    }
+    if ($uid == 1) {
+        return true;
+    }
+    $auth = new  org\Auth();
+    return $auth->check($name ,$uid);
+}
+
+function getParentId($data , $id , $clear=False){
+    static $arr=array();
+    if($clear){
+        $arr=array();
+    }
+    foreach ($data as $k => $v) {
+        if($v['id'] == $id){
+            $arr[]=$v['id'];
+            getParentId($data,$v['pid'],False);
+        }
+    }
+
+    asort($arr);
+    $arrStr=implode(',', $arr);
+    return $arrStr;
 }

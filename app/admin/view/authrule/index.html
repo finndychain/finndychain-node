@@ -1,0 +1,131 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">权限设置</a></li>
+                    <li class="active">权限设置</li>
+                </ul>
+                <!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                权限设置
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    查看管理权限
+                                </small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn  btn-info btn-sm btn-round"   onclick="javascript:window.location.href= '{:url('authrule/add')}' ">新增权限</button>
+                                </div>
+
+                            </div>
+                        </div><!-- /.page-header -->
+                        <form class="" action="{:url('authrule/sort')}" method="post">
+                            <table cellspacing="0" cellpadding="0" width="100%" class="table table-striped table-bordered table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th width="5%">排序</th>
+                                        <th>ID</th>
+                                        <th>权限名称</th>
+                                        <th>权限内容</th>
+                                        <th>操作</th>
+
+                                    </tr>
+                                    <!--数据行-->
+                                    {if empty($authruleres)}
+                                        <tr><td colspan="5" align="center" style="height:60px;color:#666;">暂无数据</td></tr>
+                                    {else/}
+                                    {volist name='authruleres' id='authrule'}
+                                    <tr>
+                                        <td><input class="input-medium" style="width:40px;height:25px;" type="text"
+                                                   name="{$authrule['id']}" value="{$authrule['sort']}"></td>
+                                        <td>{$authrule.id}</td>
+                                        <td><?php if($authrule['level']!=0){echo '|';} echo str_repeat('—', $authrule['level']*1)?>&nbsp;{$authrule.title}</td>
+                                        <td>{$authrule.name}</td>
+                                        <td>
+
+                                            <button type="button" class="btn btn-mini  btn-info btn-round" onclick="javascript:window.location.href= '{:url('authrule/edit',['ruleid'=>$authrule.id])}' "><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
+                                            <button type="button" class="btn btn-mini  btn-danger btn-round" onclick="redirect('{:url('authrule/del',['ruleid'=>$authrule.id])}')"><i class="ace-icon fa fa-times-circle "></i>删除</button>
+                                        </td>
+                                    </tr>
+                                {/volist}
+                                    <tr>
+                                        <td>
+                                            <button type="submit" class="btn btn-mini  btn-info btn-round" ><i class="ace-icon fa fa-pencil-square-o "></i>排序</button>
+                                        </td><td colspan="4"></td>
+                                    </tr>
+                                {/if}
+                                </tbody>
+                            </table>
+                        </form>
+
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<script>
+
+    function validate (theform){
+        var addusername = $('#addusername').val();
+        var adduserpwd = $('#adduserpwd').val();
+        if(addusername == '' ){
+            Msg('用户名不能为空');
+            return false;
+        }
+        if(adduserpwd == '' ){
+            Msg('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+    function edit_validate (theform){
+        var editusername = $('#editusername').val();
+        var editpwd = $('#editpwd').val();
+
+        if(editusername == '' ){
+            Msg('用户名不能为空');
+            return false;
+        }
+        if(editpwd == '' ){
+            Msg('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+
+    function redirect(url){
+        var i = window.confirm("确定要删除？");
+        if(i==true){
+            window.location= url;
+    }else{
+            return false;
+        }
+    }
+
+</script>
