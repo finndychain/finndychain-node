@@ -31,7 +31,7 @@
 - data/
 - app/
 ### 开发文档
-[文档链接](http://www.finndy.com/doc)
+>[采集工具文档链接](http://www.finndy.com/doc)
 
 ### 关于发源地
 
