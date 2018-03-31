@@ -32,7 +32,7 @@
 - app/
 
 ### 开发文档
->[采集工具文档链接](http://www.finndy.com/doc)
+>[开发手册链接](http://www.finndy.com/doc) [帮助文档链接](http://help.finndy.com)
 
 ### 关于发源地
 
