@@ -63,7 +63,7 @@
                                                 <div class="col-sm-10 pt">
                                                     {volist name="authgroupres" id="authgroup" }
                                                     <label >
-                                                        <input name="group_ids[]" type="checkbox" {if condition=" in_array($authgroup.id , $userinfo.group_id) "} checked {/if} class="ace" value="{$authgroup.id}">
+                                                        <input name="group_ids[]" type="checkbox" {if condition="is_array($userinfo.group_id)&&in_array($authgroup.id , $userinfo.group_id)"} checked {/if} class="ace" value="{$authgroup.id}">
                                                         <span class="lbl">{$authgroup.title}</span> &nbsp;&nbsp;&nbsp;
                                                     </label>
                                                     {/volist}

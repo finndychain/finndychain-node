@@ -193,7 +193,7 @@ CREATE TABLE `cloud_auth_group` (
   `create_time` int(10) unsigned NOT NULL COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 
 DROP TABLE IF EXISTS `cloud_auth_group_access`;
@@ -205,11 +205,10 @@ CREATE TABLE `cloud_auth_group_access` (
   UNIQUE KEY `uid_group_id` (`uid`,`group_id`),
   KEY `uid` (`uid`),
   KEY `group_id` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 INSERT INTO `cloud_auth_group_access` VALUES ('1', '1', '1521088299', '2018-03-27 19:20:57');
-
 INSERT INTO `cloud_auth_group` VALUES ('7', '普通用户', '1', '115,116,159,140,141,142,157,153,154,155,158,139,138,127,125,126,137,135,136,100,101,151', '', '1520931383', '2018-03-27 18:28:46');
 INSERT INTO `cloud_auth_group` VALUES ('1', '超级管理员', '1', '115,116,159,140,141,142,157,153,154,155,158,139,138,127,125,126,137,135,136,100,143,145,101,151,102,119,104,156,105,148,149,132,106,146,133', '拥有网站最高管理员权限！', '1520931383', '2018-03-27 18:28:46');
 
@@ -231,7 +230,7 @@ CREATE TABLE `cloud_auth_rule` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 INSERT INTO `cloud_auth_rule` VALUES ('100', 'user/shownav', '用户管理', '1', '1', '', '0', 'user', '1', '3', '0', '1520851347', '2018-03-15 11:32:51');
 INSERT INTO `cloud_auth_rule` VALUES ('101', 'user/profile', '我的面板', '1', '1', '', '100', '', '1', '0', '1', '1520851354', '2018-03-15 12:18:37');

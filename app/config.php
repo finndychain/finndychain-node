@@ -145,21 +145,30 @@ return [
     ],
 
     // 视图输出字符串内容替换
-    'view_replace_str'       => [
-        '__ROOT__'=>PUBLIC_PATH,
+    'view_replace_str'  =>  [
+        '__PUBLIC__'=>PUBLIC_PATH,
+        '__ROOT__' => PUBLIC_PATH,
         '__STATIC__'=> PUBLIC_PATH.'/static',
         '__CSS__'=> PUBLIC_PATH.'/static/css',
         '__JS__'=> PUBLIC_PATH.'/static/js',
         '__IMG__'=> PUBLIC_PATH.'/static/img',
         '__CDN__'=>'',
+        '__ADMIN__' => PUBLIC_PATH.'/static/admin',
     ],
     // 默认跳转页面对应的模板文件
-    'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
-    'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+    'dispatch_success_tmpl'  => APP_COMMON_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
+    'dispatch_error_tmpl'    => APP_COMMON_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
 
     // +----------------------------------------------------------------------
     // | 异常及错误设置
     // +----------------------------------------------------------------------
+
+    /*'http_exception_template'    =>  [
+      // 定义404错误的重定向页面地址
+      404 =>  APP_COMMON_PATH . 'tpl' . DS . '404.tpl',
+      // 还可以定义其它的HTTP status
+      401 =>  APP_COMMON_PATH . 'tpl' . DS . '401.tpl',
+    ],*/
 
     // 异常页面的模板文件
     'exception_tmpl'         => THINK_PATH . 'tpl' . DS . 'think_exception.tpl',
@@ -170,6 +179,8 @@ return [
     'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
+
+
 
     // +----------------------------------------------------------------------
     // | 日志设置
