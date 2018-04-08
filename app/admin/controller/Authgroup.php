@@ -88,12 +88,12 @@ class Authgroup extends Base
                 //根据子级id获取父级id
                 $ruleArr = explode(',' , $rule_ids);
                 foreach ( $ruleArr as $k=>$v) {
-                    $fathernodearr[] = getParentId($authrulearr , $v, True);
+                    $fatherNodeNrr[] = getParentId($authrulearr , $v, True);
                 }
-                $fathernodestr=implode(',', $fathernodearr);
+                $fatherNodeStr=implode(',', $fatherNodeNrr);
                 //去除重复的规则id
-                $fathernodearr = explode(',',$fathernodestr);
-                $rule_ids_arr = array_unique($fathernodearr);
+                $fatherNodeNrr = explode(',',$fatherNodeStr);
+                $rule_ids_arr = array_unique($fatherNodeNrr);
                 $rule_ids = implode(',',$rule_ids_arr);
 
                 $data['rules']=$rule_ids;
@@ -119,8 +119,6 @@ class Authgroup extends Base
         $title = '分配权限';
         $this->assign('title',$title);
         $treeDate = $this->treeview($group_data['rules']);
-
-
 
         $this->assign('treeDate',$treeDate);
         return $this->fetch();

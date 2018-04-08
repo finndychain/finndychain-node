@@ -100,8 +100,8 @@ class Users extends  Model
     {
         $res = Db::name('users')
             ->alias('a')
-            ->join('auth_group_access b','a.uid = b.uid')
-            ->join('auth_group c','b.group_id = c.id')
+            ->join('auth_group_access b','a.uid = b.uid','left')
+            ->join('auth_group c','b.group_id = c.id','left')
             ->where('a.uid' ,$uid)->select();
         if(!$res){
             return false;

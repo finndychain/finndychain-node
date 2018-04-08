@@ -634,8 +634,7 @@ class Robot extends Base
             "datalist"  => $dataarray
         );
         //生成响应API
-        $response = new \org\Response();
-        $response->gen($retarray,$datatype);
+        return $response = json($retarray);
 
     }
     //删除数据

@@ -1,0 +1,135 @@
+<!-- 头部 -->
+{include file="public/top" /}
+<!-- /头部 -->
+<div class="main-container" id="main-container">
+    <!-- left -->
+    {include file="public/left" /}
+    <!-- /left -->
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            <div class="breadcrumbs" id="breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
+                    </li>
+                    <li><a href="#">文章管理</a></li>
+                    <li class="active">文章列表</li>
+                </ul>
+                <!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>
+                                文章列表
+                                <small>
+                                    <i class="ace-icon fa fa-angle-double-right"></i>
+                                    查看和编辑文章
+                                </small>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" class="btn  btn-info btn-sm btn-round"   onclick="javascript:window.location.href= '{:url('article/add')}' ">新增文章</button>
+                                </div>
+
+                            </div>
+                        </div><!-- /.page-header -->
+                        <form class="" action="{:url('article/sort')}" method="post">
+                            <table cellspacing="0" cellpadding="0" width="100%" class="table table-striped table-bordered table-hover">
+                                <tbody>
+                                    <tr>
+                                        <th ><input class="ace" type="checkbox" name="chkall" onclick="checkall(this.form, 'item')"><span class="lbl"></span></th>
+                                        <th>ID</th>
+                                        <th>标题</th>
+                                        <th>分类</th>
+                                        <th>标签</th>
+                                        <th>作者</th>
+                                        <th>状态</th>
+                                        <th>发布时间</th>
+                                        <th>更新时间</th>
+                                        <th>操作</th>
+
+                                    </tr>
+                                    <!--数据行-->
+
+                                    {if empty($articleres)}
+                                        <tr><td colspan="10" align="center" style="height:60px;color:#666;">暂无数据</td></tr>
+                                    {else/}
+                                        {volist name='articleres' id='article'}
+                                            <tr>
+                                                <td style="width:5px"><label><input class="ace" type="checkbox" name="item[]" value="' . $article['id'] . '" /><span class="lbl"> </span><label></td>
+                                                <td>{$article.id}</td>
+                                                <td>{$article.title}</td>
+                                                <td>{$article.name}</td>
+                                                <td>{$article.keywords}</td>
+                                                <td>{$article.username}</td>
+                                                <td>{$article.poststatus}</td>
+                                                <td>{$article.create_time}</td>
+                                                <td>{$article.update_time}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-mini  btn-info btn-round" onclick="javascript:window.location.href= '{:url('article/edit',['id'=>$article.id])}' "><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
+                                                    <button type="button" class="btn btn-mini  btn-danger btn-round" onclick="redirect('{:url('article/del',['id'=>$article.id])}')"><i class="ace-icon fa fa-times-circle "></i>删除</button>
+                                                </td>
+                                            </tr>
+                                        {/volist}
+                                    {/if}
+                                </tbody>
+                            </table>
+                        </form>
+
+                    </div>
+                </div>
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+</div><!-- /.main-container -->
+
+<script>
+
+    function validate (theform){
+        var addusername = $('#addusername').val();
+        var adduserpwd = $('#adduserpwd').val();
+        if(addusername == '' ){
+            Msg('用户名不能为空');
+            return false;
+        }
+        if(adduserpwd == '' ){
+            Msg('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+    function edit_validate (theform){
+        var editusername = $('#editusername').val();
+        var editpwd = $('#editpwd').val();
+
+        if(editusername == '' ){
+            Msg('用户名不能为空');
+            return false;
+        }
+        if(editpwd == '' ){
+            Msg('密码不能为空');
+            return false;
+        }
+        return true;
+    }
+
+    function redirect(url){
+        var i = window.confirm("确定要删除？");
+        if(i==true){
+            window.location= url;
+    }else{
+            return false;
+        }
+    }
+
+</script>

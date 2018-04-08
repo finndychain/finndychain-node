@@ -24,7 +24,8 @@
         "topthink/think-testing": "^1.0",
         "topthink/think-mongo": "1.7",
         "topthink/think-captcha": "^1.0",
-        "topthink/think-angular": "^1.0",
+        "topthink/think-angular": "^1.0"
+
 
     },
     "extra": {

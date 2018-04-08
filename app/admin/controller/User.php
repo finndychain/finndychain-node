@@ -30,12 +30,12 @@ class User extends Base
         //获取用户所属组的名称
         foreach($userlist as $k=>$v){
             $groupnamearr = $this->modelUsers->getGroupInfo($v['uid'] , 'title');
-
-            $groupnamestr= implode('、',$groupnamearr );
-          
-            $v[groupname] = $groupnamestr;
+            if(is_array($groupnamearr)){
+                $groupnamestr= implode(',',$groupnamearr );
+                $v[groupname] = $groupnamestr;
+                //dump($v);
+            }
         }
-
         $theurl = url('user/index');
         $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
 
@@ -100,6 +100,11 @@ class User extends Base
                 // 验证失败 输出错误信息
                 $this->error($validate);
             }
+            $groupidarr = $data['group_ids'];
+            if(empty($groupidarr)){
+                $this->error('请选择用户组');
+            }
+
             $data['password'] = passwordencrypt($data['password']);
             $user_info = $this->modelUsers->getUserinfo(array('username'=>$data['username']));
             if($user_info){
@@ -216,6 +221,9 @@ class User extends Base
         if(!$res){
             $this->error('操作失败,稍后再试!');
         }
+        //删除用户用户组关联表中auth_group_access的数据
+        $authgroupaccess = new AuthGroupAccess();
+        $authgroupaccess->where('uid' , $uid)->delete();
         $this->success('删除成功','user/index');
 
     }
