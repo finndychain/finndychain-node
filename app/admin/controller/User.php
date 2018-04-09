@@ -29,7 +29,7 @@ class User extends Base
 
         //获取用户所属组的名称
         foreach($userlist as $k=>&$v){
-            $groupNameArr = $this->modelUsers->getGroupInfo($v['uid'] , 'title');
+            $groupNameArr = $this->modelUsers->getUserGroupInfo($v['uid'] , 'title');
             $groupNameStr= is_array($groupNameArr)?implode(',',$groupNameArr ):'';
             $v[groupname] = $groupNameStr;
         }
@@ -76,7 +76,7 @@ class User extends Base
             }
             if($postdata['set_newpass'] != $postdata['set_okpass']){$this->error('新密码两次输入不一致!');}
 
-            $userinfo =$this->modelUsers->getUserinfo(['username'=>Session::get('username'),'password'=>passwordencrypt($postdata['set_oldpass'])]);
+            $userinfo =$this->modelUsers->getUserInfo(['username'=>$this->getUserInfo('username'),'password'=>passwordencrypt($postdata['set_oldpass'])]);
             if(empty($userinfo)){$this->error('原始密码错误!');}
 
             $updage_res = $this->modelUsers->setUserValue(array('uid'=>$userinfo['uid']),'password',passwordencrypt($postdata['set_okpass']));
@@ -99,7 +99,7 @@ class User extends Base
                 $this->error($validate);
             }
             $data['password'] = passwordencrypt($data['password']);
-            $user_info = $this->modelUsers->getUserinfo(array('username'=>$data['username']));
+            $user_info = $this->modelUsers->getUserInfo(array('username'=>$data['username']));
             if($user_info){
                 $this->error('用户名已存在!');
             }
@@ -190,9 +190,9 @@ class User extends Base
 
 
         //获取该用户信息
-        $userinfo = $this->modelUsers->getUserinfo(array('uid' => $uid));
+        $userinfo = $this->modelUsers->getUserInfo(array('uid' => $uid));
         //获取用户所属组的id
-        $groupIdArr = $this->modelUsers->getGroupInfo($uid );
+        $groupIdArr = $this->modelUsers->getUserGroupInfo($uid );
 
         $userinfo[group_id] = $groupIdArr;
         $this->assign('userinfo',$userinfo);

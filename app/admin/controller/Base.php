@@ -2,6 +2,7 @@
 namespace app\admin\Controller;
 
 use think\Session;
+use think\Log;
 use app\common\controller\Bbase;
 use app\admin\model\SysConf as modelSysConf;
 use app\admin\model\AuthRule as modelAuthRule;
@@ -19,6 +20,11 @@ class Base extends  Bbase
             $this->error('您尚未登录系统',url('login/dologin'));
         }
 
+        //权限校验
+        if(!$this->checkAccess()){
+            $this->error('没有权限',url('index/index'));
+        }
+
         if(empty($this->getSysConfValue('app_key'))||empty($this->getSysConfValue('app_secret'))){
            if(in_array($this->request->controller(),array('Robot'))){
                $this->error('请先配置云账号信息',url('Sysconf/SysSet'));
@@ -31,14 +37,9 @@ class Base extends  Bbase
 
         //根据权限判断是否显示菜单 有权限则显示
         $modelAuthRule = new modelAuthRule();
-        $menuArr = $modelAuthRule->getTreeData('sort','id' , array('is_display'=> 1));
+        $menuArr = $modelAuthRule->getTreeData( array('is_display'=> 1));
 
-        //权限校验
-        if(!$this->checkAccess()){
-            $this->error('没有权限',url('index/index'));
-        }
         $this->assign('menuArr',$menuArr);
-
 
     }
     /**判断权限

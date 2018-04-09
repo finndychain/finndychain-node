@@ -8,6 +8,9 @@ class SysConf extends  Model
 
     protected $name = 'sys_conf';
 
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+
     /**获取所有系统配置信息
      * @return array|mixed
      */

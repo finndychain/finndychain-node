@@ -13,8 +13,8 @@ class Authrule extends Base
     public function Index()
     {
         $title = '权限设置';
-        $authruleres = $this->modelAuthRule->getList('sort');
-        $this->assign('authruleres' ,$authruleres);
+        $authRuleres = $this->modelAuthRule->getRuleFormatList();
+        $this->assign('authruleres' ,$authRuleres);
         $this->assign('title' ,$title);
         return $this->fetch('index');
     }
@@ -48,7 +48,7 @@ class Authrule extends Base
             }
             $this->success('新增权限成功!','index');
         }
-        $authruleres = $this->modelAuthRule->getList('sort');
+        $authruleres = $this->modelAuthRule->getRuleList();
         $title= '添加标签';
         $this->assign('authruleres' ,$authruleres);
         $this->assign('title' ,$title);
@@ -98,11 +98,12 @@ class Authrule extends Base
             $this->error('参数有误');
         }
         $title = '编辑权限';
-        $authruleres = $this->modelAuthRule->getList('sort');
+        $authruleres = $this->modelAuthRule->getRuleList();
         $authrules = $this->modelAuthRule->find($ruleid);
         $this->assign('title' ,$title);
         $this->assign('authruleres' ,$authruleres);
         $this->assign('authrules' ,$authrules);
+
         return $this->fetch();
 
     }
@@ -110,7 +111,7 @@ class Authrule extends Base
     public function sort()
     {
         $data = input('post.');
-        $res = $this->modelAuthRule->orderData($data);
+        $res = $this->modelAuthRule->updateOrderData($data);
         if(!$res){
             $this->error('数据没有变化,排序失败！');
         }
@@ -122,21 +123,18 @@ class Authrule extends Base
     {
 
         $ruleId = intval(input('param.ruleid'));
-        $ruleArr = array();
         $ruleArr = $this->modelAuthRule->getChilrenId($ruleId);
         $ruleArr[] = $ruleId;
-       // dump($ruleArr);die;
+
         $res = AuthRuleModel::destroy($ruleArr);
-        //die;
+
         if(!$res){
             $this->error('删除权限失败！');
         }
 
-        $this->redirect(url('index'));
+        //$this->redirect(url('index'));
 
-        //$this->success('删除权限成功！',url('index'));
-
-
+        $this->success('删除权限成功！',url('index'));
 
     }
 

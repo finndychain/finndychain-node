@@ -7,6 +7,9 @@ class StatRobot extends  Model
 
     protected $name = 'stat_robot';
 
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+
     /**插入数据源统计表
      * @param array $data
      * @return int|string|true

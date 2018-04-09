@@ -7,6 +7,10 @@ class FinndyData extends  Model
 {
 
     protected $name = 'finndy_data';
+
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+
     //删除数据
     public function cleardata($robotid,$type)
     {

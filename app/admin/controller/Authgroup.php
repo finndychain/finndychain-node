@@ -25,7 +25,7 @@ class Authgroup extends Base
         $authrule=new \app\admin\model\AuthRule();
         if(request()->isPost()) {
             $data = input('post.');
-            $authrulearr = $authrule->getList();
+            $authRuleArr = $authrule->getRuleList();
             $title = trim($data['title']);
             if(empty($title)){
                 $this->error('请输入用户组名称');
@@ -41,7 +41,7 @@ class Authgroup extends Base
                 $ruleArr = explode(',' , $rule_ids);
 
                 foreach ( $ruleArr as $k=>$v) {
-                    $fathernodearr[] = getParentId($authrulearr , $v, True);
+                    $fathernodearr[] = getParentId($authRuleArr , $v, True);
                 }
                 $fathernodestr=implode(',', $fathernodearr);
                 //去除重复的规则id
@@ -53,7 +53,7 @@ class Authgroup extends Base
                 unset($data['rule_ids']);
                 unset($data['groupid']);
             }
-            $data['create_time'] = time();
+
             $res = $this->modelAuthGroup->insert($data);
             if(!$res){
                 $this->error('操作失败,稍后再试!');
@@ -61,12 +61,14 @@ class Authgroup extends Base
             $this->success('新增用户组成功!','index');
         }
 
-        $rule_data = $authrule->getTreeData( 'sort' );
-        $this->assign('rule_data' ,$rule_data);
+        /*$rule_data = $authrule->getTreeData();
+        $this->assign('rule_data' ,$rule_data);*/
+
+        $treeData = $this->treeview();
+        $this->assign('treeData',$treeData);
+
         $title = '添加用户组';
         $this->assign('title',$title);
-        $treeDate = $this->treeview();
-        $this->assign('treeDate',$treeDate);
         return $this->fetch();
     }
     //修改用户组
@@ -76,7 +78,7 @@ class Authgroup extends Base
         if(request()->isPost()) {
             $data = input();
             //获取所有规则 用来获取选中的规则的父级规则id
-            $authrulearr = $authrule->getList();
+            $authRuleArr = $authrule->getRuleList();
             $title = trim($data['title']);
             if(empty($title)){
                 $this->error('请输入用户组名称');
@@ -88,7 +90,7 @@ class Authgroup extends Base
                 //根据子级id获取父级id
                 $ruleArr = explode(',' , $rule_ids);
                 foreach ( $ruleArr as $k=>$v) {
-                    $fathernodearr[] = getParentId($authrulearr , $v, True);
+                    $fathernodearr[] = getParentId($authRuleArr , $v, True);
                 }
                 $fathernodestr=implode(',', $fathernodearr);
                 //去除重复的规则id
@@ -110,20 +112,19 @@ class Authgroup extends Base
         }
         $groupid = intval(input('param.groupid'));
         //获取所有权限规则 树状结构
-        $rule_data = $authrule->getTreeData( 'sort' );
+        /*$rule_data = $authrule->getTreeData();
+        $this->assign('rule_data' ,$rule_data);*/
+
         //获取该用户组信息
         $group_data = $this->modelAuthGroup->find($groupid);
         $group_data['rules']=explode(',', $group_data['rules']);
-
-        $this->assign('rule_data' ,$rule_data);
         $this->assign('group_data' ,$group_data);
+
+        $treeData = $this->treeview($group_data['rules']);
+        $this->assign('treeData',$treeData);
+
         $title = '分配权限';
         $this->assign('title',$title);
-        $treeDate = $this->treeview($group_data['rules']);
-
-
-
-        $this->assign('treeDate',$treeDate);
         return $this->fetch();
     }
 
@@ -145,7 +146,7 @@ class Authgroup extends Base
     protected function treeview($ruleArr='')
     {
         $authrule=new \app\admin\model\AuthRule();
-        $rule_data = $authrule->getTreeData( 'sort' );
+        $rule_data = $authrule->getTreeData( );
 
         $data = array();
         foreach($rule_data as $key => $val){

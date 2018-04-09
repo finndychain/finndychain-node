@@ -41,7 +41,7 @@
                             <div class="widget-body">
                                 <div class="widget-main padding-16">
                                     <div class="row">
-                                        <form action="" method="POST" id="addsubmit" >
+                                        <form action="" method="POST" id="editForm" >
                                             <div class="form-group clearfix">
                                                 <label class="col-sm-1 label_control no-padding-right" > 用户组名称 </label>
                                                 <div class="col-sm-10">
@@ -106,7 +106,7 @@
         });
 
         function initiateDemoData() {
-            var tree_data = <?php echo $treeDate ;?>;
+            var tree_data = <?php echo $treeData ;?>;
 
             var dataSource1 = function (options, callback) {
 
