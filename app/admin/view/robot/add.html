@@ -687,7 +687,7 @@
                                                     {$thevalue.thepostvalue.pfidoption}
                                                     {/if}
                                                 </select>
-                                                    <input id="pfidoption" name="pfidoption" type="hidden" value='$thepostvalue[pfidoption_old]' />
+                                                    <input id="pfidoption" name="pfidoption" type="hidden" value='{$thepostvalue[pfidoption_old]}' />
                                                     &nbsp;&nbsp; <button id="loadingbtn" style="width:154px;" data-loading-text="loading ..." type="button" class="btn btn-white btn-info">验证并加载分类</button>
                                                 </td>
                                             </tr>
@@ -696,8 +696,8 @@
                                                 <td>
                                                     <select name="ptitle" class="form-control" style="width:275px;">
                                                         <option value="0">请选择关联字段</option>
-                                                        <option value="subject">标题(核心字段)</option>
-                                                        <option value="message">内容(核心字段)</option>
+                                                        <option value="subject" {if condition='$thevalue.thepostvalue.ptitle eq "subject" '} selected = "selected" {/if}>标题(核心字段)</option>
+                                                        <option value="message" {if condition='$thevalue.thepostvalue.ptitle eq "message" '} selected = "selected" {/if}>内容(核心字段)</option>
                                                         {for start='1' end='49' }
                                                         <option value="extfield{$i}" {if condition='$thevalue.thepostvalue.ptitle eq "extfield$i" '} selected = "selected" {/if}  >扩展字段 {$i}</option>
                                                         {/for}
@@ -709,8 +709,8 @@
                                                 <td>
                                                     <select name="pcontent" class="form-control" style="width:275px;">
                                                         <option value="0">请选择关联字段</option>
-                                                        <option value="subject">标题(核心字段)</option>
-                                                        <option value="message">内容(核心字段)</option>
+                                                        <option value="subject" {if condition='$thevalue.thepostvalue.pcontent eq "subject" '} selected = "selected" {/if}>标题(核心字段)</option>
+                                                        <option value="message" {if condition='$thevalue.thepostvalue.pcontent eq "message" '} selected = "selected" {/if}>内容(核心字段)</option>
                                                         {for start='1' end='49' }
                                                         <option value="extfield{$i}" {if condition='$thevalue.thepostvalue.pcontent eq "extfield$i" '} selected = "selected" {/if} >扩展字段 {$i}</option>
                                                         {/for}
@@ -722,8 +722,8 @@
                                                 <td>
                                                     <select name="pauthor" class="form-control" style="width:275px;">
                                                         <option value="0">请选择关联字段</option>
-                                                        <option value="subject">标题(核心字段)</option>
-                                                        <option value="message">内容(核心字段)</option>
+                                                        <option value="subject" {if condition='$thevalue.thepostvalue.pauthor eq "subject" '} selected = "selected" {/if}>标题(核心字段)</option>
+                                                        <option value="message" {if condition='$thevalue.thepostvalue.pauthor eq "message" '} selected = "selected" {/if}>内容(核心字段)</option>
                                                         {for start='1' end='49' }
                                                         <option value="extfield{$i}" {if condition='$thevalue.thepostvalue.pauthor eq "extfield$i" '} selected = "selected" {/if}>扩展字段 {$i}</option>
                                                         {/for}
@@ -735,8 +735,8 @@
                                                 <td>
                                                     <select name="pdateline" class="form-control" style="width:275px;">
                                                         <option value="0">请选择关联字段</option>
-                                                        <option value="subject">标题(核心字段)</option>
-                                                        <option value="message">内容(核心字段)</option>
+                                                        <option value="subject" {if condition='$thevalue.thepostvalue.pdateline eq "subject" '} selected = "selected" {/if}>标题(核心字段)</option>
+                                                        <option value="message" {if condition='$thevalue.thepostvalue.pdateline eq "message" '} selected = "selected" {/if}>内容(核心字段)</option>
                                                         {for start='1' end='49' }
                                                         <option value="extfield{$i}" {if condition='$thevalue.thepostvalue.pdateline eq "extfield$i" '} selected = "selected" {/if}>扩展字段 {$i}</option>
                                                         {/for}
@@ -985,7 +985,7 @@
             var purl = '{:url("robot/loadingpostcat")}';
             var pdat = "ptype=" + $('input:radio[name=ptype]:checked').val() + '&phost=' + $('#phost').val() + '&ptoken=' + $('#ptoken').val() + '&robotid=' + $('#robotid').val();
             $.post(purl,pdat,function(res){
-                console.log(res);
+                //console.log(res);
                 //res = {"status":1,"msg":"","data":[{"id":1,"name":"\u9ed8\u8ba4"},{"id":2,"name":"\u6d4b\u8bd5"}]}
                 //alert(JSON.stringify(res));
                 if (res) {

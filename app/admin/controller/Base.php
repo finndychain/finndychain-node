@@ -5,7 +5,6 @@ use think\Session;
 use app\common\controller\Bbase;
 use app\admin\model\SysConf as modelSysConf;
 use app\admin\model\AuthRule as modelAuthRule;
-use think\Request;
 
 class Base extends  Bbase
 {
@@ -48,9 +47,9 @@ class Base extends  Bbase
      */
     protected function checkAccess()
     {
-        $con=$this->request->controller();
+        $controller=$this->request->controller();
         $action=$this->request->action();
-        $name=$con.'/'.$action;
+        $name=$controller.'/'.$action;
         $notCheck=array('Index/index','Login/doLogin','Login/loginOut','Robot/policy');
         if($this->uid != 1){
             if(!in_array($name , $notCheck ,false)){

@@ -100,6 +100,7 @@ class Authgroup extends Base
                 unset($data['rule_ids']);
                 unset($data['groupid']);
             }
+
             $res = $this->modelAuthGroup->update($data);
             if(!$res){
                 $this->error('操作失败,稍后再试!');

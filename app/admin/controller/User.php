@@ -28,13 +28,11 @@ class User extends Base
         $userlist = $this->modelUsers->order('uid')->limit($start,$perpage)->select();
 
         //获取用户所属组的名称
-        foreach($userlist as $k=>$v){
-            $groupnamearr = $this->modelUsers->getGroupInfo($v['uid'] , 'title');
-            if(is_array($groupnamearr)){
-                $groupnamestr= implode(',',$groupnamearr );
-                $v[groupname] = $groupnamestr;
-                //dump($v);
-            }
+
+        foreach($userlist as $k=>&$v){
+            $groupNameArr = $this->modelUsers->getGroupInfo($v['uid'] , 'title');
+            $groupNameStr= is_array($groupNameArr)?implode(',',$groupNameArr ):'';
+            $v[groupname] = $groupNameStr;
         }
         $theurl = url('user/index');
         $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
