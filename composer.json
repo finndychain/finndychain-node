@@ -1,4 +1,6 @@
+
 {
+
     "name": "topthink/think",
     "description": "the new thinkphp framework",
     "type": "project",
@@ -25,6 +27,7 @@
         "topthink/think-mongo": "1.7",
         "topthink/think-captcha": "^1.0",
         "topthink/think-angular": "^1.0",
+        "aliyuncs/oss-sdk-php": "^2.3"
 
     },
     "extra": {

@@ -286,4 +286,13 @@ return [
     // 验证成功后是否重置
             'reset' => true
         ],
+
+    //阿里云OSS配置
+    'aliyun_oss' => [
+        'KeyId'      => 'puQbfoz1y3E',  //您的Access Key ID
+        'KeySecret'  => '6a5os5BOCPBaU06dPT',  //您的Access Key Secret
+        'Endpoint'   => 'http://oss-cn-shanghai.aliyuncs.com',  //阿里云oss 外网地址endpoint
+        'Bucket'     => 'hospital01',  //Bucket名称
+        'FileDomain'=>'http://hospital01.oss-cn-shanghai.aliyuncs.com'
+    ],
 ];

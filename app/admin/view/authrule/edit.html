@@ -53,7 +53,6 @@
 
                                                         <option {if condition="$authrules['pid'] eq $authrule['id']"} selected="selected" {/if} value="{$authrule.id} ">
 
-
                                                             <?php if($authrule['level']!=0){echo '|';} echo str_repeat('—', $authrule['level']*1)?>{$authrule.title}
 
                                                         </option>

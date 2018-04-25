@@ -51,9 +51,10 @@ class Angular
     {
         // 处理模版地址
         $template = $this->parseTemplatePath($template);
-
+        $request  = Request::instance();
+        $module   = $request->module() ?: 'default';
         // 根据模版文件名定位缓存文件
-        $tpl_cache_file = $this->config['tpl_cache_path'] . 'angular_' . md5($template) . '.php';
+        $tpl_cache_file = $this->config['tpl_cache_path'] . 'angular/' . $module . '/' . md5($template) . '.php';
         if ($this->config['debug'] || !is_file($tpl_cache_file) || !$this->storage->check($tpl_cache_file, 0)) {
             // 编译模板内容
             $content = $this->template->compiler($template, $data);
