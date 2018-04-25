@@ -227,7 +227,7 @@ CREATE TABLE `cloud_auth_rule` (
   `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
   `level` int(10) NOT NULL DEFAULT '0',
   `create_time` int(10) NOT NULL,
-  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
@@ -267,3 +267,63 @@ INSERT INTO `cloud_auth_rule` VALUES ('155', 'robot/importcopy', '导入规则im
 INSERT INTO `cloud_auth_rule` VALUES ('156', 'sysconf/sysset', '站点设置', '1', '1', '', '104', '', '1', '0', '1', '1522115434', '2018-03-27 09:50:34');
 INSERT INTO `cloud_auth_rule` VALUES ('158', 'robot/getjsonp', '获取本地数据', '1', '1', '', '116', '', '0', '0', '1', '1522142895', '2018-03-27 17:28:15');
 INSERT INTO `cloud_auth_rule` VALUES ('159', 'robot/loadingpostcat', '发布数据', '1', '1', '', '116', '', '0', '0', '1', '1522143157', '2018-03-27 17:32:37');
+
+
+CREATE TABLE `cloud_article` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '发表者用户id',
+  `cateid` int(10) NOT NULL COMMENT '分类id',
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标题',
+  `content` text COMMENT '文章内容',
+  `summary` varchar(500) NOT NULL DEFAULT '' COMMENT '摘要',
+  `thumb` varchar(255) NOT NULL COMMENT '缩略图',
+  `keywords` varchar(150) NOT NULL DEFAULT '' COMMENT 'keywords',
+  `poststatus` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态;1:已发布;0:未发布;',
+  `commentstatus` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '评论状态;1:允许;0:不允许',
+  `is_top` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否置顶;1:置顶;0:不置顶',
+  `recommended` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否推荐;1:推荐;0:不推荐',
+  `click` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '查看数',
+  `post_like` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '点赞数',
+  `comment_count` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '评论数',
+  `source` varchar(150) NOT NULL DEFAULT '' COMMENT '转载文章的来源',
+  `delete_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',
+  `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT=' 文章表';
+
+CREATE TABLE `cloud_article_category` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类id',
+  `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分类名称',
+  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '分类描述',
+  `pid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分类父id',
+  `articlecount` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '分类文章数',
+  `level` int(10) NOT NULL DEFAULT '0',
+  `status` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '状态,1:开启,0:禁用',
+  `sort` int(10) NOT NULL DEFAULT '10000' COMMENT '排序',
+  `create_time` int(10) NOT NULL,
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=' 文章分类表';
+
+
+CREATE TABLE `cloud_article_tag` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '标签id',
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标签名称',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态,1:开启,0:禁用',
+  `count` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '标签文章数',
+  `create_time` int(10) NOT NULL,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='文章标签表';
+
+CREATE TABLE `cloud_article_tag_access` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `articleid` int(10) NOT NULL COMMENT '文章id',
+  `tagid` int(10) NOT NULL COMMENT '标签id',
+  `create_time` int(10) NOT NULL,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='文章标签关联表';
+
+

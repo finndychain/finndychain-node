@@ -63,6 +63,7 @@ class Robot extends Base
     {
         if(request()->isPost()){
             $postdata = input();
+
             $validate = $this->validate($postdata,'Robot.add');//使用validate验证
             if(true !== $validate){
                 // 验证失败 输出错误信息
@@ -71,6 +72,7 @@ class Robot extends Base
             $params = $postdata;
             $params['op'] = 'valuesubmit';
             $res = api_request('POST' ,'api.php', api_build_params($params));
+           // dump($res);die;
             if($res['error_code'] === 0){
                 $robotid = $res[result];
                 $uid = $this->uid;
@@ -114,6 +116,7 @@ class Robot extends Base
     {
         if(request()->isPost()){
             $postdata = input();
+            //dump($postdata);die;
             $validate = $this->validate($postdata,'Robot.edit');//使用validate验证
             if(true !== $validate){
                 // 验证失败 输出错误信息
@@ -140,11 +143,12 @@ class Robot extends Base
         $params['op'] = 'getrobotrule';
         $params['robotid'] = $robotid;
         $res = api_request('get' ,api_build_url('api.php',$params));
-
+        //dump($res);die;
         if($res['error_code'] != 0){
             $this->error('参数有误');
         }else{
             $thevalue= check_api_result($res);
+            //dump($thevalue);die;
             $title = '编辑源';
             $tabbox  = 'style="display:none;"';
             $this->assign([

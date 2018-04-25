@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\model;
 use think\Model;
+use think\cache;
 
 
 
@@ -155,7 +156,6 @@ class AuthRule extends  Model
                     }
                 }
             }
-
         return $data;
     }
 

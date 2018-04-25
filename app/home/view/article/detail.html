@@ -1,0 +1,114 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__HOME__/css/article.css" type="text/css"/>
+<div id="wrapper" style="min-height:1000px">
+
+    <div id="wrapper">
+        <div id="container">
+            <div id="content">
+                <div class="post" id="post-19563" style="border-right: solid 1px #000000;
+                    margin-top: 10px;">
+                    <div class="path"><a href='#'>主页</a> >
+                        <a href='{:url('
+                           article/index',array('cateid'=>$crumbCates[0]['id']))}'>{$crumbCates[0][name]}</a>
+                        {if condition="$crumbCates[1] neq '' "}
+                        >
+                        <a href='{:url('
+                           article/index',array('cateid'=>$crumbCates[1]['id']))}'>{$crumbCates[1][name]}</a>>
+
+                        {$articles.title|msubstr=0,20}
+                        {else/}
+                        > {$articles.title|msubstr=0,20}
+                        {/if}
+                    </div>
+                    <div class="single_entry single2_entry">
+                        <div class="entry fewcomment" style="background: #fff;">
+                            <div class="title_container">
+                                <h2 class="title single_title">
+                                    <span>{$articles.title}</span><span class="title_date"></span></h2>
+                                <p class="single_info">时间：{$articles.create_time} 12:28</p>
+                            </div>
+                            <div class="div-content">
+
+                                {$articles.content}
+
+                                <center id="pagenav">
+                                </center>
+                                <div id="BottomNavOver" style="height: 80px;">
+                                    <div style="float: left; font-size: 12px;">
+
+                                    </div>
+                                    <div style="float: right; padding-right: 20px; width: 120px;" class="div">
+                                        <table cellpadding="0" cellspacing="0" border="0" style="background-color: transparent;
+                                            border: 0px solid #EEEEEE; border-collapse: collapse; margin: 5px 0 10px;">
+                                            <tr>
+                                                <td style="border-width: 0px; padding: 0px; padding-right: 4px;">
+
+                                                </td>
+                                                <td style="border-width: 0px; padding: 0px;">
+                                                    <!-- JiaThis Button BEGIN -->
+                                                    <div class="jiathis_style">
+                                                        <a class="jiathis_button_qzone"></a><a
+                                                            class="jiathis_button_tqq"></a><a
+                                                            class="jiathis_button_renren">
+                                                    </a><a class="jiathis_button_kaixin001"></a><a
+                                                            href="http://www.jiathis.com/share"
+                                                            class="jiathis jiathis_txt jtico jtico_jiathis"
+                                                            target="_blank"></a>
+                                                    </div>
+                                                    <script type="text/javascript"
+                                                            src="http://v3.jiathis.com/code/jia.js?uid=1365565447348652"
+                                                            charset="utf-8"></script>
+                                                    <!-- JiaThis Button END -->
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div style="float: right; width: 60px; font-size: 12px;">
+                                        分享至：
+                                    </div>
+                                    <div style="clear: both;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear">
+                            </div>
+
+                            <div class="clear">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sidebar">
+                <div class="widget">
+
+                    <div style="background: url('__HOME__/image/hots_bg.png') no-repeat scroll 0 0 transparent;width:250px;height:52px;margin-bottom:15px;">
+                    </div>
+                    <ul id="ulHot">
+
+                        {volist name="hotRes" id="hotArt"}
+                        <li style="border-bottom:dashed 1px #ccc;height:70px; margin-bottom:15px;">
+                            <div style="float:left;width:85px;height:55px; overflow:hidden;"><a
+                                    href="{:url('Article/index',array('artid'=>$hotArt['id']))}" target="_blank"><img
+                                    src="{$hotArt.thumb}" width="83" title="{$hotArt.title}"/></a></div>
+                            <div style="float:right;width:145px;height:52px; overflow:hidden;"><a
+                                    href="{:url('Article/index',array('artid'=>$hotArt['id']))}" target="_blank"
+                                    title="{$hotArt.title}">{$hotArt.title}</a></div>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+            <div class="clear">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="__HOME__/js/z700bike_global.js"></script>
+    <script type="text/javascript" src="__HOME__/js/z700bike_single.js"></script>
+</div>
+
+
+{include file="public/footer"}
+
+
+

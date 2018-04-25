@@ -1,6 +1,7 @@
 <?php
 namespace app\admin\controller;
 use app\admin\model\AuthRule as AuthRuleModel;
+use \think\cache;
 
 class Authrule extends Base
 {
@@ -13,7 +14,15 @@ class Authrule extends Base
     public function Index()
     {
         $title = '权限设置';
-        $authruleres = $this->modelAuthRule->getList('sort');
+
+      //  cache('authruleres',null);
+        if(Cache::get('authruleres')){
+            $authruleres = Cache::get('authruleres');
+        }else{
+            $authruleres = $this->modelAuthRule->getList('sort');
+            //Cache::set('authruleres',$authruleres ,3600);
+        }
+
         $this->assign('authruleres' ,$authruleres);
         $this->assign('title' ,$title);
         return $this->fetch('index');
@@ -49,6 +58,7 @@ class Authrule extends Base
             $this->success('新增权限成功!','index');
         }
         $authruleres = $this->modelAuthRule->getList('sort');
+       // dump($authruleres);die;
         $title= '添加标签';
         $this->assign('authruleres' ,$authruleres);
         $this->assign('title' ,$title);
@@ -125,9 +135,8 @@ class Authrule extends Base
         $ruleArr = array();
         $ruleArr = $this->modelAuthRule->getChilrenId($ruleId);
         $ruleArr[] = $ruleId;
-       // dump($ruleArr);die;
         $res = AuthRuleModel::destroy($ruleArr);
-        //die;
+        //dump($res);die;
         if(!$res){
             $this->error('删除权限失败！');
         }

@@ -1,0 +1,86 @@
+/* This section is used when you are displaying votes as a text */
+.textcontainer {
+	font-size: 18px;
+	padding: 0px 0px;
+	margin: 7px 3px;
+	color: #555555;
+	text-align: center;
+	display: block;
+}
+.bartext {
+	width: 40px;
+	padding: 0px 0px;
+	text-align: center;
+	display: block;
+	color: #999999;
+	margin: 0px 3px;
+}
+.bartext a {
+	color: #0099CC;
+}
+.bartext .votedown {
+	padding: 2px;
+	width: 16px;
+	height:16px;
+	float: left;
+}
+.bartext .voteup {
+	padding: 2px;
+	width: 16px;
+	height:16px;
+}
+
+.votewidget {
+	border: 1px solid #DDDDDD;
+	width: 90%;
+	display: block;
+	background-color: #000000;
+	margin: 5px auto 5px auto;
+}
+.votewidget .fore {
+	background-color: #FFFFFF;
+	width: 100%;
+	display: block;
+}
+.votewidget .back {
+	background-color: #EEEEEE;
+	width: 100%;
+	display: block;
+}
+.votewidget .votecount {
+	width: 23%;
+	padding-left: 2%;
+	float: left;
+}
+.votewidget .text {
+	width: 75%;
+	float: left;
+}
+.votewidget .title {
+	background-color: #FFFFFF;
+	width: 98%;
+	display: block;
+	padding-left: 2%;
+	font-weight: bold;
+	color: #666666;
+}
+/* Top posts widget */
+.votemicro {
+	border: 1px solid #FFE07D;
+	background-color: #FFF2C9;
+	color: #7F7F7F;
+	font-size: 0.55em; /*8*/
+	/*
+	width: 20px;
+	height: 10px;*/
+	text-align: center;
+	padding: 1px 3px 1px 3px;
+	margin: 0px 5px 0px 0px;
+	vertical-align: middle;
+	display: inline;
+	float: left;
+}
+.votemicrotext {
+	font-size: 1em; /* 12 */
+	vertical-align: middle;
+}

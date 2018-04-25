@@ -1,5 +1,8 @@
 <!-- 头部 -->
 {include file="public/top" /}
+<style>
+    table td{word-break: keep-all;white-space:nowrap;}
+</style>
 <!-- /头部 -->
 <div class="main-container" id="main-container">
     <!-- left -->
@@ -43,17 +46,17 @@
 
                             </div>
                         </div><!-- /.page-header -->
-                        <form class="" action="{:url('article/sort')}" method="post">
                             <table cellspacing="0" cellpadding="0" width="100%" class="table table-striped table-bordered table-hover">
                                 <tbody>
                                     <tr>
-                                        <th ><input class="ace" type="checkbox" name="chkall" onclick="checkall(this.form, 'item')"><span class="lbl"></span></th>
+                                        <!--<th ><input class="ace" type="checkbox" name="chkall" onclick="checkall(this.form, 'item')"><span class="lbl"></span></th>-->
                                         <th>ID</th>
                                         <th>标题</th>
                                         <th>分类</th>
                                         <th>标签</th>
                                         <th>作者</th>
-                                        <th>状态</th>
+                                        <th>点击量</th>
+                                        <!--<th>状态</th>-->
                                         <th>发布时间</th>
                                         <th>更新时间</th>
                                         <th>操作</th>
@@ -66,26 +69,62 @@
                                     {else/}
                                         {volist name='articleres' id='article'}
                                             <tr>
-                                                <td style="width:5px"><label><input class="ace" type="checkbox" name="item[]" value="' . $article['id'] . '" /><span class="lbl"> </span><label></td>
+                                                <!--<td style="width:5px"><label><input class="ace" type="checkbox" name="item[]" value="' . $article['id'] . '" /><span class="lbl"> </span><label></td>-->
                                                 <td>{$article.id}</td>
-                                                <td>{$article.title}</td>
+                                                <td>{$article.title|msubstr=0,20}</td>
                                                 <td>{$article.name}</td>
-                                                <td>{$article.keywords}</td>
+                                                <td>{$article.keywords|msubstr=0,10}</td>
                                                 <td>{$article.username}</td>
-                                                <td>{$article.poststatus}</td>
-                                                <td>{$article.create_time}</td>
+                                                <td>{$article.click}</td>
+                                                <td>{$article.create_time|date="Y-m-d H:i:s",###}</td>
                                                 <td>{$article.update_time}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-mini  btn-info btn-round" onclick="javascript:window.location.href= '{:url('article/edit',['id'=>$article.id])}' "><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
-                                                    <button type="button" class="btn btn-mini  btn-danger btn-round" onclick="redirect('{:url('article/del',['id'=>$article.id])}')"><i class="ace-icon fa fa-times-circle "></i>删除</button>
+                                                    {php}
+                                                        if($article['poststatus'] == 1){
+                                                            $data = "已发布";
+                                                            $status = 1;
+                                                            $fa = "fa fa-check";
+                                                        }else{
+                                                            $data = "取消发布";
+                                                            $status = 0;
+                                                            $fa = "fa fa-close";
+                                                        }
+                                                    {/php}
+                                                    <button class="btn btn-mini btn-success tooltip-success runstyle  " type="button" data-rel="tooltip" data-original-title="{$data}" status="{$status}" articleid="{$article.id}"  data-run="{:url('article/post')}" onclick="changeStatus(this);" data-click="false"><i class="ace-icon {$fa} "></i></button>
+                                                    {php}
+                                                    if($article['is_top'] == 1){
+                                                        $data = "置顶";
+                                                        $status = 1;
+                                                        $fa = "fa fa-arrow-up";
+                                                    }else{
+                                                        $data = "取消置顶";
+                                                        $status = 0;
+                                                        $fa = "fa fa-arrow-down";
+                                                    }
+                                                    {/php}
+                                                   <button class="btn btn-mini btn-warning tooltip-warning runstyle  " type="button" data-rel="tooltip" data-original-title="{$data}" status="{$status}" articleid="{$article.id}"  data-run="{:url('article/top')}" onclick="changeStatus(this);" data-click="false"><i class="ace-icon {$fa} "></i></button>
+                                                    {php}
+                                                    if($article['recommended'] == 1){
+                                                        $data = "已推荐";
+                                                        $status = 1;
+                                                        $fa = "fa fa-thumbs-up";
+                                                    }else{
+                                                        $data = "取消推荐";
+                                                        $status = 0;
+                                                        $fa = "fa fa-thumbs-down";
+                                                    }
+                                                    {/php}
+                                                   <button class="btn btn-mini btn-success tooltip-success runstyle  " type="button" data-rel="tooltip" data-original-title="{$data}" status="{$status}" articleid="{$article.id}"  data-run="{:url('article/recommend')}" onclick="changeStatus(this);" data-click="false"><i class="ace-icon {$fa} "></i></button>
+
+                                                    <button class="btn btn-mini btn-warning tooltip-warning runstyle  " type="button" data-rel="tooltip" data-original-title="编辑"   onclick="javascript:window.location.href= '{:url('article/edit',['id'=>$article.id])}' " ><i class="ace-icon fa  fa-pencil"></i></button>
+                                                    <button class="btn btn-mini btn-danger tooltip-error runstyle  " id="{$article.id}" type="button" onclick="delData(this)" data-rel="tooltip" data-original-title="删除"><i class="ace-icon fa fa-times-circle"></i></button>
                                                 </td>
                                             </tr>
                                         {/volist}
                                     {/if}
                                 </tbody>
                             </table>
-                        </form>
-
+                        {$multipage}
                     </div>
                 </div>
             </div><!-- /.page-content -->
@@ -94,42 +133,51 @@
 </div><!-- /.main-container -->
 
 <script>
-
-    function validate (theform){
-        var addusername = $('#addusername').val();
-        var adduserpwd = $('#adduserpwd').val();
-        if(addusername == '' ){
-            Msg('用户名不能为空');
-            return false;
-        }
-        if(adduserpwd == '' ){
-            Msg('密码不能为空');
-            return false;
-        }
-        return true;
-    }
-    function edit_validate (theform){
-        var editusername = $('#editusername').val();
-        var editpwd = $('#editpwd').val();
-
-        if(editusername == '' ){
-            Msg('用户名不能为空');
-            return false;
-        }
-        if(editpwd == '' ){
-            Msg('密码不能为空');
-            return false;
-        }
-        return true;
+    $('[data-rel=tooltip]').tooltip();
+    function changeStatus(obj){
+        var url = $(obj).attr("data-run");
+        var artid = $(obj).attr("articleid");
+        var status = $(obj).attr("status");
+        $.post(url , {id:artid,status:status},function(data){
+            if(data.status == 1){
+                Msg('修改成功');
+                $(obj).attr('data-original-title',data.msg);
+                $(obj).attr('status',1);
+                $(obj).find("i").attr('class',data.icon);
+            }
+            if(data.status === 0){
+                Msg('修改成功');
+                $(obj).attr('data-original-title',data.msg);
+                $(obj).attr('status',0);
+                $(obj).find("i").attr('class',data.icon);
+            }
+        })
     }
 
-    function redirect(url){
-        var i = window.confirm("确定要删除？");
-        if(i==true){
-            window.location= url;
-    }else{
-            return false;
-        }
+    function delData(obj){
+        var id = obj.id;
+        var url = "{:url('article/del',array('id'=>"replace"))}";
+        var url = url.replace('replace' , id);
+        bootbox.dialog({
+            message: "确认删除吗",
+            buttons:
+                {
+                    "button" :
+                        {
+                            "label" : "暂不删除",
+                            "className" : "btn-sm"
+                        },
+                    "danger_one" :
+                        {
+                            "label" : "立刻删除",
+                            "className" : "btn-sm btn-danger",
+                            "callback": function() {
+                                window.location.href=url
+                            }
+                        }
+                }
+        });
     }
+
 
 </script>

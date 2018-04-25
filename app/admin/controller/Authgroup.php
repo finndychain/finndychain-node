@@ -61,12 +61,11 @@ class Authgroup extends Base
             $this->success('新增用户组成功!','index');
         }
 
-        $rule_data = $authrule->getTreeData( 'sort' );
-        $this->assign('rule_data' ,$rule_data);
+
         $title = '添加用户组';
         $this->assign('title',$title);
-        $treeDate = $this->treeview();
-        $this->assign('treeDate',$treeDate);
+        $treeData = $this->treeview();
+        $this->assign('treeData',$treeData);
         return $this->fetch();
     }
     //修改用户组
@@ -92,8 +91,8 @@ class Authgroup extends Base
                 }
                 $fatherNodeStr=implode(',', $fatherNodeNrr);
                 //去除重复的规则id
-                $fatherNodeNrr = explode(',',$fatherNodeStr);
-                $rule_ids_arr = array_unique($fatherNodeNrr);
+                $fatherNodeArr = explode(',',$fatherNodeStr);
+                $rule_ids_arr = array_unique($fatherNodeArr);
                 $rule_ids = implode(',',$rule_ids_arr);
 
                 $data['rules']=$rule_ids;
@@ -109,19 +108,16 @@ class Authgroup extends Base
 
         }
         $groupid = intval(input('param.groupid'));
-        //获取所有权限规则 树状结构
-        $rule_data = $authrule->getTreeData( 'sort' );
+
         //获取该用户组信息
         $group_data = $this->modelAuthGroup->find($groupid);
         $group_data['rules']=explode(',', $group_data['rules']);
-
-        $this->assign('rule_data' ,$rule_data);
         $this->assign('group_data' ,$group_data);
         $title = '分配权限';
         $this->assign('title',$title);
-        $treeDate = $this->treeview($group_data['rules']);
+        $treeData = $this->treeview($group_data['rules']);
 
-        $this->assign('treeDate',$treeDate);
+        $this->assign('treeData',$treeData);
         return $this->fetch();
     }
 
@@ -129,9 +125,11 @@ class Authgroup extends Base
     public function del()
     {
         $groupid = intval(input('param.groupid'));
+        $groupid = 11111;
         $res = AuthGroupModel::destroy($groupid);
+
         if(!$res){
-            $this->success('删除失败！');
+            $this->error('删除失败！');
         }
         $this->success('删除成功！',url('index'));
     }
@@ -236,8 +234,6 @@ class Authgroup extends Base
      */
     protected function checkIsSelected($id , $arr)
     {
-
-
         if(empty($id) || empty($arr)){
             return false;
         }
@@ -246,7 +242,6 @@ class Authgroup extends Base
         }else{
             $is_show = '';
         }
-
         return $is_show;
     }
 }

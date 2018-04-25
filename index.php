@@ -26,6 +26,9 @@ define('APP_COMMON_PATH', APP_PATH . 'common/');
 // 定义应用目录
 define('PUBLIC_PATH', '/public');
 
+//上传文件目录
+define('UPLOAD_PATH', __DIR__.'/public/uploads');
+
 // 加载框架引导文件
 require __DIR__ . '/thinkphp/start.php';
 

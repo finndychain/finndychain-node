@@ -23,7 +23,7 @@ class Category extends Base
     {
         if(request()->isPost()) {
             $data = input();
-            if(empty($data['name'])){
+            if(empty(trim($data['name']))){
                 $this->error('分类名称不能为空');
             }
             //判断规则是否已存在
@@ -35,7 +35,7 @@ class Category extends Base
             $level = $this->modelCategory->getCategoryValue($where , 'level');
             if($level){
                 $data['level'] = $level[0]['level'] + 1;
-            }else{//顶级权限
+            }else{//顶级分类
                 $data['level'] = 0;
             }
             $data['create_time'] = time();
@@ -56,6 +56,9 @@ class Category extends Base
     {
         if(request()->isPost()) {
             $data = input();
+            if(empty(trim($data['name']))){
+                $this->error('分类名称不能为空');
+            }
             $id = $data['id'];
             unset($data['id']);
             $pid = $data['pid'];
@@ -63,7 +66,7 @@ class Category extends Base
             $level = $this->modelCategory->getCategoryValue($where , 'level');
             if($level){
                 $data['level'] = $level[0]['level']+1;
-            }else{//顶级权限
+            }else{//顶级分类
                 $data['level'] = 0;
             }
             $where = array('id'=>$id);
@@ -77,7 +80,7 @@ class Category extends Base
         if(empty($categoryId)){
             $this->error('参数有误');
         }
-        $title = '编辑权限';
+        $title = '编辑分类';
         $categoryRes = $this->modelCategory->getList('sort');
         $categorys = $this->modelCategory->find($categoryId);
         $this->assign('title' ,$title);
@@ -100,6 +103,9 @@ class Category extends Base
     public function del()
     {
         $categoryId = intval(input('param.id'));
+        if(empty($categoryId)){
+            $this->error('参数有误');
+        }
         $categoryArr = array();
         $categoryArr = $this->modelCategory->getChilrenId($categoryId);
         $categoryArr[] = $categoryId;
@@ -108,9 +114,9 @@ class Category extends Base
         }
         $res = CategoryModel::destroy($categoryArr);
         if(!$res){
-            $this->error('删除权限失败！');
+            $this->error('删除分类失败！');
         }
-        $this->success('删除权限成功！',url('index'));
+        $this->success('删除分类成功！',url('index'));
     }
 
 

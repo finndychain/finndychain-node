@@ -5,6 +5,7 @@ use think\Session;
 use app\common\controller\Bbase;
 use app\admin\model\SysConf as modelSysConf;
 use app\admin\model\AuthRule as modelAuthRule;
+use think\cache;
 
 class Base extends  Bbase
 {
@@ -30,9 +31,18 @@ class Base extends  Bbase
         $this->assign('currentAction',strtolower($this->request->controller().'/'.$this->request->action()));
 
         //根据权限判断是否显示菜单 有权限则显示
-        $modelAuthRule = new modelAuthRule();
-        $menuArr = $modelAuthRule->getTreeData('sort','id' , array('is_display'=> 1));
 
+        if(Cache::get('menuArr')){
+            $menuArr=Cache::get('menuArr');
+        }else{
+            $modelAuthRule = new modelAuthRule();
+            $menuArr = $modelAuthRule->getTreeData('sort','id' , array('is_display'=> 1));
+            //加入缓存
+            Cache::set('menuArr' ,$menuArr,3600);
+        }
+
+
+       // dump($menuArr);die;
         //权限校验
         if(!$this->checkAccess()){
             $this->error('没有权限',url('index/index'));

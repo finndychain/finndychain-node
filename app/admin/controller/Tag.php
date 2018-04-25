@@ -13,9 +13,18 @@ class Tag extends Base
     public function Index()
     {
         $title = '标签列表';
-        $tagRes = $this->modelTag->select();
-        //dump($tagRes);die;
+        $listcount = $this->modelTag->count();
+        $perpage = config('pagesize');
+        $page = empty(input('get.page'))?1:input('get.page');
+        $page = ($page <1)? 1:$page;
+        $star = ($page -1)*$perpage;
+        $limit = $star.','.$perpage;
+        $theurl = url('Tag/index');
+        $tagRes = $this->modelTag->limit($limit)->select();
+
+        $multipage = multi($listcount, $perpage, $page, $theurl); //分页处理
         $this->assign('tagRes' ,$tagRes);
+        $this->assign('multipage' ,$multipage);
         $this->assign('title' ,$title);
         return $this->fetch('index');
     }

@@ -6,7 +6,7 @@ use think\Model;
 
 class Tag extends  Model
 {
-
+    protected $name = 'article_tag';
     /**获取权限规则
      * @param array $where 条件
      * @return array|bool|false|\PDOStatement|string|Model

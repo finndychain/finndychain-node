@@ -6,8 +6,8 @@ use think\Model;
 
 class Category extends  Model
 {
-
-    /**获取权限规则
+    protected $name = 'article_category';
+    /**获取分类信息
      * @param array $where 条件
      * @return array|bool|false|\PDOStatement|string|Model
      */
@@ -63,30 +63,30 @@ class Category extends  Model
 
 
 
-    /**根据 权限id 来获取该条数据下面子级的id
+    /**根据 当前id 来获取该条数据下面子级的id
      * @param $authCategoryid
      * @return array id 数组
      */
-    public function getChilrenId($authCategoryid)
+    public function getChilrenId($authCategoryId)
     {
-        $authCategoryres = $this->select();
-        return $this->_getChilrenId($authCategoryres,$authCategoryid);
+        $authCategoryRes = $this->select();
+        return $this->_getChilrenId($authCategoryRes,$authCategoryId);
     }
 
-    public function _getChilrenId($authCategoryres,$authCategoryid)
+    public function _getChilrenId($authCategoryRes,$authCategoryId)
     {
         static $arr=array();
-        foreach ($authCategoryres as $k => $v) {
-            if($v['pid'] == $authCategoryid){
+        foreach ($authCategoryRes as $k => $v) {
+            if($v['pid'] == $authCategoryId){
                 $arr[]=$v['id'];
-                $this->_getChilrenId($authCategoryres,$v['id']);
+                $this->_getChilrenId($authCategoryRes,$v['id']);
             }
         }
         //asort($arr);
         return $arr;
     }
 
-    /**获取权限规则列表 树状结构
+    /**获取分类列表 树状结构
      * @return array
      */
     public function getList($order='')

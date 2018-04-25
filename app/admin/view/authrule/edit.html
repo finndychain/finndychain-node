@@ -43,7 +43,7 @@
                             <div class="widget-body">
                                 <div class="widget-main padding-16">
                                     <div class="row">
-                                        <form action="{:url('authrule/edit')}" method="POST" id="addsubmit" onsubmit="return validate(this)">
+                                        <form action="{:url('authrule/edit')}" method="POST" id="addsubmit" >
                                             <div class="form-group clearfix">
                                                 <label class="col-sm-1 label_control no-padding-right" > 上级权限 </label>
                                                 <div class="col-sm-10">
@@ -132,35 +132,6 @@
 </div><!-- /.main-container -->
 
 <script>
-
-    function validate (theform){
-        var addusername = $('#addusername').val();
-        var adduserpwd = $('#adduserpwd').val();
-        if(addusername == '' ){
-            Msg('用户名不能为空');
-            return false;
-        }
-        if(adduserpwd == '' ){
-            Msg('密码不能为空');
-            return false;
-        }
-        return true;
-    }
-    function edit_validate (theform){
-        var editusername = $('#editusername').val();
-        var editpwd = $('#editpwd').val();
-
-        if(editusername == '' ){
-            Msg('用户名不能为空');
-            return false;
-        }
-        if(editpwd == '' ){
-            Msg('密码不能为空');
-            return false;
-        }
-        return true;
-    }
-
     $(function () {
         //动态选择框，上下级选中状态变化
         $('input.checkbox-parent').on('change', function () {

@@ -11,5 +11,7 @@ return [
     //最大分页数
     'maxpages'    => 500,
     'pagesize'    => 20,
+    //图片上传最大字节 2m
+    'uploadmaxsize' => 2097152,
 
 ];

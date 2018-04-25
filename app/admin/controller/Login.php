@@ -46,7 +46,7 @@ class Login extends Bbase
                 $res['last_login_time'] = time();
                 $users_model->setUserValue(array('uid'=>$res['uid']),'last_login_time',$res['last_login_time']);
                 $res['usertype'] = $users_model->getUserGroup($res['user_type']);
-                $res['last_login_time'] = date('Y-m-d H:i:s',$res['last_login_time']);
+
                 Session::set('uid',$res['uid']);
                 Session::set('username',$res['username']);
                 Session::set('usertype',$res['usertype']);

@@ -97,10 +97,8 @@
                                         <td>{$vo.groupname}</td>
                                         <td>{$vo.create_time}</td>
                                         <td>
-                                            <div>
-
                                                 <button type="button"  class="btn btn-mini  btn-info btn-round" onclick="javascript:window.location.href= '{:url('user/edit',array('uid'=>$vo.uid))}' "><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
-                                                <button type="button" {if condition="$vo.uid eq 1 "} disabled {/if}  class="btn btn-mini  btn-danger btn-round"   onclick="redirect('{:url('user/del',array('uid'=>$vo.uid))}')" ><i class="ace-icon fa fa-times-circle "></i>删除</button>
+                                                <button type="button" {if condition="$vo.uid eq 1 "} disabled {/if}  class="btn btn-mini  btn-danger btn-round" id="{$vo.uid}"  onclick="delData(this)" ><i class="ace-icon fa fa-times-circle "></i>删除</button>
 
                                         </td>
                                     </tr>
@@ -117,6 +115,31 @@
 </div><!-- /.main-container -->
 
 <script>
+    function delData(obj){
+        var id = obj.id;
+        var url = "{:url('user/del',array('uid'=>'replace'))}";
+        var url = url.replace('replace' , id);
+        bootbox.dialog({
+            message: "确认删除吗",
+            buttons:
+                {
+                    "button" :
+                        {
+                            "label" : "暂不删除",
+                            "className" : "btn-sm"
+                        },
+                    "danger_one" :
+                        {
+                            "label" : "立刻删除",
+                            "className" : "btn-sm btn-danger",
+                            "callback": function() {
+                                window.location.href=url
+                            }
+                        }
+                }
+        });
+    }
+
 
     function validate (theform){
         var addusername = $('#addusername').val();
@@ -146,13 +169,6 @@
         return true;
     }
 
-    function redirect(url){
-        var i = window.confirm("确定要删除？");
-        if(i==true){
-            window.location= url;
-        }else{
-            return false;
-        }
-    }
+
 
 </script>

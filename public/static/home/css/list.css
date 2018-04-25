@@ -1,0 +1,77 @@
+﻿
+    #wrapper{ background-color:#ffffff;}
+    #container{margin-bottom:0px;}
+    #xh_container{width:1170px;margin-top:0px;background-color:#f4f4f4;}
+    #xh_content{padding-left:20px;padding-top:40px;background-color:#f4f4f4;}
+    #xh_content{width:840px;border-right:solid 1px #000000;}
+    .xh_post_h_3 .r{ background-color:transparent;width:260px;}
+    .xh_post_h_3{width:800px;}
+    .xh_post_h_3 .xh_post_h_3_entry{height:135px;color:#555555;}
+    #xh_sidebar{padding-top:40px;}
+    #pagination {
+        background: none repeat scroll 0 0 transparent;
+    }
+    .wp-pagenavi a {
+    margin: 0 3px 0 0;
+    padding-top: 3px;
+    padding-bottom:3px;
+    text-decoration: none;
+}
+   .larger {
+        border: 1px solid #CCCCCC;
+        padding-top:5px;
+        padding-bottom:5px;
+        text-decoration: none;
+    }
+a.larger:hover {
+    font-weight: bold;
+    margin: 0 3px 0 0;
+    padding-top: 3px;
+    padding-bottom:3px;
+    background: none repeat scroll 0 0 #333333;
+    color: #FFFFFF;	
+}
+.wp-pagenavi span.current {
+    font-weight: bold;
+    margin: 0 3px 0 0;
+    padding-top: 3px;
+    padding-bottom:3px;
+}
+.current {
+    background: none repeat scroll 0 0 #333333;
+    color: #FFFFFF;
+}
+.xh_post_h_3 {
+    border-bottom: 1px solid #000000;
+}
+
+.boxBor{
+	position:absolute;left:0;top:0;display:none;z-index:9999; background-color:#ffffff;opacity: 0.3;filter:alpha(opacity=30)
+}
+.xh_post_h_3 .r {
+    background: none repeat scroll 0 0 #F4F4F4;
+    height: 240px;
+    padding: 15px;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    width: 370px;
+}
+.xh_post_h_3 {
+    border-bottom: 1px solid #CCCCCC;
+    height: 280px;
+    margin-bottom: 40px;
+    padding-right: 10px;
+    position: relative;
+}
+#xh_container{width:1180px;margin-top:10px;}
+.path{background:none;margin-left: 18px;margin-right: 30px;height:30px;line-height:30px;border-bottom: 1px solid #CCCCCC;}
+.path a{color:#000;}
+#xh_content{padding-top:0px;padding-left:0px;}
+body {
+    background:none;background-color: #F4F4F4;
+}
+#xh_sidebar{margin-right:52px;}
+
+#ulHot li div a{ font-family:"Microsoft Yahei";font-size:13px;line-height:24px;color:#333;}
+#ulHot li div a:hover{ font-family:"Microsoft Yahei";font-size:13px;line-height:24px;color:#c40000;}

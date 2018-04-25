@@ -1,0 +1,188 @@
+{include file="public/header"}
+<link rel="stylesheet" href="__HOME__/css/list.css" type="text/css"/>
+<style>
+    .pages {
+        clear: both;
+        color: #ccc;
+        font-family: Verdana,Helvetica,Arial,sans-serif;
+        overflow: hidden;
+        padding: 2px 0 1px;
+        text-align: center;
+        vertical-align: top;
+    }
+    .pages div {
+        float: right;
+        padding-right: 12px;
+    }
+    .pages a, .pages strong {
+        border: 1px solid #d4dfe3;
+        color: #2283c5;
+        float: left;
+        margin: 0 1px;
+        overflow: hidden;
+        padding: 2px 6px 1px;
+        text-decoration: none !important;
+    }
+    .pages strong {
+        background: none repeat scroll 0 0 #6faed9;
+        border: 1px solid #6faed9;
+        color: #fff;
+    }
+    .pages a:hover {
+        border: 1px solid #2097dc;
+    }
+    .pages .prev {
+        padding: 2px 5px 2px 5px;
+    }
+    .pages .next {
+        padding: 2px 5px 2px 5px;
+    }
+    .crumb {
+        background: none;
+
+        margin-right: 30px;
+        height: 30px;
+        line-height: 30px;
+        border-bottom: 1px solid #CCCCCC;
+    }
+</style>
+<div id="wrapper">
+    <div id="xh_container">
+        <div id="xh_content">
+
+            <div class="crumb"><a href='#'>主页</a> >
+
+                <!--{volist name="crumbCates" id="cates"}-->
+                <!--<a href='{:url(' article/index',array('cateid'=>$cates['id']))}'>{$cates.name}</a>  >-->
+                <!--{/volist}-->
+
+                <a href='{:url(' article/index',array('cateid'=>$crumbCates[0]['id']))}'>{$crumbCates[0][name]}</a>
+                {if condition="$crumbCates[1] neq '' "}
+                >
+                <a href='{:url(' article/index',array('cateid'=>$crumbCates[1]['id']))}'>{$crumbCates[1][name]}</a>
+                {/if}
+            </div>
+            <div class="clear"></div>
+            <div class="xh_area_h_3" style="margin-top: 40px;min-height:588px">
+                {empty name="articleList"}
+                <div>
+                    暂时还没有文章!
+                </div>
+                {else /}
+                {volist name="articleList" id="article"}
+                <div class="xh_post_h_3 ofh">
+                    {if condition="$article['thumb'] neq ''"}
+                    <div class="xh">
+                        <a target="_blank" href="{:url('article/detail',array('artid'=>$article['id']))}"
+                           title="{$article.title}">
+                            <img src="__CDN__{$article.thumb}" alt="{$article.title}" height="240" width="400"></a>
+                    </div>
+                    {/if}
+                    <div class="{if condition=" $article[
+                    'thumb'] neq ''"}r {/if} ofh">
+                    <h2 class="xh_post_h_3_title ofh" style="height:60px;">
+                        <a target="_blank" href="{:url('article/detail',array('artid'=>$article['id']))}"
+                           title="{$article.title}">{$article.title}</a>
+                    </h2>
+                    <span class="time">{$article.create_time}</span>
+                    <div class="xh_post_h_3_entry ofh" style="color:#555;height:80px; overflow:hidden;">
+
+                        {$article.summary}
+                    </div>
+                    <div {if condition="$article['thumb'] neq ''" } class="b" {
+                    /if}>
+                    <a href="{:url('article/detail',array('artid'=>$article['id']))}" class="xh_readmore"
+                       rel="nofollow">read
+                        more</a> <span title="{$article.click}人浏览" class="xh_views">
+                                                {$article.click}</span>
+                </div>
+            </div>
+        </div>
+        {/volist}
+        {/empty}
+
+
+        <div id="pagination">
+            <div class="wp-pagenavi">
+                {$multipage}
+
+            </div>
+        </div>
+    </div>
+</div>
+<div id="xh_sidebar">
+    <!-- 右侧 -->
+    {notempty name="hotRes"}
+    <div class="widget">
+        <div style="background: url('__HOME__/image/hots_bg.png') no-repeat scroll 0 0 transparent;width:250px;height:52px;margin-bottom:15px;">
+        </div>
+        <ul id="ulHot">
+            {volist name="hotRes" id="hotArt"}
+            <li style="border-bottom:dashed 1px #ccc;height:70px; margin-bottom:15px;">
+                <div style="float:left;width:85px;height:55px; overflow:hidden;"><a
+                        href="{:url('Article/detail',array('artid'=>$hotArt['id']))}" target="_blank"><img
+                        src="__CDN__{$hotArt.thumb}" width="83" title="{$hotArt.title}"/></a></div>
+                <div style="float:right;width:145px;height:52px; overflow:hidden;"><a
+                        href="{:url('Article/detail',array('artid'=>$hotArt['id']))}" target="_blank"
+                        title="{$hotArt.title}">{$hotArt.title}</a></div>
+            </li>
+            {/volist}
+
+
+        </ul>
+    </div>
+    {/notempty}
+    <div class="widget portrait">
+        <div>
+
+        </div>
+    </div>
+
+</div>
+<div class="clear">
+</div>
+</div>
+<div class="boxBor"></div>
+
+<div class="boxBor" onclick="IBoxBor()" style="cursor:pointer;"></div>
+<script type="text/javascript">
+    $(function () {
+        var imgHoverSetTimeOut = null;
+        $('.xh_265x265 img').hover(function () {
+            var oPosition = $(this).offset();
+            var oThis = $(this);
+            $(".boxBor").css({
+                left: oPosition.left,
+                top: oPosition.top,
+                width: oThis.width(),
+                height: oThis.height()
+            });
+            $(".boxBor").show();
+            var urlText = $(this).parent().attr("href");
+            $("#hdBoxbor").val(urlText);
+        }, function () {
+            imgHoverSetTimeOut = setTimeout(function () {
+                $(".boxBor").hide();
+            }, 500);
+        });
+        $(".boxBor").hover(
+            function () {
+                clearTimeout(imgHoverSetTimeOut);
+            }
+            , function () {
+                $(".boxBor").hide();
+            }
+        );
+    });
+    function IBoxBor() {
+        window.open($("#hdBoxbor").val());
+    }
+    function goanewurl() {
+        window.open($("#hdUrlFocus").val());
+    }
+</script>
+
+</div>
+
+{include file="public/footer"}
+

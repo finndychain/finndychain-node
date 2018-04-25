@@ -152,8 +152,10 @@ return [
         '__CSS__'=> PUBLIC_PATH.'/static/css',
         '__JS__'=> PUBLIC_PATH.'/static/js',
         '__IMG__'=> PUBLIC_PATH.'/static/img',
-        '__CDN__'=>'',
+        '__CDN__'=>PUBLIC_PATH,
         '__ADMIN__' => PUBLIC_PATH.'/static/admin',
+        '__HOME__' => PUBLIC_PATH.'/static/home',
+        '__ASSETS__' => PUBLIC_PATH.'/static/assets',
     ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => APP_COMMON_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
@@ -276,4 +278,6 @@ return [
     // 验证成功后是否重置
             'reset' => true
         ],
+
+
 ];

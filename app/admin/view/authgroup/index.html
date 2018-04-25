@@ -93,36 +93,7 @@
                                             <div>
 
                                                 <button type="button" class="btn btn-mini  btn-info btn-round"  onclick="javascript:window.location.href= '{:url('authgroup/edit',['groupid'=>$authgroup.id])}' "><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
-                                            <button type="button" class="btn btn-mini  btn-danger btn-round" onclick="redirect('{:url('authgroup/del',['groupid'=>$authgroup.id])}')" ><i class="ace-icon fa fa-times-circle "></i>删除</button>
-                                                <div class="modal fade" id="exampleModal{$authgroup.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                                                    <div class="modal-dialog" role="document">
-
-                                                        <div class="modal-content" style="width:350px;margin:180px auto" >
-                                                            <div class="modal-body">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title" id="myModalLabel"> 编辑用户组</h4></div><br>
-                                                                <form action="{:url('authgroup/edit')}" method="POST" id="addsubmit" onsubmit="return validate(this)">
-                                                                    <div class="form-group" >
-                                                                        <label  for class="control-label ml35">用户组名11:</label>
-                                                                        <input type="text" class="form-control inputstyle" id="addusername" name="title" value="{$authgroup.title}" >
-                                                                    </div>
-
-                                                                    <div class="form-group" >
-                                                                        <label  for class="control-label ml35">用户组描述:</label>
-                                                                        <input type="text" class="form-control inputstyle" id="addusername" name="remark" value="{$authgroup.remark}" >
-                                                                    </div>
-
-                                                                    <input type="hidden" name="id" value="{$authgroup.id}">
-                                                                    <div class="modal-footer" style="background-color: #fff;text-align: center">
-                                                                        <button type="button" class="btn btn-default  btn-default btn-round " data-dismiss="modal">关闭</button>&nbsp;&nbsp;&nbsp;
-                                                                        <button type="submit" class="btn btn-default  btn-info btn-round ">提交</button>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                                                <button class="btn btn-mini btn-danger tooltip-error runstyle  " id="{$authgroup.id}" onclick="delData(this)" type="button" data-rel="tooltip" data-original-title="删除"><i class="ace-icon fa fa-times-circle"></i>删除</button>
                                         </td>
                                     </tr>
                                 {/volist}
@@ -140,42 +111,28 @@
 </div><!-- /.main-container -->
 
 <script>
-
-    function validate (theform){
-        var addusername = $('#addusername').val();
-        var adduserpwd = $('#adduserpwd').val();
-//        if(addusername == '' ){
-//            Msg('用户名不能为空');
-//            return false;
-//        }
-//        if(adduserpwd == '' ){
-//            Msg('密码不能为空');
-//            return false;
-//        }
-        return true;
+    function delData(obj){
+        var id = obj.id;
+        var url = "{:url('authgroup/del',array('groupid'=>"replace"))}";
+        var url = url.replace('replace' , id);
+        bootbox.dialog({
+            message: "确认删除吗",
+            buttons:
+                {
+                    "button" :
+                        {
+                            "label" : "暂不删除",
+                            "className" : "btn-sm"
+                        },
+                    "danger_one" :
+                        {
+                            "label" : "立刻删除",
+                            "className" : "btn-sm btn-danger",
+                            "callback": function() {
+                                window.location.href=url;
+                            }
+                        }
+                }
+        });
     }
-    function edit_validate (theform){
-        var editusername = $('#editusername').val();
-        var editpwd = $('#editpwd').val();
-
-//        if(editusername == '' ){
-//            Msg('用户名不能为空');
-//            return false;
-//        }
-//        if(editpwd == '' ){
-//            Msg('密码不能为空');
-//            return false;
-//        }
-        return true;
-    }
-    function redirect(url){
-        var i = window.confirm("确定要删除？");
-        if(i==true){
-            window.location= url;
-        }else{
-            return false;
-        }
-    }
-
-
 </script>

@@ -11,6 +11,7 @@
 */
 namespace app\home\controller;
 
+
 use think\Db;
 
 class Index extends Base
@@ -18,7 +19,10 @@ class Index extends Base
     public function index()
     {
 
-        return $this->fetch('/index');
+        //获取最新文章列表
+
+
+        return $this->fetch('index');
     }
 
 }

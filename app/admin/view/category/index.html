@@ -14,7 +14,7 @@
                     <li>
                         <i class="ace-icon fa fa-home home-icon"></i> <a href="#">首页</a>
                     </li>
-                    <li><a href="#">文章设置</a></li>
+                    <li><a href="#">文章管理</a></li>
                     <li class="active">分类列表</li>
                 </ul>
                 <!-- /.nav-search -->
@@ -50,7 +50,7 @@
                                         <th width="5%">排序</th>
                                         <th>ID</th>
                                         <th>分类名称</th>
-                                        <th>描述</th>
+                                        <th>创建时间</th>
                                         <th>操作</th>
 
                                     </tr>
@@ -64,13 +64,15 @@
                                                    name="{$category['id']}" value="{$category['sort']}"></td>
                                         <td>{$category.id}</td>
                                         <td><?php if($category['level']!=0){echo '|';} echo str_repeat('—', $category['level']*1)?>&nbsp;{$category.name}</td>
-                                        <td>{$category.description}</td>
+                                        <td>{$category.create_time}</td>
                                         <td>
 
                                             <button type="button" class="btn btn-mini  btn-info btn-round" onclick="javascript:window.location.href= '{:url('category/edit',['id'=>$category.id])}' "><i class="ace-icon fa fa-pencil-square-o "></i>编辑</button>
-                                            <button type="button" class="btn btn-mini  btn-danger btn-round" onclick="redirect('{:url('category/del',['id'=>$category.id])}')"><i class="ace-icon fa fa-times-circle "></i>删除</button>
+                                            <button class="btn btn-mini btn-danger tooltip-error runstyle  " id="{$category.id}" type="button" onclick="delData(this)" data-rel="tooltip" data-original-title="删除"><i class="ace-icon fa fa-times-circle"></i>删除</button>
                                         </td>
                                     </tr>
+
+
                                 {/volist}
                                     <tr>
                                         <td>
@@ -90,42 +92,29 @@
 </div><!-- /.main-container -->
 
 <script>
-
-    function validate (theform){
-        var addusername = $('#addusername').val();
-        var adduserpwd = $('#adduserpwd').val();
-        if(addusername == '' ){
-            Msg('用户名不能为空');
-            return false;
-        }
-        if(adduserpwd == '' ){
-            Msg('密码不能为空');
-            return false;
-        }
-        return true;
-    }
-    function edit_validate (theform){
-        var editusername = $('#editusername').val();
-        var editpwd = $('#editpwd').val();
-
-        if(editusername == '' ){
-            Msg('用户名不能为空');
-            return false;
-        }
-        if(editpwd == '' ){
-            Msg('密码不能为空');
-            return false;
-        }
-        return true;
-    }
-
-    function redirect(url){
-        var i = window.confirm("确定要删除？");
-        if(i==true){
-            window.location= url;
-    }else{
-            return false;
-        }
+    function delData(obj){
+        var id = obj.id;
+        var url = "{:url('category/del',array('id'=>"replace"))}";
+        var url = url.replace('replace' , id);
+        bootbox.dialog({
+            message: "确认删除吗",
+            buttons:
+                {
+                    "button" :
+                        {
+                            "label" : "暂不删除",
+                            "className" : "btn-sm"
+                        },
+                    "danger_one" :
+                        {
+                            "label" : "立刻删除",
+                            "className" : "btn-sm btn-danger",
+                            "callback": function() {
+                                window.location.href=url;
+                            }
+                        }
+                }
+        });
     }
 
 </script>

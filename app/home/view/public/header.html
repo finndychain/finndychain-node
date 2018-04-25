@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/>
+    <meta content='{$seoInfo.kw}' name='Keywords'>
+    <meta content='{$seoInfo.desc}' name='Description'>
+    <meta name="description" content="ThinkPHP5.0"/>
+    <meta name="keywords" content="{$confres.keywords}"/>
+    <link rel="stylesheet" type="text/css" media="all" href="__HOME__/css/style.css"/>
+    <script type="text/javascript" src="__HOME__/js/jquery-1.4.1.min.js"></script>
+    <script type="text/javascript" src="__HOME__/js/jquery.js"></script>
+    <!--<script src="__HOME__/js/jquery.error.js" type="text/javascript"></script>-->
+    <script src="__HOME__/js/jtemplates.js" type="text/javascript"></script>
+    <!--<script src="__HOME__/js/jquery.form.js" type="text/javascript"></script>-->
+    <script src="__HOME__/js/lazy.js" type="text/javascript"></script>
+    <script type="text/javascript" src="__HOME__/js/wp-sns-share.js"></script>
+    <script type="text/javascript" src="__HOME__/js/voterajax.js"></script>
+    <script type="text/javascript" src="__HOME__/js/userregister.js"></script>
+    <link rel="stylesheet" href="__HOME__/css/pagenavi-css.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="__HOME__/css/votestyles.css" type="text/css"/>
+    <link rel="stylesheet" href="__HOME__/css/voteitup.css" type="text/css"/>
+
+    <script type="text/javascript">
+        function IFocuse(th, o) {
+            var t = $(th);
+            var c = t.attr("class");
+            if (o) {
+                t.removeClass(c).addClass(c + "-over");
+            }
+            else {
+                t.removeClass(c).addClass(c.replace("-over", ""));
+            }
+        }
+
+        function ILike(th, v) {
+            if (v) {
+                $(th).addClass("single_views_over");
+            }
+            else {
+                $(th).removeClass("single_views_over");
+            }
+        }
+    </script>
+
+    <style>
+       .trig {
+            width: 0;
+            height: 0;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 8px solid #fff;
+            display:block;
+           float:right;
+           margin-top:15px;
+           margin-left:5px;
+
+        }
+    </style>
+</head>
+<body class="xh_body">
+<script src="__HOME__/js/common.js" type="text/javascript"></script>
+<script>
+    function subForm() {
+
+        formsearch.submit();
+        //form1为form的id
+    }
+</script>
+<script type="text/javascript">
+    function showMask() {
+        $("#mask").css("height", $(document).height());
+        $("#mask").css("width", $(document).width());
+        $("#mask").show();
+    }
+</script>
+<div id="mask" class="mask" onclick="CloseMask()"></div>
+<div id="header_wrap">
+    <div id="header">
+        <div style="float: left; width: 310px;">
+            <h1>
+
+                <div class="" id="logo-sub-class">
+                    <img src="__HOME__/image/logo.png" alt="" width="130" style="margin-top: 8px;">
+                </div>
+            </h1>
+        </div>
+        <div id="navi">
+
+            <ul id="jsddm">
+                <li><a class="navi_home" href="{:url('index/index')}">首页</a></li>
+                {volist name="categoryRes" id="cate"}
+                <li>
+                    {if condition="$cate['children'] neq 0" } <a class="havechild"  href="{:url('article/index',array('cateid'=>$cate.id))}" > <span >{$cate.name}</span><span class="trig"></span></a>
+                    <ul>
+                        <?php foreach ($cate['children'] as $k2 => $v2):?>
+                        <li><a href="{:url('article/index',array('cateid'=>$v2.id))}"><?php echo $v2['name'];?></a></li>
+                        <?php endforeach;?>
+                    </ul>
+
+                    {else/}<a href="{:url('article/index',array('cateid'=>$cate.id))}"> {$cate.name}</a> {/if}
+
+
+                </li>
+                {/volist}
+            </ul>
+
+            <div style="clear: both;">
+            </div>
+
+
+        </div>
+        <!--<div style="float: right; width: 209px;">-->
+            <!--<div class="widget" style="height: 30px; padding-top: 20px;">-->
+                <!--<div style="float: left;">-->
+                    <!--<form name="formsearch" action="{:url('search/index')}" method="get">-->
+                        <!--<input name="keywords" type="text"-->
+                               <!--style="background-color: #000000;padding-left: 10px; font-size: 12px;font-family: 'Microsoft Yahei'; color: #999999;height: 29px; width: 160px; border: solid 1px #666666; line-height: 28px;"-->
+                               <!--id="go" value="在这里搜索..." onfocus="if(this.value=='在这里搜索...'){this.value='';}"-->
+                               <!--onblur="if(this.value==''){this.value='在这里搜索...';}"/>-->
+                    <!--</form>-->
+                <!--</div>-->
+                <!--<div style="float: left;">-->
+                    <!--<img src="__HOME__/image/search-new.png" id="imgSearch" style="cursor: pointer; margin: 0px;-->
+                        <!--padding: 0px;" onclick="subForm()"/></div>-->
+                <!--<div style="clear: both;">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    </div>
+</div>
+
+</div>

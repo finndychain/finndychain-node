@@ -20,12 +20,12 @@ class Article extends Validate
         'title.require'=>'文章标题不能为空',
         'keywords.require'=>'关键词不能为空',
         'content.require'=>'文章内容不能为空',
-        'thumb.image'=>'请上传图片',
+        //'thumb.image'=>'请上传图片',
         'thumb.fileExt'=>'上传的图片为jpg,gif,png',
         'thumb.fileSize'=>'上传的图片大小超过2M',
     ];
     protected $scene = [
-        'add' => ['title','keywords','content','thumb'],
+        'add' => ['title','keywords','content'],
         'edit' => ['title','keywords','content'],
     ];
 }
