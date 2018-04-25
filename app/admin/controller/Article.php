@@ -239,25 +239,52 @@ class Article extends Base
     {
         $typeArr = array('jpg','jpeg','bmp','png');//允许上传文件格式
         $file = request()->file('file');
-        $info = $file->move(UPLOAD_PATH);
-        if($info){
 
-            //20160820/42a79759f284b767dfcb2a0197904287.jpg
+        $file_save_method = config('file_save_method');
+
+        if($file_save_method === 0){
+            $info = $file->move(UPLOAD_PATH);
+
             $imgName = $info->getSaveName();
-
             $type = $info->getExtension(); //获取文件类型
             $size = $info->getSize(); //获取文件类型
-            if (!in_array($type, $typeArr)) {
-                echo json_encode(array("error"=>"清上传jpg,png,bmp或jpeg类型的图片！"));
-                exit;
-            }
-            if ($size > 111111111111) {
-                echo json_encode(array("error"=>"图片大小已超过500KB！"));
-                exit;
-            }
+
             $configPath = config('view_replace_str');
             $pic_url = request()->domain().$configPath['__PUBLIC__'].'/uploads/'. $imgName;
             $savepath = '/uploads/'. $imgName;
+
+        }else{
+            $file = $_FILES['file'];
+            $info = oss_upload_file($file['name'],$file['tmp_name']);
+
+            $imgName = $info['md5'];
+            $type = $info->getExtension(); //获取文件类型
+            $size = $info->getSize(); //获取文件类型
+
+            $savepath = $info['savePath'];
+            $pic_url = oss_display_image($savepath,1);
+
+
+        }
+
+
+
+        if($info){
+
+
+            //20160820/42a79759f284b767dfcb2a0197904287.jpg
+
+            if (!in_array($type, $typeArr)) {
+                echo json_encode(array("error"=>"请上传jpg,png,bmp或jpeg类型的图片！"));
+                exit;
+            }
+            if ($size > (config('uploadmaxsize'))) {
+                echo json_encode(array("error"=>"图片大小已超过2M！"));
+                exit;
+            }
+
+
+
             echo json_encode(array("error"=>"0","picpath"=>$pic_url,"name"=>$imgName,"savepath"=>$savepath));
         }else{
             echo json_encode(array("error"=>"上传有误，清检查服务器配置！"));

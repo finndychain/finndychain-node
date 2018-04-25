@@ -7,6 +7,10 @@ class AuthGroup extends  Model
 {
 
     protected $name = 'auth_group';
+
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+
     /** 查询制定字段的值
      * @param array $where
      * @param $field
@@ -30,8 +34,6 @@ class AuthGroup extends  Model
     {
         return  $this->where($where)->update($data);
     }
-
-
 
 
 }

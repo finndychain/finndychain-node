@@ -118,7 +118,6 @@ function api_get_appkey($name='app_key'){
  */
 function exportfile($array, $filename) {
 
-
     $time = date('Y-m-d H:i:s');
     $array['version'] = strip_tags('3.0');
     $exporttext = "# -------------------------------------------------\r\n".
@@ -341,4 +340,74 @@ function getParentId($data , $id , $clear=False){
     asort($arr);
     $arrStr=implode(',', $arr);
     return $arrStr;
+}
+
+
+/**
+ * 云存储上传文件内容
+ *
+ * @param string $object 上传的文件名称 (支持目录形式，例如：test/img001.jpg)
+ * @param string $path   本地文件路径  ($_FILE['name']['tmp_name'])
+ * @return array $return 上传结果
+ */
+function oss_upload_file($object,$path){
+    $return =array();
+    try{
+        //获取配置项，并赋值给对象$config
+        $config=config('aliyun_oss');
+        //实例化OSS
+        $ossClient=new \OSS\OssClient($config['KeyId'],$config['KeySecret'],$config['Endpoint']);
+        //uploadFile的上传方法
+        $rs = $ossClient->uploadFile($config['Bucket'], $object, $path);
+        $return['md5'] = $rs['content-md5'];
+        $saveInfo=explode('aliyuncs.com/',$rs['info']['url']);
+        $return['savePath'] = $saveInfo[1]; //aliyuncs.com
+
+    } catch(OssException $e) {
+        //如果出错这里返回报错信息
+        return $e->getMessage();
+    }
+    //否则，完成上传操作
+    return $return;
+}
+
+/**
+ * 云存储删除指定的文件内容
+ * @param string $object object名称
+ * @param array $options
+ * @return null
+ */
+function oss_remove_file($object){
+    //获取配置项，并赋值给对象$config
+    $config=config('aliyun_oss');
+    //实例化OSS
+    $ossClient=new \OSS\OssClient($config['KeyId'],$config['KeySecret'],$config['Endpoint']);
+    $rs = $ossClient->deleteObject($config['Bucket'],$object);
+    return $rs;
+}
+
+/**
+ * 云存储获取显示的文件URL
+ * @param string $path 文件路径
+ * @param int $style  显示格式类型（默认为原图）
+ * @return string $url
+ */
+function oss_display_image($path,$style=0){
+    $ds = '!';
+    //获取配置项，并赋值给对象$config
+    $fsDomain=config('aliyun_oss.FileDomain');
+    $url =  $fsDomain.'/'.$path;
+    switch ($style){
+        case 1://竖立
+            $url = $url.$ds.'400x300';
+            break;
+        case 2: //横向
+            $url = $url.$ds.'800x600';
+            break;
+        default://原图
+
+         break;
+    }
+
+    return $url;
 }

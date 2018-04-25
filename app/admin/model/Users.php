@@ -5,11 +5,16 @@ use think\Db;
 
 class Users extends  Model
 {
+
+
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+
     /**获取用户信息
      * @param array $where 条件
      * @return array|bool|false|\PDOStatement|string|Model
      */
-    public function getUserinfo(array $where){
+    public function getUserInfo(array $where){
         if(!is_array($where)) return false;
         return  $this->where($where)->find();
     }
@@ -29,7 +34,7 @@ class Users extends  Model
      * @return int|string
      */
      public function insertUserinfo(array $data){
-        $data['create_time'] = time();
+        //$data['create_time'] = time();
         $this->allowField(true)->save($data);
         return $this->getLastInsID();
     }
@@ -96,7 +101,7 @@ class Users extends  Model
      * @param $key 指定字段
      * @return false|\PDOStatement|string|\think\Collection
      */
-    public function getGroupInfo($uid,$key="group_id")
+    public function getUserGroupInfo($uid,$key="group_id")
     {
         $res = Db::name('users')
             ->alias('a')

@@ -37,8 +37,6 @@ class Form extends Link implements \ArrayAccess
     private $baseHref;
 
     /**
-     * Constructor.
-     *
      * @param \DOMElement $node       A \DOMElement instance
      * @param string      $currentUri The URI of the page where the form is embedded
      * @param string      $method     The method to use for the link (if null, it defaults to the method defined by the form)
@@ -172,6 +170,18 @@ class Form extends Link implements \ArrayAccess
             if (!empty($qs)) {
                 parse_str($qs, $expandedValue);
                 $varName = substr($name, 0, strlen(key($expandedValue)));
+
+                array_walk_recursive(
+                    $expandedValue,
+                    function (&$value, $key) {
+                        if (ctype_digit($value) && ('size' === $key || 'error' === $key)) {
+                            $value = (int) $value;
+                        }
+                    }
+                );
+
+                reset($expandedValue);
+
                 $values = array_replace_recursive($values, array($varName => current($expandedValue)));
             }
         }
@@ -199,7 +209,7 @@ class Form extends Link implements \ArrayAccess
                 parse_str($query, $currentParameters);
             }
 
-            $queryString = http_build_query(array_merge($currentParameters, $this->getValues()), null, '&');
+            $queryString = http_build_query(array_merge($currentParameters, $this->getValues()), '', '&');
 
             $pos = strpos($uri, '?');
             $base = false === $pos ? $uri : substr($uri, 0, $pos);
@@ -268,8 +278,6 @@ class Form extends Link implements \ArrayAccess
 
     /**
      * Sets a named field.
-     *
-     * @param FormField $field The field
      */
     public function set(FormField $field)
     {
@@ -356,8 +364,6 @@ class Form extends Link implements \ArrayAccess
      *
      * Expects a 'submit' button \DOMElement and finds the corresponding form element, or the form element itself.
      *
-     * @param \DOMElement $node A \DOMElement instance
-     *
      * @throws \LogicException If given node is not a button or input or does not have a form ancestor
      */
     protected function setNode(\DOMElement $node)
@@ -427,7 +433,7 @@ class Form extends Link implements \ArrayAccess
             // corresponding elements are either descendants or have a matching HTML5 form attribute
             $formId = Crawler::xpathLiteral($this->node->getAttribute('id'));
 
-            $fieldNodes = $xpath->query(sprintf('descendant::input[@form=%s] | descendant::button[@form=%s] | descendant::textarea[@form=%s] | descendant::select[@form=%s] | //form[@id=%s]//input[not(@form)] | //form[@id=%s]//button[not(@form)] | //form[@id=%s]//textarea[not(@form)] | //form[@id=%s]//select[not(@form)]', $formId, $formId, $formId, $formId, $formId, $formId, $formId, $formId));
+            $fieldNodes = $xpath->query(sprintf('descendant::input[@form=%s] | descendant::button[@form=%1$s] | descendant::textarea[@form=%1$s] | descendant::select[@form=%1$s] | //form[@id=%1$s]//input[not(@form)] | //form[@id=%1$s]//button[not(@form)] | //form[@id=%1$s]//textarea[not(@form)] | //form[@id=%1$s]//select[not(@form)]', $formId));
             foreach ($fieldNodes as $node) {
                 $this->addField($node);
             }

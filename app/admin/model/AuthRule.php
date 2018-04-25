@@ -10,6 +10,9 @@ class AuthRule extends  Model
 
     protected $name = 'auth_rule';
 
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+
     /**获取权限规则
      * @param array $where 条件
      * @return array|bool|false|\PDOStatement|string|Model
@@ -28,9 +31,7 @@ class AuthRule extends  Model
     public function getRuleValue(array $where, $field)
     {
        $data = $this->where($where)->field($field)->select();
-       if($data){
-           $data = collection($data)->toArray();
-       }
+
        return $data;
     }
 
@@ -52,7 +53,7 @@ class AuthRule extends  Model
      * @param  string $order 排序字段
      * @return boolean       操作是否成功
      */
-    public function orderData($data,$id='id',$order='sort'){
+    public function updateOrderData($data,$id='id',$order='sort'){
 
         foreach ($data as $key => $val) {
             if($this->where(array($id=>$key))->setField('sort',$val)){
@@ -61,9 +62,6 @@ class AuthRule extends  Model
         }
         return $result;
     }
-
-
-
 
 
     /**根据 权限id 来获取该条数据下面子级的id
@@ -89,74 +87,81 @@ class AuthRule extends  Model
         return $arr;
     }
 
-    /**获取权限规则列表 树状结构
+
+    /**获取权限规则列表 树状结构(父子关系)
+     * @param $where array
+     * @param $order array
      * @return array
      */
-    public function getList($order='')
-    {
-        if(empty($order)){
-            $authRes = $this->select();
-        }
-        $authRes = $this->order($order)->select();
-        $authRes = collection($authRes)->toArray();
-        return $this->sort($authRes);
+    public function getRuleFormatList($where=array(),$order=array('sort'=>'ASC')){
+        $data = $this->getRuleList($where,$order);
+        return self::ruleSortFormat($data);
     }
 
-    /**根据pid 递归查询 权限
+
+    /**根据pid 递归查询 权限(父子关系格式化)
      * @param $authRes
      * @param int $pid
      * @return array
      */
-    public function sort($authRes , $pid=0)
+    static public function ruleSortFormat($authRes , $pid=0)
     {
         static $arr = array();
         foreach($authRes as $k => $v){
             if($v['pid'] == $pid ){
                 $arr[] = $v;
-                $this->sort($authRes , $v['id']);
+                self::ruleSortFormat($authRes , $v['id']);
             }
         }
         return $arr;
     }
 
-
     /**
      * 获取权限规则列表 层级结构
-     * @param  string $order 排序方式
-     * @param  string $child 主键
-     * @param  array $where  c 查询条件
+     * @param   array $order 排序方式
+     * @param  array $where  查询条件
      * @return array         结构数据
      */
-    public function getTreeData($order='',$child='id', $where='' ){
-        // 判断是否需要排序
-        if(empty($order)){
-            $data=$this->select();
+    public function getTreeData($where=array(),$order=array('sort'=>'ASC') ){
+        // 判断是否需要排
+        $data = $this->getRuleList($where,$order);
+        $data= self::channelLevel($data,0);
 
-        }else{
-            $data=$this->where($where)->order($order)->select();
-        }
-        $data = collection($data)->toArray();
-
-            $data= self::channelLevel($data,0,$child);
-
-            if(session('uid') != 1){
-                foreach ($data as $k => $v) {
-                    if (authCheck($v['name'],session('uid'))) {
-                        if(is_array($v['_data'])){
-                            foreach ($v['_data'] as $m => $n) {
-                                if(!authCheck($n['name'],session('uid'))){
-                                    // 删除无权限的规则
-                                    unset($data[$k]['_data'][$m]);
-                                }
+        if(session('uid') != 1){
+            foreach ($data as $k => $v) {
+                if (authCheck($v['name'],session('uid'))) {
+                    if(is_array($v['_data'])){
+                        foreach ($v['_data'] as $m => $n) {
+                            if(!authCheck($n['name'],session('uid'))){
+                                // 删除无权限的规则
+                                unset($data[$k]['_data'][$m]);
                             }
                         }
-                    }else{
-                        // 删除无权限的规则
-                        unset($data[$k]);
                     }
+                }else{
+                    // 删除无权限的规则
+                    unset($data[$k]);
                 }
             }
+
+        }
         return $data;
+    }
+
+    /**获取权限规则列表
+     * @param $where array
+     * @param $order array
+     * @return array
+     */
+    public function getRuleList($where=array(),$order=array('sort'=>'ASC'))
+    {
+        if(empty($where)){
+            $authRes = $this->order($order)->select();
+        }else{
+            $authRes = $this->where($where)->order($order)->select();
+        }
+
+        return $authRes;
     }
 
     /**

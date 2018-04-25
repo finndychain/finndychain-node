@@ -202,7 +202,17 @@ return [
     // +----------------------------------------------------------------------
     'trace'                  => [
         // 内置Html Console 支持扩展
-        'type' => 'Html',
+        //'type'  =>  'console',
+        'type'       =>  'Html',
+        'trace_tabs' =>  [
+            'base'=>'基本',
+            'file'=>'文件',
+            'info'=>'流程',
+            'error'=>'错误', //error|notice
+            'sql'=>'SQL',
+            'debug'=>'调试',
+            'user'=>'用户'
+        ]
     ],
 
     // +----------------------------------------------------------------------
@@ -278,6 +288,19 @@ return [
     // 验证成功后是否重置
             'reset' => true
         ],
+
+    //文件上传方式 0:为本地服务器,1:上传到阿里云oss,2:七牛云存储
+    'file_save_method'=> 0,
+    //阿里云OSS配置
+    'aliyun_oss' => [
+        'KeyId'      => 'LTAIPgTosmSu5d3q',  //您的Access Key ID
+        'KeySecret'  => 'Rnvg7zAxm1HdRKri9XuguoQTHhS2xC',  //您的Access Key Secret
+        'Endpoint'   => 'http://oss-cn-shanghai.aliyuncs.com',  //阿里云oss 外网地址endpoint
+        'Bucket'     => 'hospital01',  //Bucket名称
+        'FileDomain'=>'http://hospital01.oss-cn-shanghai.aliyuncs.com'
+    ],
+
+
 
 
 ];
