@@ -359,13 +359,15 @@ function oss_upload_file($object,$path){
         $ossClient=new \OSS\OssClient($config['KeyId'],$config['KeySecret'],$config['Endpoint']);
         //uploadFile的上传方法
         $rs = $ossClient->uploadFile($config['Bucket'], $object, $path);
-        //print_r($rs);
+
         $return['md5'] = $rs['content-md5'];
         $return['sizeUpload'] = $rs['size_upload'];
         $return['totalTime'] = $rs['total_time'];
+        $type = explode('/',$rs['oss-requestheaders']['Content-Type']);
+        $return['contentType'] = trim($type[1]);
         $saveInfo=explode('aliyuncs.com/',$rs['info']['url']);
         $return['savePath'] = $saveInfo[1]; //aliyuncs.com
-
+        
     } catch(OssException $e) {
         //如果出错这里返回报错信息
         return $e->getMessage();
