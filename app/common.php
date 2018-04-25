@@ -359,7 +359,10 @@ function oss_upload_file($object,$path){
         $ossClient=new \OSS\OssClient($config['KeyId'],$config['KeySecret'],$config['Endpoint']);
         //uploadFile的上传方法
         $rs = $ossClient->uploadFile($config['Bucket'], $object, $path);
+        //print_r($rs);
         $return['md5'] = $rs['content-md5'];
+        $return['sizeUpload'] = $rs['size_upload'];
+        $return['totalTime'] = $rs['total_time'];
         $saveInfo=explode('aliyuncs.com/',$rs['info']['url']);
         $return['savePath'] = $saveInfo[1]; //aliyuncs.com
 
