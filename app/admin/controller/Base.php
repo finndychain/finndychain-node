@@ -20,28 +20,21 @@ class Base extends  Bbase
         if(!$this->uid || !$this->getUserInfo()){
             $this->error('您尚未登录系统',url('login/dologin'));
         }
-
         //权限校验
         if(!$this->checkAccess()){
             $this->error('没有权限',url('index/index'));
         }
-
         if(empty($this->getSysConfValue('app_key'))||empty($this->getSysConfValue('app_secret'))){
            if(in_array($this->request->controller(),array('Robot'))){
                $this->error('请先配置云账号信息',url('Sysconf/SysSet'));
            }
         }
-
         $this->setPageSeo();
-
         $this->assign('currentAction',strtolower($this->request->controller().'/'.$this->request->action()));
-
         //根据权限判断是否显示菜单 有权限则显示
-
         $modelAuthRule = new modelAuthRule();
         $menuArr = $modelAuthRule->getTreeData( array('is_display'=> 1));
         $this->assign('menuArr',$menuArr);
-
     }
     /**判断权限
      * @param $uid 用户id

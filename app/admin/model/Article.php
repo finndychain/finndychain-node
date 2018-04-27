@@ -94,12 +94,8 @@ class Article extends  Model
         Article::event('before_delete',function($article){
             $arts=Article::find($article->id);
             $thumb=$_SERVER['DOCUMENT_ROOT'].$arts['thumb'];
-            $thumb_sm=$_SERVER['DOCUMENT_ROOT'].$arts['thumb_sm'];
             if(file_exists($thumb)){
                 @unlink($thumb);
-            }
-            if(file_exists($thumb_sm)){
-                @unlink($thumb_sm);
             }
         });
     }

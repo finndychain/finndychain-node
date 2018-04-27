@@ -32,11 +32,15 @@ class Article extends Base
         //dump($multipage);die;
 
         $hotRes=$this->modelArticle->getHotRes($cateId);
+        $title = '文章首页';
         $this->assign(array(
             'articleList'=>$articleList,
             'hotRes'=>$hotRes,
-            'multipage'=>$multipage
+            'multipage'=>$multipage,
+            'title'=>$title
+
         ));
+
         return $this->fetch('index');
     }
 
@@ -50,10 +54,12 @@ class Article extends Base
         $articles =  $this->modelArticle->where(array('id'=>$artId))->find();
         $this->modelArticle->setField(array('id'=>$artId) , 'click');
     	$hotRes=$this->modelArticle->getHotRes($articles['cateid']);
+    	$title = '文章详情';
     	$this->assign(array(
     		'articles'=>$articles,
     		'hotRes'=>$hotRes,
             'artid'=>$artId,
+            'title'=>$title
     		));
         return $this->fetch('article/detail');
     }

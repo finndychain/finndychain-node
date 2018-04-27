@@ -126,10 +126,13 @@ class AuthRule extends  Model
         // 判断是否需要排
         $data = $this->getRuleList($where,$order);
         $data= self::channelLevel($data,0);
+        $data = collection($data)->toArray();
 
         if(session('uid') != 1){
             foreach ($data as $k => $v) {
+
                 if (authCheck($v['name'],session('uid'))) {
+
                     if(is_array($v['_data'])){
                         foreach ($v['_data'] as $m => $n) {
                             if(!authCheck($n['name'],session('uid'))){
@@ -143,7 +146,6 @@ class AuthRule extends  Model
                     unset($data[$k]);
                 }
             }
-
         }
         return $data;
     }
@@ -160,7 +162,7 @@ class AuthRule extends  Model
         }else{
             $authRes = $this->where($where)->order($order)->select();
         }
-
+        $authRes = collection($authRes)->toArray();
         return $authRes;
     }
 

@@ -37,7 +37,7 @@ class Article extends Base
         if(request()->isPost()) {
             $data = input();
 
-           // dump($data);die;
+
             $validate = $this->validate($data, 'Article.add');
             if (true !== $validate) {
                 $this->error($validate);
@@ -48,10 +48,6 @@ class Article extends Base
                     $data[$key] = $val;
                 }
             }
-//            if(!empty($data[thumb])){
-//                $data[thumb] = serialize($data[thumb]);
-//            }
-//            dump($data[thumb]);die;
             unset($data[post]);
             if(empty(intval($data['cateid']))){
                 $this->error('请选择分类');
@@ -82,14 +78,29 @@ class Article extends Base
     {
         if(request()->isPost()) {
             $data = input();
+            //dump($data);die;
             $validate = $this->validate($data, 'Article.edit');
             if (true !== $validate) {
                 // 验证失败 输出错误信息
                 $this->error($validate);
             }
+
+            if($data[thumb]){
+                $arts=$this->modelArticle->find($data['id']);
+                $old_thumb=$_SERVER['DOCUMENT_ROOT'].$arts['thumb'];
+
+                if(file_exists($old_thumb)){
+                    @unlink($old_thumb);
+                }
+            }else{
+                $data[thumb] = $data['thumb_old'];
+            }
+
+
             //旧图
-            $arts=$this->modelArticle->find($data['id']);
-            $old_thumb=$_SERVER['DOCUMENT_ROOT'].$arts['thumb'];
+
+
+
 
             //发布,置顶,推荐 复选框处理
             if(!empty($data[post])){
@@ -105,11 +116,8 @@ class Article extends Base
                 $this->error('更新失败');
             }
 
-            //文章编辑成功 将旧图删除
-            //dump($thumb);die;
-            if(file_exists($old_thumb)){
-                @unlink($old_thumb);
-            }
+
+
             $this->success('更新成功!','index');
         }
 
@@ -237,101 +245,55 @@ class Article extends Base
     //多图上传处理
     public function upload()
     {
-        $typeArr = array('jpg','jpeg','bmp','png');//允许上传文件格式
-        $file = request()->file('file');
-
+        $typeArr = array("jpg", "png", "bmp",'jpeg');//允许上传文件格式
         $file_save_method = config('file_save_method');
 
-        if($file_save_method === 0){
-            $info = $file->move(UPLOAD_PATH);
+        if($file_save_method === 0){//存储本地服务器
+            $file = request()->file('file');
+            $info = $file->validate(['size'=>config('uploadmaxsize'),'ext'=>'jpg,png,bmp,jpeg'])->move(UPLOAD_PATH);
+            if($info){
+                $imgName = $info->getSaveName();
+                $configPath = config('view_replace_str');
+                $pic_url = request()->domain().$configPath['__PUBLIC__'].'/uploads/'. $imgName;
+                $savepath = '/uploads/'. $imgName;
 
-            $imgName = $info->getSaveName();
-            $type = $info->getExtension(); //获取文件类型
-            $size = $info->getSize(); //获取文件类型
+    //                $result['status'] = true;
+    //                $result['attrs']['data-server-file'] = true;
+    //                $result['attrs']['data-delete-url'] = $_SERVER['DOCUMENT_ROOT'].'/'.$imgName;
+    //                $result['attrs']['data-delete-url'] = $pic_url;
+    //                $result['attrs']['savepath'] = $savepath;
+    //                $result['attrs']['name'] = $imgName;
+    //                $result['attrs']['picpath'] = $pic_url;
+    //                $result['type'] = $uploadType;
 
-            $configPath = config('view_replace_str');
-            $pic_url = request()->domain().$configPath['__PUBLIC__'].'/uploads/'. $imgName;
-            $savepath = '/uploads/'. $imgName;
-
-        }else{
+                return json(array("error"=>"0","picpath"=>$pic_url,"name"=>$imgName,"savepath"=>$savepath));
+            }else{
+                return json(array("error"=>$file->getError()));
+            }
+        }else{//上传到云端服务器 oss  七牛
             $file = $_FILES['file'];
-            $info = oss_upload_file($file['name'],$file['tmp_name']);
-
-            $imgName = $info['md5'];
-            $type = $info->getExtension(); //获取文件类型
-            $size = $info->getSize(); //获取文件类型
-
-            $savepath = $info['savePath'];
-            $pic_url = oss_display_image($savepath,1);
-
-
-        }
-
-
-
-        if($info){
-
-
-            //20160820/42a79759f284b767dfcb2a0197904287.jpg
-
+            $type = explode('/' , $file['type']);
+            $type = $type[1];
             if (!in_array($type, $typeArr)) {
-                echo json_encode(array("error"=>"请上传jpg,png,bmp或jpeg类型的图片！"));
+                return json(array("error"=>"请上传jpg,png,bmp或jpeg类型的图片！"));
                 exit;
             }
-            if ($size > (config('uploadmaxsize'))) {
-                echo json_encode(array("error"=>"图片大小已超过2M！"));
+            if ($file['size'] > (config('uploadmaxsize'))) {
+                return json(array("error"=>"图片大小已超过2M！"));
                 exit;
             }
 
-
-
-            echo json_encode(array("error"=>"0","picpath"=>$pic_url,"name"=>$imgName,"savepath"=>$savepath));
-        }else{
-            echo json_encode(array("error"=>"上传有误，清检查服务器配置！"));
+            $info = oss_upload_file($file['name'],$file['tmp_name']);
+            if($info){
+                $imgName = $info['savePath'];
+                $totalTime = $info['totalTime'];
+                $savepath = $info['savePath'];
+                $pic_url = oss_display_image($savepath,1);
+                return json(array("error"=>"0","picpath"=>$pic_url,"name"=>$imgName,"savepath"=>$savepath,"totalTime"=>$totalTime));
+            }else{
+                return json(array("error"=>"上传有误，清检查服务器配置！"));
+            }
         }
-
-
-//        if (isset($_POST)) {
-//            $name = $_FILES['file']['name'];
-//            $size = $_FILES['file']['size'];
-//            $name_tmp = $_FILES['file']['tmp_name'];
-//            if (empty($name)) {
-//                echo json_encode(array("error"=>"您还未选择图片"));
-//                exit;
-//            }
-//            $type = strtolower(substr(strrchr($name, '.'), 1)); //获取文件类型
-//
-////            if (!in_array($type, $typeArr)) {
-////                echo json_encode(array("error"=>"清上传jpg,png或gif类型的图片！"));
-////                exit;
-////            }
-////            if ($size > (22500 * 1024)) {
-////                echo json_encode(array("error"=>"图片大小已超过500KB！"));
-////                exit;
-////            }
-//
-//            $pic_name = time() . rand(10000, 99999) . "." . $type;//图片名称
-//            $configPath = config('view_replace_str');
-//            $pic_url = request()->domain().$configPath['__PUBLIC__'].'/uploads/'. $pic_name;//上传后图片路径+名称
-//            $savepath = '/uploads/'. $pic_name;
-//           // dump($pic_url);
-//           // dump($savepath);die;
-//            $uploadPath = UPLOAD_PATH.'/'.$pic_name;;//上传路径
-//
-////            dump($uploadPath);die;
-//
-//            if (move_uploaded_file($name_tmp, $uploadPath)) { //临时文件转移到目标文件夹
-//
-//
-//                echo json_encode(array("error"=>"0","pic"=>$pic_url,"name"=>$pic_name,"savepath"=>$savepath));
-//
-//
-//            } else {
-//                echo json_encode(array("error"=>"上传有误，清检查服务器配置！"));
-//            }
-//        }
-
-
     }
 
     //删除文件
@@ -339,13 +301,24 @@ class Article extends Base
     {
         if(request()->isAjax()){
             $fileName = input('get.fileName');
-            $file=$_SERVER['DOCUMENT_ROOT'].'/uploads/'.$fileName;
             $result = array();
-            if(file_exists($file)){
-                @unlink($file);
-                $result['msg'] = 'ok';
+            if( $file_save_method === 0){
+                $file=$_SERVER['DOCUMENT_ROOT'].'/uploads/'.$fileName;
+                $result = array();
+                if(file_exists($file)){
+                    @unlink($file);
+                    $result['msg'] = 'ok';
+                }else{
+                    $result['msg'] = 'fail';
+                }
             }else{
-                $result['msg'] = 'fail';
+                $res = oss_remove_file($fileName);
+
+                if($res){
+                    $result['msg'] = 'ok';
+                }else{
+                    $result['msg'] = 'fail';
+                }
             }
             return json($result);
         }

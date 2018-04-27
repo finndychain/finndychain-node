@@ -6,34 +6,34 @@
 <!--<link rel="stylesheet" href="__ASSETS__/libs/webupload/syntax.css" />-->
 <script src="__ASSETS__/libs/webupload/webuploader.js"></script>
 <style>
-    a.input {
-        width:70px;
-        height:40px;
-        line-height:40px;
-        background:#4ba8e5;
-        text-align:center;
-        display:inline-block;/*具有行内元素的视觉，块级元素的属性 宽高*/
-        overflow:hidden;/*去掉的话，输入框也可以点击*/
-        position:relative;/*相对定位，为 #file 的绝对定位准备*/
+    /*a.input {*/
+        /*width:70px;*/
+        /*height:40px;*/
+        /*line-height:40px;*/
+        /*background:#4ba8e5;*/
+        /*text-align:center;*/
+        /*display:inline-block;!*具有行内元素的视觉，块级元素的属性 宽高*!*/
+        /*overflow:hidden;!*去掉的话，输入框也可以点击*!*/
+        /*position:relative;!*相对定位，为 #file 的绝对定位准备*!*/
 
-        margin-left:20px
-    }
-    a.input:hover {
-        background:#4ba8e5;
-        color: #ffffff;
-    }
-    a{
-        text-decoration:none;
-        color:#FFF;
-    }
-    #file {
-        opacity:0;/*设置此控件透明度为零，即完全透明*/
-        filter:alpha(opacity=0);/*设置此控件透明度为零，即完全透明针对IE*/
+        /*margin-left:20px*/
+    /*}*/
+    /*a.input:hover {*/
+        /*background:#4ba8e5;*/
+        /*color: #ffffff;*/
+    /*}*/
+    /*a{*/
+        /*text-decoration:none;*/
+        /*color:#FFF;*/
+    /*}*/
+    /*#file {*/
+        /*opacity:0;!*设置此控件透明度为零，即完全透明*!*/
+        /*filter:alpha(opacity=0);!*设置此控件透明度为零，即完全透明针对IE*!*/
 
-        position:absolute;/*绝对定位，相对于 .input */
-        top:0;
-        right:0;
-    }
+        /*position:absolute;!*绝对定位，相对于 .input *!*/
+        /*top:0;*/
+        /*right:0;*/
+    /*}*/
 
 
 
@@ -187,17 +187,10 @@
                                             <div class="form-group clearfix">
                                                 <label class="col-sm-1 label_control no-padding-right" > 缩略图 </label>
                                                 <div class="col-sm-10" >
-                                                    <!--<input type="text" id="file_name" readonly="readonly" placeholder="允许的图片类型为jpg,gif,png 大小不超过2M" value=""class="col-xs-10 col-sm-5" />                                   <a href="javascript:;" class="input">-->
-                                                    <!--浏览-->
-                                                    <!--<input type="file" id="file" name="thumb">-->
-
-                                                    <!--</a>-->
-
-                                                    <!--dom结构部分-->
                                                     <div id="uploader-demo">
                                                         <!--用来存放item-->
                                                         <div id="fileList" class="uploader-list" style="float:right"></div>
-                                                        <div id="imgPicker" style="float:left">添加图片</div>
+                                                        <div id="imgPicker" style="float:left">上传</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -232,39 +225,8 @@
     </div><!-- /.main-content -->
 </div><!-- /.main-container -->
 
-<script>
-    $(function(){
-        $('#file').change(function(){
-            var fileSize = this.files[0].size;
-            var maxFileSize = <?php  echo config('uploadmaxsize')?>;
-            var size = fileSize / maxFileSize;
-            var fileType = this.files[0].type;
-            imgType = fileType.substring(fileType.lastIndexOf("/")+1,fileType.length);
-            //console.log(imgType);
 
-//            if (imgType != "png" || imgType != "jpeg"  || imgType != "jpg"){
-//                Msg('请上传jpg,jpeg,png格式的图片！');
-//                this.value="";
-//                return false;
-//            }
 
-            if(size>2){
-                Msg('图片不能大于2M,请将文件压缩后重新上传！');
-                this.value="";
-                return false;
-            }
-
-            $("#file_name").val($("#file").val());
-
-        })
-    })
-</script>
-<script>
-    //    var uploadPath = '<?php echo UPLOAD_PATH.'/ueditor' ;?>';
-    //    console.log(uploadPath);
-    //    imagePathFormat= uploadPath;
-
-</script>
 <script type="text/javascript" src="__STATIC__/assets/libs/ueditor/ueditor.config.js"></script>
 <!-- 编辑器源码文件 -->
 <script type="text/javascript" src="__STATIC__/assets/libs/ueditor/ueditor.all.js"></script>
@@ -283,17 +245,15 @@
     function removeImg(file, obj=''){
         var url = "{:url('article/removeFile')}";
         $.get(url ,{fileName:file},function(data){
+
+            console.log(data);
             if(data.msg === 'ok'){
                 $('#'+obj).remove();
-                //                var html = '<input type="hidden" id="data_photo" name="remove[]" value="'+file+'">';
-                // $('#fileList').append(html);
             }else{
                 Msg('删除失败');
             }
         })
     }
-
-
     //webupload
     $(function(){
         var $list = $('#fileList');
@@ -310,46 +270,25 @@
 
             },
             //fileNumLimit: 1,
+            fileSizeLimit:'<?php echo config('uploadmaxsize');?>',
             accept: {
                 title: 'Images',
                 extensions: 'gif,jpg,jpeg,bmp,png',
                 mimeTypes: 'image/jpg,image/jpeg,image/png'
-            },
-            thumb:{
-                width: 110,
-                height: 110,
-
-                // 图片质量，只有type为`image/jpeg`的时候才有效。
-                quality: 70,
-
-                // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
-                allowMagnify: true,
-
-                // 是否允许裁剪。
-                crop: true,
-
-                // 为空的话则保留原有图片格式。
-                // 否则强制转换成指定的类型。
-                type: 'image/jpeg'
             },
 
             'onUploadSuccess': function(file, data, response) {
                 var up_src = data.picpath.replace("\\", "\/");
                 var save_src = data.savepath.replace("\\", "\/");
                 var imgName = data.name.replace("\\", "\/");
-//                uploader.removeFile(file);
-//                uploader.reset();
 
                 //编辑图片 将旧图隐藏掉
+
                 $('#thumb').attr('class','hide');
 
-
-
-
                 //上传成功后显示图片
-
                 var $li = $(
-                        '<div id="' + file.id + '" data-imgname="'+imgName+'"  class="file-item thumbnail draggable-element d-'+file.id.substr(file.id.length-1,1)+' " style="position:relative;">' +
+                        '<div id="' + file.id + '" data-imgname="'+imgName+'" class="file-item thumbnail draggable-element d-"'+file.id.substr(file.id.length-1,1)+' style="position:relative;">' +
                         '<img>' +
                         '<a class="file-panel" href="javascript:;" onclick="removeImg(\''+imgName+'\', \''+file.id+'\')">'+
                         '<span class="fa fa-close">删除</span>' +
@@ -364,15 +303,11 @@
 
                 //替换图片 删除旧图
                 var old_img_name =   $( '#'+file.id ).siblings().attr("data-imgname");
-
                 if(old_img_name){
                     removeImg(old_img_name);
                     //删除旧图
                     $( '#'+file.id ).siblings().remove();
                 }
-
-
-
                 // 创建缩略图 如果为非图片文件，可以不用调用此方法 100（宽） x 100（高）
                 uploader.makeThumb( file, function( error, src ) {
                     if ( error ) {
@@ -383,24 +318,19 @@
                 }, 100, 100 );
             }
         });
-
-
-
-        // 文件上传失败，显示上传出错。
-        uploader.on( 'uploadError', function( file ) {
-            console.log('uploadError')
+        //上传失败显示错误
+        uploader.on('uploadAccept', function (file, response) {
+            if(response.error != 0){
+                Msg(response.error);
+                return false;
+            }
         });
-//        uploader.on('error', function(handler) {
-//            if (handler == "Q_EXCEED_NUM_LIMIT") {
-//                alert("只能上传一张图片");
-//            }
-//        })
-
-
-
+        uploader.on('error', function(handler) {
+            if (handler == "Q_EXCEED_SIZE_LIMIT") {
+                Msg('图片大小超过2M');
+            }
+        })
     })
-
-
 
 
 </script>

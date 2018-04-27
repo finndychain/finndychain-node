@@ -51,7 +51,7 @@ class Authrule extends Base
             $this->success('新增权限成功!','index');
         }
 
-        $authruleres = $this->modelAuthRule->getRuleList();
+        $authruleres = $this->modelAuthRule->getRuleFormatList();
         $title= '添加标签';
         $this->assign('authruleres' ,$authruleres);
         $this->assign('title' ,$title);

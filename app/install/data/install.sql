@@ -208,9 +208,8 @@ CREATE TABLE `cloud_auth_group_access` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `cloud_auth_group_access` VALUES ('1', '1', '1521088299', '2018-03-27 19:20:57');
-INSERT INTO `cloud_auth_group` VALUES ('7', '普通用户', '1', '115,116,159,140,141,142,157,153,154,155,158,139,138,127,125,126,137,135,136,100,101,151', '', '1520931383', '2018-03-27 18:28:46');
-INSERT INTO `cloud_auth_group` VALUES ('1', '超级管理员', '1', '115,116,159,140,141,142,157,153,154,155,158,139,138,127,125,126,137,135,136,100,143,145,101,151,102,119,104,156,105,148,149,132,106,146,133', '拥有网站最高管理员权限！', '1520931383', '2018-03-27 18:28:46');
+
+INSERT INTO `cloud_auth_group` VALUES ('1', '普通用户', '1', '115,116,135,136,139,140,141,142,157,137,126,125,138,127,153,154,155,158,159,100,101,151,190,193,195,196,194,191,207,208,201,202,203,204,205,206,192,197,198,199', '普通用户', '1520931383', '2018-03-27 18:28:46');
 
 
 DROP TABLE IF EXISTS `cloud_auth_rule`;
@@ -232,42 +231,59 @@ CREATE TABLE `cloud_auth_rule` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-INSERT INTO `cloud_auth_rule` VALUES ('100', 'user/shownav', '用户管理', '1', '1', '', '0', 'user', '1', '3', '0', '1520851347', '2018-03-15 11:32:51');
-INSERT INTO `cloud_auth_rule` VALUES ('101', 'user/profile', '我的面板', '1', '1', '', '100', '', '1', '0', '1', '1520851354', '2018-03-15 12:18:37');
-INSERT INTO `cloud_auth_rule` VALUES ('102', 'user/index', '会员列表', '1', '1', '', '100', '', '1', '0', '1', '1520851743', '2018-03-15 12:18:38');
-INSERT INTO `cloud_auth_rule` VALUES ('104', 'sysconf/index', '系统设置', '1', '1', '', '0', 'th', '1', '4', '0', '0', '2018-03-15 11:32:51');
-INSERT INTO `cloud_auth_rule` VALUES ('105', 'authrule/index', '权限设置', '1', '1', '', '104', '', '1', '0', '1', '0', '2018-03-15 12:18:42');
-INSERT INTO `cloud_auth_rule` VALUES ('106', 'authgroup/index', '用户组设置', '1', '1', '', '104', '', '1', '0', '1', '0', '2018-03-15 12:18:39');
-INSERT INTO `cloud_auth_rule` VALUES ('138', 'robot/export', '导出规则', '1', '1', '', '116', '', '0', '0', '1', '1521539020', '2018-03-20 17:43:40');
-INSERT INTO `cloud_auth_rule` VALUES ('116', 'robot/shownav', '数据管理', '1', '1', '', '0', 'cog', '1', '1', '0', '1521078157', '2018-03-19 17:17:31');
-INSERT INTO `cloud_auth_rule` VALUES ('115', 'index/index', '首页', '1', '1', '', '0', 'tachometer', '1', '0', '0', '1521078076', '2018-03-15 14:56:54');
-INSERT INTO `cloud_auth_rule` VALUES ('119', 'user/add', '增加会员', '1', '1', '', '100', '', '0', '0', '1', '1521081526', '2018-03-19 17:22:40');
-INSERT INTO `cloud_auth_rule` VALUES ('127', 'robot/index', '数据源列表', '1', '1', '', '116', '', '1', '0', '1', '1521093668', '2018-03-15 14:01:08');
-INSERT INTO `cloud_auth_rule` VALUES ('125', 'robot/add', '新增数据源', '1', '1', '', '116', '', '1', '0', '1', '1521088281', '2018-03-20 14:46:28');
-INSERT INTO `cloud_auth_rule` VALUES ('126', 'robot/edit', '编辑数据源', '1', '1', '', '116', '', '0', '0', '1', '1521088299', '2018-03-15 12:31:39');
-INSERT INTO `cloud_auth_rule` VALUES ('137', 'robot/copy', '复制数据源', '1', '1', '', '116', '', '0', '0', '1', '1521538994', '2018-03-20 17:43:14');
-INSERT INTO `cloud_auth_rule` VALUES ('135', 'robot/startrun', '开始采集', '1', '1', '', '116', '', '0', '0', '1', '1521530818', '2018-03-27 17:25:36');
-INSERT INTO `cloud_auth_rule` VALUES ('136', 'robot/debugrobot', '测试采集', '1', '1', '', '116', '', '0', '0', '1', '1521538956', '2018-03-27 09:47:45');
-INSERT INTO `cloud_auth_rule` VALUES ('132', 'authrule/add', '增加权限', '1', '1', '', '105', '', '0', '0', '2', '1521447405', '2018-03-19 16:16:45');
-INSERT INTO `cloud_auth_rule` VALUES ('133', 'authgroup/add', '增加用户组', '1', '1', '', '106', '', '0', '0', '2', '1521447446', '2018-03-20 18:15:13');
-INSERT INTO `cloud_auth_rule` VALUES ('139', 'robot/detail', '查看数据源', '1', '1', '', '116', '', '0', '0', '1', '1521539096', '2018-03-20 17:45:10');
-INSERT INTO `cloud_auth_rule` VALUES ('140', 'robot/cleardata', '删除数据', '1', '1', '', '116', '', '0', '0', '1', '1521539185', '2018-03-20 17:46:25');
-INSERT INTO `cloud_auth_rule` VALUES ('141', 'robot/export_csv', '导出数据csv格式', '1', '1', '', '116', '', '0', '0', '1', '1521539217', '2018-03-20 17:46:57');
-INSERT INTO `cloud_auth_rule` VALUES ('142', 'robot/export_json', '导出数据JSON格式', '1', '1', '', '116', '', '0', '0', '1', '1521539245', '2018-03-20 17:47:25');
-INSERT INTO `cloud_auth_rule` VALUES ('143', 'user/del', '删除用户', '1', '1', '', '100', '', '0', '0', '1', '1521540413', '2018-03-20 18:06:53');
-INSERT INTO `cloud_auth_rule` VALUES ('157', 'robot/stoprun', '停止采集', '1', '1', '', '116', '', '0', '0', '1', '1522142758', '2018-03-27 17:25:58');
-INSERT INTO `cloud_auth_rule` VALUES ('145', 'user/edit', '编辑用户', '1', '1', '', '100', '', '0', '0', '1', '1521540504', '2018-03-20 18:08:24');
-INSERT INTO `cloud_auth_rule` VALUES ('146', 'authgroup/edit', '修改用户组', '1', '1', '', '106', '', '0', '0', '2', '1521540753', '2018-03-20 18:12:33');
-INSERT INTO `cloud_auth_rule` VALUES ('148', 'authrule/edit', '编辑权限', '1', '1', '', '105', '', '0', '0', '2', '1521541002', '2018-03-20 18:16:42');
-INSERT INTO `cloud_auth_rule` VALUES ('149', 'authrule/del', '删除权限', '1', '1', '', '105', '', '0', '0', '2', '1521541013', '2018-03-26 17:44:33');
-INSERT INTO `cloud_auth_rule` VALUES ('151', 'user/resetpwd', '修改密码', '1', '1', '', '101', '', '0', '0', '2', '1522056235', '2018-03-26 17:34:59');
-INSERT INTO `cloud_auth_rule` VALUES ('153', 'robot/progress', '采集进度', '1', '1', '', '116', '', '0', '0', '1', '1522058193', '2018-03-26 17:56:33');
-INSERT INTO `cloud_auth_rule` VALUES ('154', 'robot/import', '导入规则', '1', '1', '', '116', '', '0', '0', '1', '1522058354', '2018-03-26 17:59:14');
-INSERT INTO `cloud_auth_rule` VALUES ('155', 'robot/importcopy', '导入规则importcopy', '1', '1', '', '116', '', '0', '0', '1', '1522058372', '2018-03-27 09:45:20');
-INSERT INTO `cloud_auth_rule` VALUES ('156', 'sysconf/sysset', '站点设置', '1', '1', '', '104', '', '1', '0', '1', '1522115434', '2018-03-27 09:50:34');
-INSERT INTO `cloud_auth_rule` VALUES ('158', 'robot/getjsonp', '获取本地数据', '1', '1', '', '116', '', '0', '0', '1', '1522142895', '2018-03-27 17:28:15');
+INSERT INTO `cloud_auth_rule` VALUES ('206', 'article/top', '置顶文章', '1', '1', '', '191', '', '0', '0', '2', '1524810011', '2018-04-27 15:05:54');
+INSERT INTO `cloud_auth_rule` VALUES ('205', 'article/removeFile', '删除文件', '1', '1', '', '191', '', '0', '0', '2', '1524810011', '2018-04-27 14:25:04');
+INSERT INTO `cloud_auth_rule` VALUES ('204', 'article/upload', '图片上传', '1', '1', '', '191', '', '0', '0', '2', '1524810011', '2018-04-27 14:23:13');
+INSERT INTO `cloud_auth_rule` VALUES ('203', 'article/del', '删除文章', '1', '1', '', '191', '', '0', '0', '2', '1524810011', '2018-04-27 14:21:17');
+INSERT INTO `cloud_auth_rule` VALUES ('202', 'article/edit', '编辑文章', '1', '1', '', '191', '', '0', '0', '2', '1524810011', '2018-04-27 14:20:11');
+INSERT INTO `cloud_auth_rule` VALUES ('201', 'article/add', '新增文章', '1', '1', '', '191', '', '0', '0', '2', '1524809989', '2018-04-27 14:19:49');
+INSERT INTO `cloud_auth_rule` VALUES ('199', 'category/del', '删除分类', '1', '1', '', '192', '', '0', '3', '2', '1524797335', '2018-04-27 16:53:55');
+INSERT INTO `cloud_auth_rule` VALUES ('198', 'category/edit', '编辑分类', '1', '1', '', '192', '', '0', '0', '2', '1524797318', '2018-04-27 10:48:38');
+INSERT INTO `cloud_auth_rule` VALUES ('197', 'category/add', '新增分类', '1', '1', '', '192', '', '0', '0', '2', '1524797294', '2018-04-27 10:48:14');
+INSERT INTO `cloud_auth_rule` VALUES ('196', 'tag/del', '删除标签', '1', '1', '', '193', '', '0', '0', '2', '1524797256', '2018-04-27 10:47:36');
+INSERT INTO `cloud_auth_rule` VALUES ('195', 'tag/edit', '编辑标签', '1', '1', '', '193', '', '0', '0', '2', '1524797223', '2018-04-27 10:47:03');
+INSERT INTO `cloud_auth_rule` VALUES ('194', 'tag/add', '新增标签', '1', '1', '', '193', '', '0', '0', '2', '1524797199', '2018-04-27 10:46:39');
+INSERT INTO `cloud_auth_rule` VALUES ('193', 'tag/index', '标签设置', '1', '1', '', '190', '', '1', '3', '1', '1524797112', '2018-04-27 17:00:39');
+INSERT INTO `cloud_auth_rule` VALUES ('192', 'category/index', '分类设置', '1', '1', '', '190', '', '1', '2', '1', '1524797079', '2018-04-27 16:53:55');
+INSERT INTO `cloud_auth_rule` VALUES ('191', 'article/index', '文章列表', '1', '1', '', '190', '', '1', '1', '1', '1524447561', '2018-04-27 16:53:55');
 INSERT INTO `cloud_auth_rule` VALUES ('159', 'robot/loadingpostcat', '发布数据', '1', '1', '', '116', '', '0', '0', '1', '1522143157', '2018-03-27 17:32:37');
-
+INSERT INTO `cloud_auth_rule` VALUES ('158', 'robot/getjsonp', '获取本地数据', '1', '1', '', '116', '', '0', '0', '1', '1522142895', '2018-03-27 17:28:15');
+INSERT INTO `cloud_auth_rule` VALUES ('190', 'article/shownav', '文章管理', '1', '1', '', '0', 'bookmark', '1', '8', '0', '1524447515', '2018-04-23 09:40:21');
+INSERT INTO `cloud_auth_rule` VALUES ('155', 'robot/importcopy', '导入规则importcopy', '1', '1', '', '116', '', '0', '0', '1', '1522058372', '2018-03-27 09:45:20');
+INSERT INTO `cloud_auth_rule` VALUES ('154', 'robot/import', '导入规则', '1', '1', '', '116', '', '0', '0', '1', '1522058354', '2018-03-26 17:59:14');
+INSERT INTO `cloud_auth_rule` VALUES ('153', 'robot/progress', '采集进度', '1', '1', '', '116', '', '0', '0', '1', '1522058193', '2018-03-26 17:56:33');
+INSERT INTO `cloud_auth_rule` VALUES ('151', 'user/resetpwd', '修改密码', '1', '1', '', '101', '', '0', '0', '2', '1522056235', '2018-03-26 17:34:59');
+INSERT INTO `cloud_auth_rule` VALUES ('149', 'authrule/del', '删除权限', '1', '1', '', '105', '', '0', '0', '2', '1521541013', '2018-03-26 17:44:33');
+INSERT INTO `cloud_auth_rule` VALUES ('156', 'sysconf/sysset', '站点设置', '1', '1', '', '104', '', '1', '0', '1', '1522115434', '2018-03-27 09:50:34');
+INSERT INTO `cloud_auth_rule` VALUES ('105', 'authrule/index', '权限设置', '1', '1', '', '104', '', '1', '0', '1', '0', '2018-03-15 12:18:42');
+INSERT INTO `cloud_auth_rule` VALUES ('145', 'user/edit', '编辑用户', '1', '1', '', '100', '', '0', '0', '1', '1521540504', '2018-03-20 18:08:24');
+INSERT INTO `cloud_auth_rule` VALUES ('157', 'robot/stoprun', '停止采集', '1', '1', '', '116', '', '0', '0', '1', '1522142758', '2018-03-27 17:25:58');
+INSERT INTO `cloud_auth_rule` VALUES ('143', 'user/del', '删除用户', '1', '1', '', '100', '', '0', '0', '1', '1521540413', '2018-03-20 18:06:53');
+INSERT INTO `cloud_auth_rule` VALUES ('142', 'robot/export_json', '导出数据JSON格式', '1', '1', '', '116', '', '0', '0', '1', '1521539245', '2018-03-20 17:47:25');
+INSERT INTO `cloud_auth_rule` VALUES ('141', 'robot/export_csv', '导出数据csv格式', '1', '1', '', '116', '', '0', '0', '1', '1521539217', '2018-03-20 17:46:57');
+INSERT INTO `cloud_auth_rule` VALUES ('140', 'robot/cleardata', '删除数据', '1', '1', '', '116', '', '0', '0', '1', '1521539185', '2018-03-20 17:46:25');
+INSERT INTO `cloud_auth_rule` VALUES ('139', 'robot/detail', '查看数据源', '1', '1', '', '116', '', '0', '0', '1', '1521539096', '2018-03-20 17:45:10');
+INSERT INTO `cloud_auth_rule` VALUES ('133', 'authgroup/add', '增加用户组', '1', '1', '', '106', '', '0', '0', '2', '1521447446', '2018-03-20 18:15:13');
+INSERT INTO `cloud_auth_rule` VALUES ('148', 'authrule/edit', '编辑权限', '1', '1', '', '105', '', '0', '0', '2', '1521541002', '2018-03-20 18:16:42');
+INSERT INTO `cloud_auth_rule` VALUES ('136', 'robot/debugrobot', '测试采集', '1', '1', '', '116', '', '0', '0', '1', '1521538956', '2018-03-27 09:47:45');
+INSERT INTO `cloud_auth_rule` VALUES ('135', 'robot/startrun', '开始采集', '1', '1', '', '116', '', '0', '0', '1', '1521530818', '2018-03-27 17:25:36');
+INSERT INTO `cloud_auth_rule` VALUES ('137', 'robot/copy', '复制数据源', '1', '1', '', '116', '', '0', '0', '1', '1521538994', '2018-03-20 17:43:14');
+INSERT INTO `cloud_auth_rule` VALUES ('126', 'robot/edit', '编辑数据源', '1', '1', '', '116', '', '0', '0', '1', '1521088299', '2018-03-15 12:31:39');
+INSERT INTO `cloud_auth_rule` VALUES ('125', 'robot/add', '新增数据源', '1', '1', '', '116', '', '1', '0', '1', '1521088281', '2018-03-20 14:46:28');
+INSERT INTO `cloud_auth_rule` VALUES ('127', 'robot/index', '数据源列表', '1', '1', '', '116', '', '1', '0', '1', '1521093668', '2018-03-15 14:01:08');
+INSERT INTO `cloud_auth_rule` VALUES ('119', 'user/add', '增加会员', '1', '1', '', '100', '', '0', '0', '1', '1521081526', '2018-03-19 17:22:40');
+INSERT INTO `cloud_auth_rule` VALUES ('115', 'index/index', '首页', '1', '1', '', '0', 'tachometer', '1', '0', '0', '1521078076', '2018-03-15 14:56:54');
+INSERT INTO `cloud_auth_rule` VALUES ('116', 'robot/shownav', '数据管理', '1', '1', '', '0', 'cog', '1', '1', '0', '1521078157', '2018-03-19 17:17:31');
+INSERT INTO `cloud_auth_rule` VALUES ('138', 'robot/export', '导出规则', '1', '1', '', '116', '', '0', '0', '1', '1521539020', '2018-03-20 17:43:40');
+INSERT INTO `cloud_auth_rule` VALUES ('106', 'authgroup/index', '用户组设置', '1', '1', '', '104', '', '1', '0', '1', '0', '2018-03-15 12:18:39');
+INSERT INTO `cloud_auth_rule` VALUES ('146', 'authgroup/edit', '修改用户组', '1', '1', '', '106', '', '0', '0', '2', '1521540753', '2018-03-20 18:12:33');
+INSERT INTO `cloud_auth_rule` VALUES ('104', 'sysconf/shownav', '系统设置', '1', '1', '', '0', 'th', '1', '4', '0', '0', '2018-04-27 11:52:09');
+INSERT INTO `cloud_auth_rule` VALUES ('200', 'user/index', '会员列表', '1', '1', '', '100', '', '1', '0', '1', '1524798889', '2018-04-27 11:29:30');
+INSERT INTO `cloud_auth_rule` VALUES ('101', 'user/profile', '我的面板', '1', '1', '', '100', '', '1', '0', '1', '1520851354', '2018-03-15 12:18:37');
+INSERT INTO `cloud_auth_rule` VALUES ('132', 'authrule/add', '增加权限', '1', '1', '', '105', '', '0', '0', '2', '1521447405', '2018-03-19 16:16:45');
+INSERT INTO `cloud_auth_rule` VALUES ('100', 'user/shownav', '用户管理', '1', '1', '', '0', 'user', '1', '3', '0', '1520851347', '2018-04-18 17:35:42');
+INSERT INTO `cloud_auth_rule` VALUES ('207', 'article/post', '发布文章', '1', '1', '', '191', '', '0', '0', '2', '1524810011', '2018-04-27 15:05:56');
+INSERT INTO `cloud_auth_rule` VALUES ('208', 'article/recommend', '推荐文章', '1', '1', '', '191', '', '0', '0', '2', '1524810011', '2018-04-27 15:05:57');
 
 CREATE TABLE `cloud_article` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -277,7 +293,7 @@ CREATE TABLE `cloud_article` (
   `content` text COMMENT '文章内容',
   `summary` varchar(500) NOT NULL DEFAULT '' COMMENT '摘要',
   `thumb` varchar(255) NOT NULL COMMENT '缩略图',
-  `keywords` varchar(150) NOT NULL DEFAULT '' COMMENT 'keywords',
+  `keywords` varchar(150) NOT NULL DEFAULT '' COMMENT 'seo keywords',
   `poststatus` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '状态;1:已发布;0:未发布;',
   `commentstatus` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '评论状态;1:允许;0:不允许',
   `is_top` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否置顶;1:置顶;0:不置顶',
@@ -304,7 +320,7 @@ CREATE TABLE `cloud_article_category` (
   `create_time` int(10) NOT NULL,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT=' 文章分类表';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT=' 文章分类表';
 
 
 CREATE TABLE `cloud_article_tag` (
@@ -317,6 +333,8 @@ CREATE TABLE `cloud_article_tag` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='文章标签表';
 
+
+
 CREATE TABLE `cloud_article_tag_access` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `articleid` int(10) NOT NULL COMMENT '文章id',
@@ -325,5 +343,6 @@ CREATE TABLE `cloud_article_tag_access` (
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='文章标签关联表';
+
 
 

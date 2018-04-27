@@ -40,8 +40,8 @@
     }
 
     .thumb_img{
-        width:100% !important;
-        height:100% !important;
+        width:100px !important;
+        height:100px !important;
         display: block;
         max-width: 100%;
         height: auto;
@@ -130,7 +130,7 @@
                                                     <textarea name="summary" id="" cols="30" rows="3" class="col-xs-10 col-sm-6" >{$articles['summary']}</textarea>
                                                 </div>
                                             </div>
-                                            <div  class="form-group clearfix">
+                                            <div class="form-group clearfix">
                                                 <label class="col-sm-1 label_control no-padding-right" > 内容 </label>
                                                 <div class="col-sm-10">
                                                     <script id="container" name="content" type="text/plain">
@@ -138,35 +138,32 @@
                                                     </script>
                                                 </div>
                                             </div>
-
+                                            {if condition=" $articles['thumb'] neq '' "}
                                             <div id="thumb" class="form-group clearfix">
                                                 <label class="col-sm-1 label_control no-padding-right" >  </label>
-                                                <label class="col-sm-3 label_control no-padding-right"  > <div class="file-item thumbnail draggable-element d-" style="width:110px;height:110px;">
-                                                    <img class="thumb_img"  src="__CDN__{$articles['thumb']}" >
-                                                    <input type="hidden" name="thumb_old" value="{$articles['thumb']}">
+                                                <label class="col-sm-3 label_control no-padding-right"  >
+                                                    <div class="file-item thumbnail draggable-element d-" style="width:110px;height:110px;">
+                                                        {if condition="$Think.config.file_save_method eq 1 "}
+                                                        <img class="thumb_img"  src="{$articles['thumb']|oss_display_image=1}" >
+                                                        {else /}
+                                                        <img class="thumb_img"  src="__CDN__{$articles['thumb']}" >
+                                                        {/if}
+                                                        <input type="hidden" name="thumb_old" value="{$articles['thumb']}">
+                                                    </div>
                                                 </label>
-                                                </div>
                                             </div>
+                                            {else /}
+                                            {/if}
 
                                             <div class="form-group clearfix">
                                                 <label class="col-sm-1 label_control no-padding-right" > 缩略图 </label>
 
                                                 <div class="col-sm-10" >
-                                                    <!--<input type="text" id="file_name" readonly="readonly" value="__CDN__{$articles['thumb_sm']}" class="col-xs-10 col-sm-5" />                                   <a href="javascript:;" class="input">-->
-                                                    <!--浏览-->
-                                                    <!--<input type="file" id="file" name="thumb">-->
-                                                    <!--{if condition="$articles['thumb'] neq ''"}-->
-
-                                                    <!--{else /}-->
-                                                    <!--暂无缩略图-->
-                                                    <!--{/if}-->
-                                                    <!--</a>-->
-
                                                     <!--dom结构部分-->
                                                     <div id="uploader-demo">
                                                         <!--用来存放item-->
                                                         <div id="fileList" class="uploader-list" style="float:right"></div>
-                                                        <div id="imgPicker" style="float:left">替换</div>
+                                                        <div id="imgPicker" style="float:left">上传</div>
                                                     </div>
 
                                                 </div>
@@ -189,7 +186,6 @@
                                                 </div>
                                             </div>
                                             <br>
-                                        <!--<div onclick="removeImg('e','e')">ddd</div>-->
                                             <input type="hidden"  name="id" value="{$articles.id}">
                                             <div class="col-xs-6 align-center">
                                                 <input type="submit"  value="提交保存" class="btn btn-info input-small btn-round">
@@ -211,27 +207,6 @@
     </div><!-- /.main-content -->
 </div><!-- /.main-container -->
 
-<script>
-    //    $(function(){
-    //        $('#file').change(function(){
-    //            var fileSize = this.files[0].size;
-    //            var maxFileSize = <?php  echo config('uploadmaxsize')?>;
-    //            var size = fileSize / maxFileSize;
-    //            var fileType = this.files[0].type;
-    //            imgType = fileType.substring(fileType.lastIndexOf("/")+1,fileType.length);
-    //            //console.log(imgType);
-    //            if(size>2){
-    //                Msg('图片不能大于2M,请将文件压缩后重新上传！');
-    //                this.value="";
-    //                return false;
-    //            }
-    //
-    //
-    //            $("#file_name").val($("#file").val());
-    //
-    //        })
-    //    })
-</script>
 <script type="text/javascript" src="__STATIC__/assets/libs/ueditor/ueditor.config.js"></script>
 <!-- 编辑器源码文件 -->
 <script type="text/javascript" src="__STATIC__/assets/libs/ueditor/ueditor.all.js"></script>
@@ -251,6 +226,8 @@
     function removeImg(file, obj=''){
         var url = "{:url('article/removeFile')}";
         $.get(url ,{fileName:file},function(data){
+
+            console.log(data);
             if(data.msg === 'ok'){
                 $('#'+obj).remove();
             }else{
@@ -258,7 +235,6 @@
             }
         })
     }
-
 
     //webupload
     $(function(){
@@ -268,38 +244,19 @@
             auto: true,// 选完文件后，是否自动上传。
             swf: '__ADMIN__/js/Uploader.swf',//这里引入swf,根据你实际放置的位置
             server: "{:url('article/upload')}",
-            duplicate :true,// 重复上传图片，true为可重复false为不可重复
-            //pick: '#imgPicker',// 选择文件的按钮
-            pick: {
-                id: '#imgPicker',
-                multiple:true,//单图/多图
+                duplicate :true,// 重复上传图片，true为可重复false为不可重复
+                //pick: '#imgPicker',// 选择文件的按钮
+                pick: {
+                    id: '#imgPicker',
+                    multiple:false,//单图/多图
 
-            },
-            //fileNumLimit: 1,
-            //fileSizeLimit:'<?php echo config('uploadmaxsize');?>',
+                },
+                //fileNumLimit: 1,
+                fileSizeLimit:'<?php echo config('uploadmaxsize');?>',
             accept: {
                 title: 'Images',
-                extensions: 'jpg,jpeg,bmp,png',
+                extensions: 'gif,jpg,jpeg,bmp,png',
                 mimeTypes: 'image/jpg,image/jpeg,image/png'
-            },
-            compress: false, //不压缩图片
-            resize: false, // 且该值不能为true
-            thumb:{
-                width: 110,
-                height: 110,
-
-                // 图片质量，只有type为`image/jpeg`的时候才有效。
-                quality: 70,
-
-                // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
-                allowMagnify: true,
-
-                // 是否允许裁剪。
-                crop: true,
-
-                // 为空的话则保留原有图片格式。
-                // 否则强制转换成指定的类型。
-                type: 'image/jpeg'
             },
 
             'onUploadSuccess': function(file, data, response) {
@@ -307,17 +264,18 @@
                 var save_src = data.savepath.replace("\\", "\/");
                 var imgName = data.name.replace("\\", "\/");
 
-                //编辑图片 将旧图隐藏掉
-                $('#thumb').attr('class','hide');
+                    //编辑图片 将旧图隐藏掉
+
+                    $('#thumb').attr('class','hide');
 
                 //上传成功后显示图片
                 var $li = $(
-                        '<div id="' + file.id + '" data-imgname="'+imgName+'"  class="file-item thumbnail draggable-element d-'+file.id.substr(file.id.length-1,1)+' " style="position:relative;">' +
+                        '<div id="' + file.id + '" data-imgname="'+imgName+'" class="file-item thumbnail draggable-element d-"'+file.id.substr(file.id.length-1,1)+' style="position:relative;">' +
                         '<img>' +
                         '<a class="file-panel" href="javascript:;" onclick="removeImg(\''+imgName+'\', \''+file.id+'\')">'+
                         '<span class="fa fa-close">删除</span>' +
                         '</a>' +
-                        '<input type="hidden" id="data_photo" name="thumb" value="'+save_src+'">' +
+                        '<input type="hidden"  name="thumb" value="'+save_src+'">' +
                         '</div>'
                     ),
                     $img = $li.find('img');
@@ -326,12 +284,12 @@
                 $list.append( $li );
 
 //                //替换图片 删除旧图
-//                var old_img_name =   $( '#'+file.id ).siblings().attr("data-imgname");
-//                if(old_img_name){
-//                    removeImg(old_img_name);
-//                    //删除旧图
-//                    $( '#'+file.id ).siblings().remove();
-//                }
+                var old_img_name =   $( '#'+file.id ).siblings().attr("data-imgname");
+                if(old_img_name){
+                    removeImg(old_img_name);
+                    //删除旧图
+                    $( '#'+file.id ).siblings().remove();
+                }
                 // 创建缩略图 如果为非图片文件，可以不用调用此方法 100（宽） x 100（高）
                 uploader.makeThumb( file, function( error, src ) {
                     if ( error ) {
@@ -342,24 +300,19 @@
                 }, 100, 100 );
             }
         });
-
-
-
-        // 文件上传失败，显示上传出错。
-        uploader.on( 'uploadError', function( file ) {
-            console.log('uploadError')
-        });
-        uploader.on('error', function(handler) {
-            if (handler == "Q_EXCEED_SIZE_LIMIT") {
-                Msg('图片大小超过2M');
-            }
+            //上传失败显示错误
+            uploader.on('uploadAccept', function (file, response) {
+                if(response.error != 0){
+                    Msg(response.error);
+                    return false;
+                }
+            });
+            uploader.on('error', function(handler) {
+                if (handler == "Q_EXCEED_SIZE_LIMIT") {
+                    Msg('图片大小超过2M');
+                }
+            })
         })
-
-
-
-    })
-
-
 
 
 </script>

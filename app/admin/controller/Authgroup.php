@@ -26,6 +26,7 @@ class Authgroup extends Base
         if(request()->isPost()) {
             $data = input('post.');
             $authRuleArr = $authrule->getRuleList();
+
             $title = trim($data['title']);
             if(empty($title)){
                 $this->error('请输入用户组名称');
@@ -87,7 +88,7 @@ class Authgroup extends Base
                 //根据子级id获取父级id
                 $ruleArr = explode(',' , $rule_ids);
                 foreach ( $ruleArr as $k=>$v) {
-                    $fatherNodeNrr[] = getParentId($authrulearr , $v, True);
+                    $fatherNodeNrr[] = getParentId($authRuleArr , $v, True);
                 }
                 $fatherNodeStr=implode(',', $fatherNodeNrr);
                 //去除重复的规则id
