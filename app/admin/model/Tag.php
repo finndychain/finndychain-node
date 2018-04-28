@@ -7,6 +7,10 @@ use think\Model;
 class Tag extends  Model
 {
     protected $name = 'article_tag';
+
+    // 关闭自动写入update_time字段
+    protected $updateTime = false; //兼容mysql5.7
+
     /**获取权限规则
      * @param array $where 条件
      * @return array|bool|false|\PDOStatement|string|Model

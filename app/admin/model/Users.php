@@ -6,9 +6,8 @@ use think\Db;
 class Users extends  Model
 {
 
-
     // 关闭自动写入update_time字段
-    protected $updateTime = false;
+    protected $updateTime = false;  //兼容mysql5.7
 
     /**获取用户信息
      * @param array $where 条件

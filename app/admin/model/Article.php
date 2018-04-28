@@ -6,6 +6,10 @@ use think\db;
 
 class Article extends  Model
 {
+
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+
     protected static function init()
     {
         //新增前 处理缩略图  如果上传失败 则不会继续执行insert

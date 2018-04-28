@@ -7,6 +7,10 @@ use think\Model;
 class Category extends  Model
 {
     protected $name = 'article_category';
+
+    // 关闭自动写入update_time字段
+    protected $updateTime = false;
+
     /**获取分类信息
      * @param array $where 条件
      * @return array|bool|false|\PDOStatement|string|Model
