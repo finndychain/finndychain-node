@@ -43,11 +43,9 @@
 - runtime/
 - data/
 - app/
-### 开发文档
->[采集工具文档链接](http://www.finndy.com/doc)
 
 ### 开发文档
->[开发手册链接](http://www.finndy.com/doc) [帮助文档链接](http://help.finndy.com)
+>[开发手册链接](http://www.finndy.com/doc) [帮助文档链接](http://help.finndy.com) QQ讨论群：340431667
 
 ### 关于发源地
 
