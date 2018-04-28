@@ -293,11 +293,11 @@ return [
     'file_save_method'=> 0,
     //阿里云OSS配置
     'aliyun_oss' => [
-        'KeyId'      => 'LTAIwQ2TVRSnCIv9',  //您的Access Key ID oss02
-        'KeySecret'  => '02bZoiv5JyLO6nFIMbWPx1mbrgjdh2',  //您的Access Key Secret
+        'KeyId'      => '',  //您的Access Key ID oss02
+        'KeySecret'  => '',  //您的Access Key Secret
         'Endpoint'   => 'http://oss-cn-shanghai.aliyuncs.com',  //阿里云oss 外网地址endpoint
-        'Bucket'     => 'keyan01',  //Bucket名称
-        'FileDomain'=>'http://keyan01.oss-cn-shanghai.aliyuncs.com'
+        'Bucket'     => '',  //Bucket名称
+        'FileDomain'=>''
     ],
 
 
