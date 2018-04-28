@@ -285,6 +285,8 @@ INSERT INTO `cloud_auth_rule` VALUES ('100', 'user/shownav', '用户管理', '1'
 INSERT INTO `cloud_auth_rule` VALUES ('207', 'article/post', '发布文章', '1', '1', '', '191', '', '0', '0', '2', '1524810011', '2018-04-27 15:05:56');
 INSERT INTO `cloud_auth_rule` VALUES ('208', 'article/recommend', '推荐文章', '1', '1', '', '191', '', '0', '0', '2', '1524810011', '2018-04-27 15:05:57');
 
+
+DROP TABLE IF EXISTS `cloud_article`;
 CREATE TABLE `cloud_article` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `uid` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '发表者用户id',
@@ -306,8 +308,11 @@ CREATE TABLE `cloud_article` (
   `create_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT COMMENT=' 文章表';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8  COMMENT=' 文章表';
 
+
+
+DROP TABLE IF EXISTS `cloud_article_category`;
 CREATE TABLE `cloud_article_category` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类id',
   `name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '分类名称',
@@ -320,9 +325,9 @@ CREATE TABLE `cloud_article_category` (
   `create_time` int(10) NOT NULL,
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT=' 文章分类表';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT=' 文章分类表';
 
-
+DROP TABLE IF EXISTS `cloud_article_tag`;
 CREATE TABLE `cloud_article_tag` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '标签id',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '标签名称',
@@ -331,10 +336,10 @@ CREATE TABLE `cloud_article_tag` (
   `create_time` int(10) NOT NULL,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='文章标签表';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文章标签表';
 
 
-
+DROP TABLE IF EXISTS `cloud_article_tag_access`;
 CREATE TABLE `cloud_article_tag_access` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `articleid` int(10) NOT NULL COMMENT '文章id',
@@ -342,7 +347,7 @@ CREATE TABLE `cloud_article_tag_access` (
   `create_time` int(10) NOT NULL,
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='文章标签关联表';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='文章标签关联表';
 
 
 
