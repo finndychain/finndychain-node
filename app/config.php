@@ -293,11 +293,11 @@ return [
     'file_save_method'=> 0,
     //阿里云OSS配置
     'aliyun_oss' => [
-        'KeyId'      => 'LTAIPgTosmSu5d3q',  //您的Access Key ID
-        'KeySecret'  => 'Rnvg7zAxm1HdRKri9XuguoQTHhS2xC',  //您的Access Key Secret
+        'KeyId'      => 'LTAIwQ2TVRSnCIv9',  //您的Access Key ID oss02
+        'KeySecret'  => '02bZoiv5JyLO6nFIMbWPx1mbrgjdh2',  //您的Access Key Secret
         'Endpoint'   => 'http://oss-cn-shanghai.aliyuncs.com',  //阿里云oss 外网地址endpoint
-        'Bucket'     => 'hospital01',  //Bucket名称
-        'FileDomain'=>'http://hospital01.oss-cn-shanghai.aliyuncs.com'
+        'Bucket'     => 'keyan01',  //Bucket名称
+        'FileDomain'=>'http://keyan01.oss-cn-shanghai.aliyuncs.com'
     ],
 
 
