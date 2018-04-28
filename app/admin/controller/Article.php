@@ -301,6 +301,7 @@ class Article extends Base
     {
         if(request()->isAjax()){
             $fileName = input('get.fileName');
+            $file_save_method = config('file_save_method');
             $result = array();
             if( $file_save_method === 0){
                 $file=$_SERVER['DOCUMENT_ROOT'].'/uploads/'.$fileName;
