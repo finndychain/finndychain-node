@@ -61,4 +61,4 @@
 
 发源地® 商标和著作权所有者为上海连源信息科技有限公司。
 
-版权所有Copyright © 2017-2018 by 发源地 (http://www.finndy.com) All rights reserved。
+版权所有Copyright © 2015-2018 by 发源地 (http://www.finndy.com) All rights reserved。
